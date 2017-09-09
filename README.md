@@ -13,6 +13,7 @@ provided, as well as a short example of usage.
   - [Domain navigation](#domain-navigation)
   - [Mapping spatial data](#mapping-spatial-data)
 - [Solver example](#solver-example)
+- [Asking for help](#asking-for-help)
 
 ### Developer tools
 
@@ -103,6 +104,10 @@ function solve(problem::EstimationProblem, solver::NormSolver)
 end
 ```
 ![NormSolver](docs/NormSolver.png)
+
+### Asking for help
+
+If you have any questions, please [open an issue](https://github.com/juliohm/GeoStatsDevTools.jl/issues).
 
 [travis-img]: https://travis-ci.org/juliohm/GeoStatsDevTools.jl.svg?branch=master
 [travis-url]: https://travis-ci.org/juliohm/GeoStatsDevTools.jl
