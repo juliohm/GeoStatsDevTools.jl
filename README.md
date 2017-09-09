@@ -45,7 +45,7 @@ end
 
 #### Mapping spatial data
 
-In GeoStats.jl, spatial data and domain types are disconnected from each other for many reasons:
+In this framework, spatial data and domain types are disconnected from each other for many reasons:
 
 - To enable agressive parallelism and to avoid expensive data copies
 - To give developers the power of deciding when and where data is to be copied
