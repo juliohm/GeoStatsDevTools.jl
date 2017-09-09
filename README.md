@@ -3,8 +3,8 @@
 [![][travis-img]][travis-url] [![][julia-pkg-img]][julia-pkg-url]
 
 This package contains developer tools for the [GeoStats.jl](https://github.com/juliohm/GeoStats.jl)
-framework. It can be used in conjunction with the [GeoStatsBase.jl](https://github.com/juliohm/GeoStatsBase.jl)
-package to speed up the development of new solvers. A quick overview of the tools defined in the package is
+framework. It is intended to be used in conjunction with [GeoStatsBase.jl](https://github.com/juliohm/GeoStatsBase.jl)
+to speed up the development of new solvers. A quick overview of the tools defined in the package is
 provided, as well as a short example of usage.
 
 ## Contents
