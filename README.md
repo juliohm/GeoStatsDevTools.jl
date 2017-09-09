@@ -1,7 +1,13 @@
 # GeoStatsDevTools
 
-[![Build Status](https://travis-ci.org/juliohm/GeoStatsDevTools.jl.svg?branch=master)](https://travis-ci.org/juliohm/GeoStatsDevTools.jl)
+[![][travis-img]][travis-url] [![][julia-pkg-img]][julia-pkg-url]
 
-[![Coverage Status](https://coveralls.io/repos/juliohm/GeoStatsDevTools.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/juliohm/GeoStatsDevTools.jl?branch=master)
+This package contains developer tools for the [GeoStats.jl](https://github.com/juliohm/GeoStats.jl)
+framework. It can be used in conjunction with the [GeoStatsBase.jl](https://github.com/juliohm/GeoStatsBase.jl)
+package to reduce development time.
 
-[![codecov.io](http://codecov.io/github/juliohm/GeoStatsDevTools.jl/coverage.svg?branch=master)](http://codecov.io/github/juliohm/GeoStatsDevTools.jl?branch=master)
+[travis-img]: https://travis-ci.org/juliohm/GeoStatsDevTools.jl.svg?branch=master
+[travis-url]: https://travis-ci.org/juliohm/GeoStatsDevTools.jl
+
+[julia-pkg-img]: http://pkg.julialang.org/badges/GeoStatsDevTools_0.6.svg
+[julia-pkg-url]: http://pkg.julialang.org/?pkg=GeoStatsDevTools

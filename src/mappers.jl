@@ -12,49 +12,21 @@
 ## ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 ## OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-__precompile__()
+"""
+    AbstractMapper
 
-module GeoStatsDevTools
+A mapping strategy for mapping spatial data onto a domain of type `D`.
+"""
+abstract type AbstractMapper{D<:AbstractDomain} end
 
-using DataFrames
+"""
+    mapping(mapper, variable)
 
-importall GeoStatsBase
+Return the mapping from data locations to `variable` values.
+"""
+mapping(::AbstractMapper, variable::Symbol) = error("not implemented")
 
-# spatial data
-include("spatialdata/geodataframe.jl")
-
-# domains
-include("domains/regular_grid.jl")
-include("domains/point_collection.jl")
-
-# domain navigation
-include("paths.jl")
-include("neighborhoods.jl")
-
-# data mappers
-include("mappers.jl")
-
-export
-  # spatial data
-  GeoDataFrame,
-  readtable,
-
-  # domains
-  RegularGrid,
-  PointCollection,
-  origin,
-  spacing,
-
-  # paths
-  SimplePath,
-  RandomPath,
-
-  # neighborhoods
-  CubeNeighborhood,
-  BallNeighborhood,
-
-  # mappers
-  SimpleMapper,
-  mapping
-
-end # module
+#------------------
+# IMPLEMENTATIONS
+#------------------
+include("mappers/simple_mapper.jl")

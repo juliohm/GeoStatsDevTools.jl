@@ -12,49 +12,23 @@
 ## ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 ## OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-__precompile__()
+"""
+    AbstractNeighborhood
 
-module GeoStatsDevTools
+A neighborhood on a spatial domain of type `D`.
+"""
+abstract type AbstractNeighborhood{D<:AbstractDomain} end
 
-using DataFrames
+# Neighborhoods are functor objects that can be evaluated
+# at a given location:
+#
+# julia> neighborhood(location)
+#
+# The operator () returns the neighbors (as integers) and
+# is implemented differently depending on the domain type.
 
-importall GeoStatsBase
-
-# spatial data
-include("spatialdata/geodataframe.jl")
-
-# domains
-include("domains/regular_grid.jl")
-include("domains/point_collection.jl")
-
-# domain navigation
-include("paths.jl")
-include("neighborhoods.jl")
-
-# data mappers
-include("mappers.jl")
-
-export
-  # spatial data
-  GeoDataFrame,
-  readtable,
-
-  # domains
-  RegularGrid,
-  PointCollection,
-  origin,
-  spacing,
-
-  # paths
-  SimplePath,
-  RandomPath,
-
-  # neighborhoods
-  CubeNeighborhood,
-  BallNeighborhood,
-
-  # mappers
-  SimpleMapper,
-  mapping
-
-end # module
+#------------------
+# IMPLEMENTATIONS
+#------------------
+include("neighborhoods/cube_neighborhood.jl")
+include("neighborhoods/ball_neighborhood.jl")

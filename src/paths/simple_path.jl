@@ -12,49 +12,14 @@
 ## ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 ## OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-__precompile__()
+"""
+    SimplePath(domain)
 
-module GeoStatsDevTools
-
-using DataFrames
-
-importall GeoStatsBase
-
-# spatial data
-include("spatialdata/geodataframe.jl")
-
-# domains
-include("domains/regular_grid.jl")
-include("domains/point_collection.jl")
-
-# domain navigation
-include("paths.jl")
-include("neighborhoods.jl")
-
-# data mappers
-include("mappers.jl")
-
-export
-  # spatial data
-  GeoDataFrame,
-  readtable,
-
-  # domains
-  RegularGrid,
-  PointCollection,
-  origin,
-  spacing,
-
-  # paths
-  SimplePath,
-  RandomPath,
-
-  # neighborhoods
-  CubeNeighborhood,
-  BallNeighborhood,
-
-  # mappers
-  SimpleMapper,
-  mapping
-
-end # module
+A simple (or default) path on a spatial `domain`.
+"""
+struct SimplePath{D<:AbstractDomain} <: AbstractPath{D}
+  domain::D
+end
+Base.start(p::SimplePath)       = 1
+Base.next(p::SimplePath, state) = state, state + 1
+Base.done(p::SimplePath, state) = state == npoints(p.domain) + 1

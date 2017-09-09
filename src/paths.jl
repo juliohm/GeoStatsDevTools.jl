@@ -12,49 +12,43 @@
 ## ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 ## OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-__precompile__()
+"""
+    AbstractPath
 
-module GeoStatsDevTools
+A path on a spatial domain of type `D`.
+"""
+abstract type AbstractPath{D<:AbstractDomain} end
 
-using DataFrames
+"""
+    Base.start(path)
 
-importall GeoStatsBase
+Return the start of the `path`.
+"""
+Base.start(::AbstractPath) = error("not implemented")
 
-# spatial data
-include("spatialdata/geodataframe.jl")
+"""
+    Base.next(path, state)
 
-# domains
-include("domains/regular_grid.jl")
-include("domains/point_collection.jl")
+Advance in the `path` from current `state`.
+"""
+Base.next(::AbstractPath, state) = error("not implemented")
 
-# domain navigation
-include("paths.jl")
-include("neighborhoods.jl")
+"""
+    Base.done(path, state)
 
-# data mappers
-include("mappers.jl")
+Return true if `state` is the end of the `path`.
+"""
+Base.done(::AbstractPath, state) = error("not implemented")
 
-export
-  # spatial data
-  GeoDataFrame,
-  readtable,
+"""
+    Base.length(path)
 
-  # domains
-  RegularGrid,
-  PointCollection,
-  origin,
-  spacing,
+Return the length of a `path`.
+"""
+Base.length(p::AbstractPath) = npoints(p.domain)
 
-  # paths
-  SimplePath,
-  RandomPath,
-
-  # neighborhoods
-  CubeNeighborhood,
-  BallNeighborhood,
-
-  # mappers
-  SimpleMapper,
-  mapping
-
-end # module
+#------------------
+# IMPLEMENTATIONS
+#------------------
+include("paths/simple_path.jl")
+include("paths/random_path.jl")
