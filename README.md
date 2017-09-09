@@ -102,6 +102,7 @@ function solve(problem::EstimationProblem, solver::NormSolver)
   EstimationSolution(pdomain, mean, variance)
 end
 ```
+![NormSolver](docs/NormSolver.png)
 
 [travis-img]: https://travis-ci.org/juliohm/GeoStatsDevTools.jl.svg?branch=master
 [travis-url]: https://travis-ci.org/juliohm/GeoStatsDevTools.jl
