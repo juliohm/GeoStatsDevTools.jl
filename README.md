@@ -56,7 +56,7 @@ to find the mapping between locations in the domain and the data for a given var
 
 ```julia
 # for each variable of the problem, map the data to the domain
-mapper = SimpleMapper(data(problem), domain(problem), variables(problem))
+mapper = SimpleMapper(problem)
 
 # get the mapping for the `:precipitation` variable
 precipdata = mapping(mapper, :precipitation)
