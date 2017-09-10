@@ -14,9 +14,12 @@
 
 """
     SimpleMapper(spatialdata, domain, targetvars)
+    SimpleMapper(problem)
 
 A mapping strategy that maps `targetvars` in `spatialdata`
 onto an arbitrary `domain` using a closest-point algorithm.
+
+Alternatively, map all the variables of the `problem`.
 """
 struct SimpleMapper{D<:AbstractDomain} <: AbstractMapper{D}
   dict::Dict{Symbol,Dict{Int,<:Any}}
@@ -27,21 +30,26 @@ end
 function SimpleMapper(spatialdata::S, domain::D, targetvars::Dict{Symbol,DataType}
                      ) where {S<:AbstractSpatialData,D<:AbstractDomain}
   # build dictionary with mappings
-  dict = Dict()
+  dict = Dict{Symbol,Dict{Int,<:Any}}()
   for (var,V) in targetvars
     # retrieve data for variable
     X, z = valid(spatialdata, var)
 
-    # map locations to values
+    # mapping for variable
     mapping = Dict{Int,eltype(z)}()
-    for j=1:size(X,2)
-      coords = view(X, :, j)
-      value  = z[j]
 
-      # find closest point in the domain
-      location = findclosest(domain, coords)
+    if isempty(z)
+      # then mapping is also empty
+    else
+      for j=1:size(X,2)
+        coords = view(X, :, j)
+        value  = z[j]
 
-      1 ≤ location ≤ npoints(domain) && push!(mapping, location => value)
+        # find closest point in the domain
+        location = findclosest(domain, coords)
+
+        1 ≤ location ≤ npoints(domain) && push!(mapping, location => value)
+      end
     end
 
     # save mapping for variable
@@ -50,6 +58,8 @@ function SimpleMapper(spatialdata::S, domain::D, targetvars::Dict{Symbol,DataTyp
 
   SimpleMapper{D}(dict)
 end
+
+SimpleMapper(problem) = SimpleMapper(data(problem), domain(problem), variables(problem))
 
 function findclosest(domain::D, coords::AbstractVector{T}) where {T<:Real,D<:RegularGrid{T}}
   dims = size(domain)

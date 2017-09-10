@@ -54,6 +54,7 @@ export
   BallNeighborhood,
 
   # mappers
+  AbstractMapper,
   SimpleMapper,
   mapping
 
