@@ -91,6 +91,25 @@ macro metasolver(solver, solvertype, body)
 
       $solver(dict, $(gkeys...))
     end
+
+    # ------------
+    # IO methods
+    # ------------
+    function Base.show(io::IO, solver::$solver)
+      print(io, $solver)
+    end
+
+    function Base.show(io::IO, ::MIME"text/plain", solver::$solver)
+      println(io, solver)
+      for (var, varparams) in solver.params
+        println(io, "  └─$var")
+        pnames = setdiff(fieldnames(varparams), [:__dummy__])
+        for pname in pnames
+          pval = getfield(varparams, pname)
+          println(io, "    └─$pname = $pval")
+        end
+      end
+    end
   end)
 end
 
