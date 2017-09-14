@@ -50,7 +50,6 @@ macro metasolver(solver, solvertype, body)
   gparams = map(p -> p.args[2], gparams)
 
   # add default value of `nothing` if necessary
-  vparams = map(p -> p isa Symbol ? :($p = nothing) : p, vparams)
   gparams = map(p -> p isa Symbol ? :($p = nothing) : p, gparams)
 
   # replace Expr(:=, a, 2) by Expr(:kw, a, 2) for valid kw args
