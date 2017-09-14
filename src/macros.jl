@@ -67,6 +67,7 @@ macro metasolver(solver, solvertype, body)
       $(vparams...)
     end
 
+    @doc (@doc $solverparam) (
     struct $solver <: $solvertype
       params::Dict{Symbol,$solverparam}
 
@@ -75,7 +76,7 @@ macro metasolver(solver, solvertype, body)
       function $solver(params::Dict{Symbol,$solverparam}, $(gkeys...))
         new(params, $(gkeys...))
       end
-    end
+    end)
 
     function $solver(params...; $(gparams...))
       # build dictionary for inner constructor
