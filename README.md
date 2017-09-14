@@ -10,12 +10,30 @@ provided, as well as a short example of usage.
 ## Contents
 
 - [Developer tools](#developer-tools)
+  - [Solver macros](#solver-macros)
   - [Domain navigation](#domain-navigation)
   - [Mapping spatial data](#mapping-spatial-data)
 - [Solver example](#solver-example)
 - [Asking for help](#asking-for-help)
 
 ### Developer tools
+
+#### Solver macros
+
+To define a new solver with the same interface of built-in solvers such as `Kriging` and `SeqGaussSim`, the developer
+can use solver macros:
+
+```julia
+@estimsolver MySolver begin
+  @param variogram = GaussianVariogram()
+  @param mean # defaults to nothing
+  @global verbose = true
+end
+```
+
+The `@estimsolver` macro defines a new estimation solver `MySolver`, a parameter type `MySolverParam`, and an outer constructor that accepts parameters for each variable as well as global parameters.
+
+Similarly, simulation solvers can be created with the `@simsolver` macro.
 
 #### Domain navigation
 
@@ -75,32 +93,41 @@ For illustration purposes, we write an estimation solver that, for each location
 importall GeoStatsBase
 using GeoStatsDevTools
 
-struct NormSolver <: AbstractEstimationSolver
-  # optional parameters go there
+@estimsolver NormSolver begin
+  @param pmean = 2
+  @param pvar  = Inf
 end
 
 function solve(problem::EstimationProblem, solver::NormSolver)
   pdomain = domain(problem)
 
-  mean = Dict{Symbol,Vector}()
-  variance = Dict{Symbol,Vector}()
+  # results for each variable
+  μs = []; σs = []
 
   for (var,V) in variables(problem)
+    # get user parameters
+    if var in keys(solver.params)
+      varparams = solver.params[var]
+    else
+      varparams = NormSolverParam()
+    end
+
+    # allocate memory
     varμ = Vector{V}(npoints(pdomain))
     varσ = Vector{V}(npoints(pdomain))
 
     for location in SimplePath(pdomain)
       x = coordinates(pdomain, location)
 
-      varμ[location] = norm(x, 2)
-      varσ[location] = norm(x, Inf)
+      varμ[location] = norm(x, varparams.pmean)
+      varσ[location] = norm(x, varparams.pvar)
     end
 
-    push!(mean, var => varμ)
-    push!(variance, var => varσ)
+    push!(μs, var => varμ)
+    push!(σs, var => varσ)
   end
 
-  EstimationSolution(pdomain, mean, variance)
+  EstimationSolution(pdomain, Dict(μs), Dict(σs))
 end
 ```
 ![NormSolver](docs/NormSolver.png)
