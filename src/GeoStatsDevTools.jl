@@ -18,6 +18,9 @@ module GeoStatsDevTools
 
 using DataFrames
 
+# won't be neeeded in Julia v0.7
+using Parameters
+
 importall GeoStatsBase
 
 # spatial data
@@ -33,6 +36,9 @@ include("neighborhoods.jl")
 
 # data mappers
 include("mappers.jl")
+
+# helper macros
+include("macros.jl")
 
 export
   # spatial data
@@ -56,6 +62,10 @@ export
   # mappers
   AbstractMapper,
   SimpleMapper,
-  mapping
+  mapping,
+
+  # helper macros
+  @estimsolver,
+  @simsolver
 
 end # module
