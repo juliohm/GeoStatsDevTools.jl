@@ -64,6 +64,7 @@ macro metasolver(solver, solvertype, body)
 
   esc(quote
     $Parameters.@with_kw_noshow struct $solverparam
+      __dummy__ = nothing
       $(vparams...)
     end
 
