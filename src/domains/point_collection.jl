@@ -33,7 +33,7 @@ PointCollection(coords::AbstractMatrix{T}) where {T<:Real} =
 
 npoints(pc::PointCollection) = size(pc.coords, 2)
 
-coordinates(pc::PointCollection, location::I) where {I<:Integer} = pc.coords[:,location]
+coordinates(pc::PointCollection, location::Int) = pc.coords[:,location]
 
 # ------------
 # IO methods

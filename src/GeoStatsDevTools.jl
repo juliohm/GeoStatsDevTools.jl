@@ -34,9 +34,6 @@ include("domains/point_collection.jl")
 include("paths.jl")
 include("neighborhoods.jl")
 
-# data mappers
-include("mappers.jl")
-
 # helper macros
 include("macros.jl")
 
@@ -58,11 +55,6 @@ export
   # neighborhoods
   CubeNeighborhood,
   BallNeighborhood,
-
-  # mappers
-  AbstractMapper,
-  SimpleMapper,
-  mapping,
 
   # helper macros
   @estimsolver,

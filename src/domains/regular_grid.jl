@@ -58,7 +58,7 @@ end
 RegularGrid{T}(dims::Dims{N}) where {N,T<:Real} =
   RegularGrid{T,N}(dims, (zeros(T,length(dims))...), (ones(T,length(dims))...))
 
-RegularGrid{T}(dims::Vararg{<:Integer,N}) where {N,T<:Real} = RegularGrid{T}(dims)
+RegularGrid{T}(dims::Vararg{Int,N}) where {N,T<:Real} = RegularGrid{T}(dims)
 
 RegularGrid(dims::Vector{Int}, origin::Vector{T}, spacing::Vector{T}) where {T<:Real} =
   RegularGrid{T,length(dims)}((dims...), (origin...), (spacing...))
@@ -69,9 +69,24 @@ Base.size(grid::RegularGrid) = grid.dims
 origin(grid::RegularGrid) = grid.origin
 spacing(grid::RegularGrid) = grid.spacing
 
-function coordinates(grid::RegularGrid, location::I) where {I<:Integer}
+function coordinates(grid::RegularGrid, location::Int)
   intcoords = ind2sub(grid.dims, location)
-  [grid.origin[i] + (intcoords[i] - one(I))*grid.spacing[i] for i=1:ndims(grid)]
+  [grid.origin[i] + (intcoords[i] - 1)*grid.spacing[i] for i=1:ndims(grid)]
+end
+
+function nearestlocation(grid::RegularGrid{T}, coords::AbstractVector{T}) where {T<:Real}
+  dims = size(grid)
+  dorigin = origin(grid)
+  dspacing = spacing(grid)
+
+  #units = round.(Int, (coords .- [dorigin...]) ./ [dspacing...])
+  units = [round(Int, (coords[i] - dorigin[i]) / dspacing[i]) for i=1:ndims(grid)]
+  intcoords = units + 1 # 1-based indexing
+
+  # make sure integer coordinates lie inside of the grid
+  intcoords = [clamp(intcoords[i], 1, dims[i]) for i in 1:ndims(grid)]
+
+  sub2ind(dims, intcoords...)
 end
 
 # ------------

@@ -38,7 +38,7 @@ end
 
 BallNeighborhood(domain::D, radius) where {D<:AbstractDomain} = BallNeighborhood{D}(domain, radius)
 
-function (neigh::BallNeighborhood{<:RegularGrid})(location::I) where {I<:Integer}
+function (neigh::BallNeighborhood{<:RegularGrid})(location::Int)
   # retrieve domain
   ndomain = neigh.domain
 
@@ -49,7 +49,7 @@ function (neigh::BallNeighborhood{<:RegularGrid})(location::I) where {I<:Integer
   xₒ = coordinates(ndomain, location)
 
   # discard neighbors outside of sphere
-  neighbors = I[]
+  neighbors = Int[]
   for neighbor in cneighbors
     x = coordinates(ndomain, neighbor)
 
@@ -65,14 +65,14 @@ function (neigh::BallNeighborhood{<:RegularGrid})(location::I) where {I<:Integer
   neighbors
 end
 
-function (neigh::BallNeighborhood{<:PointCollection})(location::I) where {I<:Integer}
+function (neigh::BallNeighborhood{<:PointCollection})(location::Int)
   # retrieve domain
   ndomain = neigh.domain
 
   # center in real coordinates
   xₒ = coordinates(ndomain, location)
 
-  neighbors = I[]
+  neighbors = Int[]
   for loc in 1:npoints(ndomain)
     x = coordinates(ndomain, loc)
     norm(x .- xₒ) ≤ neigh.radius && push!(neighbors, loc)

@@ -86,6 +86,17 @@ end
 
 npoints(geodata::GeoDataFrame) = nrow(geodata.data)
 
+function coordinates(geodata::GeoDataFrame, idx::Int)
+  rawdata = geodata.data
+  cnames = geodata.coordnames
+
+  vec(convert(Array, rawdata[idx,cnames]))
+end
+
+value(geodata::GeoDataFrame, idx::Int, var::Symbol) = geodata.data[idx,var]
+
+Base.isvalid(geodata::GeoDataFrame, idx::Int, var::Symbol) = !(value(geodata, idx, var) ≡ NA)
+
 function valid(geodata::GeoDataFrame, var::Symbol)
   rawdata = geodata.data
   cnames = geodata.coordnames
@@ -93,7 +104,7 @@ function valid(geodata::GeoDataFrame, var::Symbol)
   vardata = rawdata[[cnames...,var]]
   completecases!(vardata)
 
-  X = convert(Array, vardata[cnames])'
+  X = convert(Matrix, vardata[cnames])'
   z = convert(Vector, vardata[var])
 
   X, z
