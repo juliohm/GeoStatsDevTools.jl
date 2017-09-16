@@ -70,17 +70,17 @@ In this framework, spatial data and domain types are disconnected from each othe
 - To enable higher-level comparison schemes such as cross-validation
 
 To map spatial data onto a domain, we introduce the notion of mappers. The `SimpleMapper` type can be used
-to find the mapping between locations in the domain and the data for a given variable:
+to find the mapping from domain locations to data locations for a given variable:
 
 ```julia
-# for each variable of the problem, map the data to the domain
-mapper = SimpleMapper(problem)
+# construct a problem mapping data onto domain using SimpleMapper (default)
+problem = EstimationProblem(..., mapper=SimpleMapper())
 
 # get the mapping for the `:precipitation` variable
-precipdata = mapping(mapper, :precipitation)
+mapping = datamap(problem, :precipitation)
 
-for (location, value) in precipdata
-  println("Precipitation at location: $value")
+for (loc, datloc) in mapping
+  println("Domain location $loc has data at spatial data index $datloc")
 end
 ```
 
