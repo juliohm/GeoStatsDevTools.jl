@@ -26,7 +26,7 @@ can use solver macros:
 ```julia
 @estimsolver MySolver begin
   @param variogram = GaussianVariogram()
-  @param mean # defaults to nothing
+  @param mean # no default parameter
   @global verbose = true
 end
 ```
