@@ -34,6 +34,9 @@ include("domains/point_collection.jl")
 include("paths.jl")
 include("neighborhoods.jl")
 
+# helper functions
+include("utils.jl")
+
 # helper macros
 include("macros.jl")
 
@@ -55,6 +58,9 @@ export
   # neighborhoods
   CubeNeighborhood,
   BallNeighborhood,
+
+  # helper functions
+  bounding_grid,
 
   # helper macros
   @estimsolver,
