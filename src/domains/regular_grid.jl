@@ -37,11 +37,6 @@ Create a 2D grid with 100x100 locations and origin at (10.,20.) units:
 ```julia
 julia> RegularGrid([100,100],[10.,20.],[1.,1.])
 ```
-
-### Notes
-
-Internally, the vectors that are passed as arguments are converted into
-tuples that are stored in the stack instead of in the memory heap.
 """
 struct RegularGrid{T<:Real,N} <: AbstractDomain{T,N}
   dims::Dims{N}
