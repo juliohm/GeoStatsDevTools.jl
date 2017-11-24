@@ -110,6 +110,9 @@ function valid(geodata::GeoDataFrame, var::Symbol)
   X, z
 end
 
+Base.view(geodata::GeoDataFrame, inds::AbstractVector{Int}) =
+  GeoDataFrame(view(geodata.data, inds), geodata.coordnames)
+
 # ------------
 # IO methods
 # ------------
