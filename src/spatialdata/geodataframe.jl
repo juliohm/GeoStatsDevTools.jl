@@ -53,17 +53,17 @@ GeoDataFrame(data, coordnames) = GeoDataFrame{typeof(data)}(data, coordnames)
 """
     readtable(args; coordnames=[:x,:y,:z], kwargs)
 
-Read data from disk using `DataFrames.readtable`, optionally
-specifying the columns `coordnames` with spatial coordinates.
+Read data from disk using `CSV.read`, optionally specifying
+the columns `coordnames` with spatial coordinates.
 
 The arguments `args` and keyword arguments `kwargs` are
-forwarded to the `DataFrames.readtable` function, please
-check their documentation for more details.
+forwarded to the `CSV.read` function, please check their
+documentation for more details.
 
 This function returns a [`GeoDataFrame`](@ref) object.
 """
 function readtable(args...; coordnames=[:x,:y,:z], kwargs...)
-  data = DataFrames.readtable(args...; kwargs...)
+  data = CSV.read(args...; kwargs...)
   GeoDataFrame(data, coordnames)
 end
 
@@ -95,14 +95,14 @@ end
 
 value(geodata::GeoDataFrame, idx::Int, var::Symbol) = geodata.data[idx,var]
 
-Base.isvalid(geodata::GeoDataFrame, idx::Int, var::Symbol) = !(value(geodata, idx, var) ≡ NA)
+Base.isvalid(geodata::GeoDataFrame, idx::Int, var::Symbol) = !(value(geodata, idx, var) ≡ missing)
 
 function valid(geodata::GeoDataFrame, var::Symbol)
   rawdata = geodata.data
   cnames = geodata.coordnames
 
   vardata = rawdata[[cnames...,var]]
-  completecases!(vardata)
+  dropmissing!(vardata)
 
   X = convert(Matrix, vardata[cnames])'
   z = convert(Vector, vardata[var])

@@ -17,6 +17,7 @@ __precompile__()
 module GeoStatsDevTools
 
 using DataFrames
+using CSV
 
 # won't be neeeded in Julia v0.7
 using Parameters
