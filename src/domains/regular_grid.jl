@@ -74,7 +74,6 @@ function nearestlocation(grid::RegularGrid{T}, coords::AbstractVector{T}) where 
   dorigin = origin(grid)
   dspacing = spacing(grid)
 
-  #units = round.(Int, (coords .- [dorigin...]) ./ [dspacing...])
   units = [round(Int, (coords[i] - dorigin[i]) / dspacing[i]) for i=1:ndims(grid)]
   intcoords = units + 1 # 1-based indexing
 

@@ -37,7 +37,7 @@ function (neigh::CubeNeighborhood{<:RegularGrid})(location::Int)
   nd = ndims(neigh.domain)
 
   # cube center in multi-dimensional index format
-  center = [ind2sub(sz, location)...]
+  center = ind2sub(sz, location)
 
   # number of units to reach the sides of the cube
   units = [floor(Int, neigh.radius / sp) for sp in spacing(neigh.domain)]

@@ -49,7 +49,7 @@ function (neigh::BallNeighborhood{<:RegularGrid})(location::Int)
   xₒ = coordinates(ndomain, location)
 
   # discard neighbors outside of sphere
-  neighbors = Int[]
+  neighbors = Vector{Int}()
   for neighbor in cneighbors
     x = coordinates(ndomain, neighbor)
 
@@ -72,7 +72,7 @@ function (neigh::BallNeighborhood{<:PointCollection})(location::Int)
   # center in real coordinates
   xₒ = coordinates(ndomain, location)
 
-  neighbors = Int[]
+  neighbors = Vector{Int}()
   for loc in 1:npoints(ndomain)
     x = coordinates(ndomain, loc)
     norm(x .- xₒ) ≤ neigh.radius && push!(neighbors, loc)
