@@ -1,4 +1,4 @@
-# GeoStatsDevTools
+# GeoStatsDevTools.jl
 
 [![][travis-img]][travis-url] [![][julia-pkg-img]][julia-pkg-url]
 
