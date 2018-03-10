@@ -8,6 +8,7 @@ __precompile__()
 module GeoStatsDevTools
 
 using Distances
+using Distributions
 using DataFrames
 using CSV
 
@@ -30,8 +31,9 @@ include("domains/point_collection.jl")
 include("paths.jl")
 include("neighborhoods.jl")
 
-# distances
+# distances and distributions
 include("distances.jl")
+include("distributions.jl")
 
 # variograms
 include("empirical_variograms.jl")
@@ -65,6 +67,11 @@ export
   # distances
   Ellipsoidal,
   evaluate,
+
+  # distributions
+  EmpiricalDistribution,
+  quantile,
+  cdf,
 
   # empirical variograms
   EmpiricalVariogram,
