@@ -7,11 +7,15 @@ __precompile__()
 
 module GeoStatsDevTools
 
+using Distances
 using DataFrames
 using CSV
 
 # won't be neeeded in Julia v0.7
 using Parameters
+
+# extend result_type and pairwise for theoretical variograms
+import Distances: result_type, pairwise
 
 importall GeoStatsBase
 
@@ -25,6 +29,13 @@ include("domains/point_collection.jl")
 # domain navigation
 include("paths.jl")
 include("neighborhoods.jl")
+
+# distances
+include("distances.jl")
+
+# variograms
+include("empirical_variograms.jl")
+include("theoretical_variograms.jl")
 
 # helper functions
 include("utils.jl")
@@ -50,6 +61,27 @@ export
   # neighborhoods
   CubeNeighborhood,
   BallNeighborhood,
+
+  # distances
+  Ellipsoidal,
+  evaluate,
+
+  # empirical variograms
+  EmpiricalVariogram,
+
+  # theoretical variograms
+  AbstractVariogram,
+  GaussianVariogram,
+  ExponentialVariogram,
+  MaternVariogram,
+  SphericalVariogram,
+  CubicVariogram,
+  PentasphericalVariogram,
+  PowerVariogram,
+  SineHoleVariogram,
+  CompositeVariogram,
+  isstationary,
+  pairwise,
 
   # helper functions
   bounding_grid,
