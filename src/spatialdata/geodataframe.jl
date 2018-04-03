@@ -61,7 +61,7 @@ end
 function coordinates(geodata::GeoDataFrame)
   rawdata = geodata.data
   cnames = geodata.coordnames
-  ctypes = eltypes(rawdata[cnames])
+  ctypes = Missings.T.(eltypes(rawdata[cnames]))
 
   Dict(var => T for (var,T) in zip(cnames,ctypes))
 end
@@ -70,7 +70,7 @@ function variables(geodata::GeoDataFrame)
   rawdata = geodata.data
   cnames = geodata.coordnames
   vnames = [var for var in names(rawdata) if var ∉ cnames]
-  vtypes = eltypes(rawdata[vnames])
+  vtypes = Missings.T.(eltypes(rawdata[vnames]))
 
   Dict(var => T for (var,T) in zip(vnames,vtypes))
 end
@@ -81,7 +81,7 @@ function coordinates(geodata::GeoDataFrame, idx::Int)
   rawdata = geodata.data
   cnames = geodata.coordnames
 
-  vec(convert(Array, rawdata[idx,cnames]))
+  [rawdata[idx,cname] for cname in cnames]
 end
 
 value(geodata::GeoDataFrame, idx::Int, var::Symbol) = geodata.data[idx,var]
