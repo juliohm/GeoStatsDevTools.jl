@@ -15,9 +15,6 @@ using CSV
 # won't be neeeded in Julia v0.7
 using Parameters
 
-# extend result_type and pairwise for theoretical variograms
-import Distances: result_type, pairwise
-
 importall GeoStatsBase
 
 # spatial data
@@ -34,10 +31,6 @@ include("neighborhoods.jl")
 # distances and distributions
 include("distances.jl")
 include("distributions.jl")
-
-# variograms
-include("empirical_variograms.jl")
-include("theoretical_variograms.jl")
 
 # helper functions
 include("utils.jl")
@@ -72,9 +65,6 @@ export
   EmpiricalDistribution,
   quantile,
   cdf,
-
-  # empirical variograms
-  EmpiricalVariogram,
 
   # theoretical variograms
   AbstractVariogram,
