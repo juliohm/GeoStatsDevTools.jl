@@ -66,20 +66,6 @@ export
   quantile,
   cdf,
 
-  # theoretical variograms
-  AbstractVariogram,
-  GaussianVariogram,
-  ExponentialVariogram,
-  MaternVariogram,
-  SphericalVariogram,
-  CubicVariogram,
-  PentasphericalVariogram,
-  PowerVariogram,
-  SineHoleVariogram,
-  CompositeVariogram,
-  isstationary,
-  pairwise,
-
   # helper functions
   bounding_grid,
 
