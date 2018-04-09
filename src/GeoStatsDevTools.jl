@@ -19,6 +19,7 @@ importall GeoStatsBase
 
 # spatial data
 include("spatialdata/geodataframe.jl")
+include("spatialdata/geogriddata.jl")
 
 # domains
 include("domains/regular_grid.jl")
@@ -41,6 +42,7 @@ include("macros.jl")
 export
   # spatial data
   GeoDataFrame,
+  GeoGridData,
   readtable,
 
   # domains
