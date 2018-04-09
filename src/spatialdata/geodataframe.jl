@@ -86,11 +86,6 @@ end
 
 value(geodata::GeoDataFrame, idx::Int, var::Symbol) = geodata.data[idx,var]
 
-function Base.isvalid(geodata::GeoDataFrame, idx::Int, var::Symbol)
-  val = value(geodata, idx, var)
-  !(val ≡ missing || (val isa Number && isnan(val)))
-end
-
 Base.view(geodata::GeoDataFrame, inds::AbstractVector{Int}) =
   GeoDataFrame(view(geodata.data, inds), geodata.coordnames)
 
