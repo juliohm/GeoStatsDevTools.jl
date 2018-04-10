@@ -39,6 +39,10 @@ include("utils.jl")
 # helper macros
 include("macros.jl")
 
+# digest solutions
+include("solutions/estimation_solution.jl")
+include("solutions/simulation_solution.jl")
+
 export
   # spatial data
   GeoDataFrame,
