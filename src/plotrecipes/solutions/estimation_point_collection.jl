@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------
 
 @recipe function f(solution::EstimationSolution{<:PointCollection}; variables=nothing)
-  # grid dimension and size
+  # retrieve domain geometry
   sdomain = domain(solution)
   dim = ndims(sdomain)
 
@@ -20,7 +20,6 @@
 
   for (i,var) in enumerate(variables)
     X  = hcat([coordinates(sdomain, i) for i in 1:npoints(sdomain)]...)
-    @show size(X)
     μ  = solution.mean[var]
     σ² = solution.variance[var]
 
