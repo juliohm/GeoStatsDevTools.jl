@@ -11,6 +11,7 @@ using Distances
 using Distributions
 using DataFrames
 using CSV
+using RecipesBase
 
 # won't be neeeded in Julia v0.7
 using Parameters
@@ -42,6 +43,11 @@ include("macros.jl")
 # digest solutions
 include("solutions/estimation_solution.jl")
 include("solutions/simulation_solution.jl")
+
+# plot recipes
+include("plotrecipes/hscatter.jl")
+include("plotrecipes/solutions/estimation_regular_grid.jl")
+include("plotrecipes/solutions/simulation_regular_grid.jl")
 
 export
   # spatial data
