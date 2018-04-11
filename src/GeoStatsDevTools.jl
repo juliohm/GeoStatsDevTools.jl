@@ -49,6 +49,7 @@ include("plotrecipes/hscatter.jl")
 include("plotrecipes/solutions/estimation_regular_grid.jl")
 include("plotrecipes/solutions/simulation_regular_grid.jl")
 include("plotrecipes/solutions/estimation_point_collection.jl")
+include("plotrecipes/solutions/simulation_point_collection.jl")
 
 export
   # spatial data
