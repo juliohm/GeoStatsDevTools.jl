@@ -55,9 +55,12 @@ Base.size(grid::RegularGrid) = grid.dims
 origin(grid::RegularGrid) = grid.origin
 spacing(grid::RegularGrid) = grid.spacing
 
-function coordinates(grid::RegularGrid, location::Int)
+function coordinates!(buff::AbstractVector{T}, grid::RegularGrid{T,N},
+                      location::Int) where {N,T<:Real}
   intcoords = ind2sub(grid.dims, location)
-  [grid.origin[i] + (intcoords[i] - 1)*grid.spacing[i] for i=1:ndims(grid)]
+  for i in 1:N
+    @inbounds buff[i] = grid.origin[i] + (intcoords[i] - 1)*grid.spacing[i]
+  end
 end
 
 function nearestlocation(grid::RegularGrid{T}, coords::AbstractVector{T}) where {T<:Real}

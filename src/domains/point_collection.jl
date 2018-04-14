@@ -24,7 +24,12 @@ PointCollection(coords::AbstractMatrix{T}) where {T<:Real} =
 
 npoints(pc::PointCollection) = size(pc.coords, 2)
 
-coordinates(pc::PointCollection, location::Int) = pc.coords[:,location]
+function coordinates!(buff::AbstractVector{T}, pc::PointCollection{T,N},
+                      location::Int) where {N,T<:Real}
+  for i in 1:N
+    @inbounds buff[i] = pc.coords[i,location]
+  end
+end
 
 # ------------
 # IO methods
