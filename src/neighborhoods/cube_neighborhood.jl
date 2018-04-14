@@ -67,10 +67,10 @@ function (neigh::CubeNeighborhood{<:RegularGrid})(location::Int)
   else # higher dimensions
     istart = CartesianIndex(tuple(topleft...))
     iend   = CartesianIndex(tuple(bottomright...))
-    cartesian_range = CartesianRange(istart, iend)
+    irange = CartesianRange(istart, iend)
 
-    for (n,idx) in enumerate(cartesian_range)
-      neighbors[n] = sub2ind(sz, idx.I...)
+    for (n,idx) in enumerate(irange)
+      @inbounds neighbors[n] = sub2ind(sz, idx.I...)
     end
   end
 
