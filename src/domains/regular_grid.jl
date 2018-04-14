@@ -63,16 +63,16 @@ function coordinates!(buff::AbstractVector{T}, grid::RegularGrid{T,N},
   end
 end
 
-function nearestlocation(grid::RegularGrid{T}, coords::AbstractVector{T}) where {T<:Real}
+function nearestlocation(grid::RegularGrid{T,N}, coords::AbstractVector{T}) where {N,T<:Real}
   dims = size(grid)
   dorigin = origin(grid)
   dspacing = spacing(grid)
 
-  units = [round(Int, (coords[i] - dorigin[i]) / dspacing[i]) for i=1:ndims(grid)]
+  units = [round(Int, (coords[i] - dorigin[i]) / dspacing[i]) for i=1:N]
   intcoords = units + 1 # 1-based indexing
 
   # make sure integer coordinates lie inside of the grid
-  intcoords = [clamp(intcoords[i], 1, dims[i]) for i in 1:ndims(grid)]
+  intcoords = [clamp(intcoords[i], 1, dims[i]) for i in 1:N]
 
   sub2ind(dims, intcoords...)
 end
