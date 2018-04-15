@@ -39,10 +39,13 @@ function (neigh::BallNeighborhood{<:RegularGrid})(location::Int)
   # coordinates of the center
   xₒ = coordinates(ndomain, location)
 
+  # pre-allocate memory for neighbors coordinates
+  x = MVector{ndims(ndomain),coordtype(ndomain)}()
+
   # discard neighbors outside of sphere
   neighbors = Vector{Int}()
   for neighbor in cneighbors
-    x = coordinates(ndomain, neighbor)
+    coordinates!(x, ndomain, neighbor)
 
     # compute ||x-xₒ||^2
     sum² = zero(eltype(x))
@@ -63,9 +66,12 @@ function (neigh::BallNeighborhood{<:PointCollection})(location::Int)
   # center in real coordinates
   xₒ = coordinates(ndomain, location)
 
+  # pre-allocate memory for neighbors coordinates
+  x = MVector{ndims(ndomain),coordtype(ndomain)}()
+
   neighbors = Vector{Int}()
   for loc in 1:npoints(ndomain)
-    x = coordinates(ndomain, loc)
+    coordinates!(x, ndomain, loc)
     norm(x .- xₒ) ≤ neigh.radius && push!(neighbors, loc)
   end
 

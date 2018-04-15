@@ -10,6 +10,7 @@ module GeoStatsDevTools
 using Distances
 using Distributions
 using DataFrames
+using StaticArrays
 using CSV
 using RecipesBase
 

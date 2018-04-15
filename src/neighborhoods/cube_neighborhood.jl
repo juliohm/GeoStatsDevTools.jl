@@ -25,17 +25,18 @@ CubeNeighborhood(domain::D, radius) where {D<:AbstractDomain} = CubeNeighborhood
 function (neigh::CubeNeighborhood{<:RegularGrid})(location::Int)
   # grid size
   sz = size(neigh.domain)
+  sp = spacing(neigh.domain)
   nd = ndims(neigh.domain)
 
   # cube center in multi-dimensional index format
   center = ind2sub(sz, location)
 
   # number of units to reach the sides of the cube
-  units = [floor(Int, neigh.radius / sp) for sp in spacing(neigh.domain)]
+  units = ntuple(i -> @inbounds(return floor(Int, neigh.radius / sp[i])), nd)
 
   # cube spans from top left to bottom right
-  topleft     = [max(center[i] - units[i],     1) for i=1:nd]
-  bottomright = [min(center[i] + units[i], sz[i]) for i=1:nd]
+  topleft     = ntuple(i -> @inbounds(return max(center[i] - units[i], 1)), nd)
+  bottomright = ntuple(i -> @inbounds(return min(center[i] + units[i], sz[i])), nd)
 
   # number of points in the cube
   ncubepoints = prod(bottomright[i] - topleft[i] + 1 for i=1:nd)
@@ -84,9 +85,12 @@ function (neigh::CubeNeighborhood{<:PointCollection})(location::Int)
   # center in real coordinates
   xₒ = coordinates(ndomain, location)
 
-  neighbors = Int[]
+  # pre-allocate memory for neighbors coordinates
+  x = MVector{ndims(ndomain),coordtype(ndomain)}()
+
+  neighbors = Vector{Int}()
   for loc in 1:npoints(ndomain)
-    x = coordinates(ndomain, loc)
+    coordinates!(x, ndomain, loc)
     norm(x .- xₒ, Inf) ≤ neigh.radius && push!(neighbors, loc)
   end
 
