@@ -6,9 +6,9 @@
 """
     PointCollection(coords)
 
-A collection of points with coordinate matrix `coords`.
-The number of rows is the dimensionality of the domain
-whereas the number of columns is the number of points.
+A collection of points with coordinate matrix `coords`. The number
+of rows of the matrix is the dimensionality of the domain whereas
+the number of columns is the number of points in the collection.
 """
 struct PointCollection{T<:Real,N} <: AbstractDomain{T,N}
   coords::Matrix{T}
