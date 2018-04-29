@@ -72,9 +72,17 @@ function nearestlocation(grid::RegularGrid{T,N}, coords::AbstractVector{T}) wher
   icoords = ntuple(i -> @inbounds(return units[i] + 1), N) # 1-based indexing
 
   # make sure integer coordinates lie inside of the grid
-  intcoords = ntuple(i -> @inbounds(return clamp(icoords[i], 1, sz[i])), N)
+  c = ntuple(i -> @inbounds(return clamp(icoords[i], 1, sz[i])), N)
 
-  sub2ind(sz, intcoords...)
+  if N == 1
+    @inbounds return c[1]
+  elseif N == 2
+    @inbounds return c[1] + sz[1]*(c[2]-1)
+  elseif N == 3
+    @inbounds return c[1] + sz[1]*(c[2]-1) + sz[1]*sz[2]*(c[3]-1)
+  else # higher dimensions
+    sub2ind(sz, c...)
+  end
 end
 
 # ------------
