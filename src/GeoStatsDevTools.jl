@@ -21,7 +21,7 @@ importall GeoStatsBase
 
 # spatial data
 include("spatialdata/geodataframe.jl")
-include("spatialdata/geogriddata.jl")
+include("spatialdata/regular_grid_data.jl")
 
 # domains
 include("domains/regular_grid.jl")
@@ -55,7 +55,7 @@ include("plotrecipes/solutions/simulation_point_collection.jl")
 export
   # spatial data
   GeoDataFrame,
-  GeoGridData,
+  RegularGridData,
   readtable,
 
   # domains

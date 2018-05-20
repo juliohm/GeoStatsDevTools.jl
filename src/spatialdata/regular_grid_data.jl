@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------
 
 """
-    GeoGridData(data, origin, spacing)
+    RegularGridData(data, origin, spacing)
 
 Regularly spaced `data` georeferenced with `origin` and `spacing`.
 The `data` argument is a dictionary mapping variable names to Julia
@@ -21,17 +21,17 @@ to georeference the data:
 
 ```julia
 julia> data = Dict(:porosity => poro, :permeability => perm)
-julia> GeoGridData(data, [0.,0.,0.], [1.,1.,1.])
+julia> RegularGridData(data, [0.,0.,0.], [1.,1.,1.])
 ```
 
 Alternatively, one can omit `origin` and `spacing` for default
 values of zeros and ones:
 
 ```julia
-julia> GeoGridData{Float64}(data)
+julia> RegularGridData{Float64}(data)
 ```
 """
-struct GeoGridData{T<:Real,N} <: AbstractSpatialData
+struct RegularGridData{T<:Real,N} <: AbstractSpatialData
   data::Dict{Symbol,<:AbstractArray}
   origin::NTuple{N,T}
   spacing::NTuple{N,T}
@@ -39,7 +39,7 @@ struct GeoGridData{T<:Real,N} <: AbstractSpatialData
   # state fields
   dims::Dims{N}
 
-  function GeoGridData{T,N}(data, origin, spacing) where {N,T<:Real}
+  function RegularGridData{T,N}(data, origin, spacing) where {N,T<:Real}
     sizes = [size(array) for array in values(data)]
     @assert length(unique(sizes)) == 1 "data dimensions must be the same for all variables"
     @assert length(sizes[1]) == N "inconsistent number of dimensions for given origin/spacing"
@@ -48,26 +48,26 @@ struct GeoGridData{T<:Real,N} <: AbstractSpatialData
   end
 end
 
-GeoGridData(data::Dict{Symbol,<:AbstractArray}, origin::Vector{T}, spacing::Vector{T}) where {T<:Real} =
-  GeoGridData{T,length(origin)}(data, (origin...), (spacing...))
+RegularGridData(data::Dict{Symbol,<:AbstractArray}, origin::Vector{T}, spacing::Vector{T}) where {T<:Real} =
+  RegularGridData{T,length(origin)}(data, (origin...), (spacing...))
 
-GeoGridData{T}(data::Dict{Symbol,<:AbstractArray{<:Any,N}}) where {N,T<:Real} =
-  GeoGridData{T,N}(data, (zeros(T,N)...), (ones(T,N)...))
+RegularGridData{T}(data::Dict{Symbol,<:AbstractArray{<:Any,N}}) where {N,T<:Real} =
+  RegularGridData{T,N}(data, (zeros(T,N)...), (ones(T,N)...))
 
-coordinates(geodata::GeoGridData{T,N}) where {T<:Real,N} = Dict(Symbol("x$i") => T for i=1:N)
+coordinates(geodata::RegularGridData{T,N}) where {T<:Real,N} = Dict(Symbol("x$i") => T for i=1:N)
 
-variables(geodata::GeoGridData) = Dict(var => eltype(array) for (var,array) in geodata.data)
+variables(geodata::RegularGridData) = Dict(var => eltype(array) for (var,array) in geodata.data)
 
-npoints(geodata::GeoGridData) = prod(geodata.dims)
+npoints(geodata::RegularGridData) = prod(geodata.dims)
 
-function coordinates(geodata::GeoGridData{T,N}, idx::Int) where {N,T<:Real}
+function coordinates(geodata::RegularGridData{T,N}, idx::Int) where {N,T<:Real}
   intcoords = ind2sub(geodata.dims, idx)
   [geodata.origin[i] + (intcoords[i] - 1)*geodata.spacing[i] for i=1:N]
 end
 
-value(geodata::GeoGridData, idx::Int, var::Symbol) = geodata.data[var][idx]
+value(geodata::RegularGridData, idx::Int, var::Symbol) = geodata.data[var][idx]
 
-function Base.view(geodata::GeoGridData{T,N}, inds::AbstractVector{Int}) where {N,T<:Real}
+function Base.view(geodata::RegularGridData{T,N}, inds::AbstractVector{Int}) where {N,T<:Real}
   # find top left and bottom right of view
   imin = fill(typemax(Int), N)
   imax = fill(typemin(Int), N)
@@ -90,18 +90,18 @@ function Base.view(geodata::GeoGridData{T,N}, inds::AbstractVector{Int}) where {
   origin  = [geodata.origin[i] + (imin[i] - 1)*geodata.spacing[i] for i=1:N]
   spacing = [geodata.spacing...]
 
-  GeoGridData(data, origin, spacing)
+  RegularGridData(data, origin, spacing)
 end
 
 # ------------
 # IO methods
 # ------------
-function Base.show(io::IO, geodata::GeoGridData{T,N}) where {N,T<:Real}
+function Base.show(io::IO, geodata::RegularGridData{T,N}) where {N,T<:Real}
   dims = join(geodata.dims, "×")
-  print(io, "$dims GeoGridData{$T,$N}")
+  print(io, "$dims RegularGridData{$T,$N}")
 end
 
-function Base.show(io::IO, ::MIME"text/plain", geodata::GeoGridData{T,N}) where {N,T<:Real}
+function Base.show(io::IO, ::MIME"text/plain", geodata::RegularGridData{T,N}) where {N,T<:Real}
   println(io, geodata)
   println(io, "  origin:  ", geodata.origin)
   println(io, "  spacing: ", geodata.spacing)
