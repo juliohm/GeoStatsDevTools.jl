@@ -60,37 +60,32 @@ variables(geodata::RegularGridData) = Dict(var => eltype(array) for (var,array) 
 
 npoints(geodata::RegularGridData) = prod(geodata.dims)
 
-function coordinates(geodata::RegularGridData{T,N}, idx::Int) where {N,T<:Real}
-  intcoords = ind2sub(geodata.dims, idx)
+function coordinates(geodata::RegularGridData{T,N}, ind::Int) where {N,T<:Real}
+  intcoords = ind2sub(geodata.dims, ind)
   [geodata.origin[i] + (intcoords[i] - 1)*geodata.spacing[i] for i=1:N]
 end
 
-value(geodata::RegularGridData, idx::Int, var::Symbol) = geodata.data[var][idx]
+value(geodata::RegularGridData, ind::Int, var::Symbol) = geodata.data[var][ind]
 
 function Base.view(geodata::RegularGridData{T,N}, inds::AbstractVector{Int}) where {N,T<:Real}
-  # find top left and bottom right of view
-  imin = fill(typemax(Int), N)
-  imax = fill(typemin(Int), N)
-  for ind in inds
-    intcoords = ind2sub(geodata.dims, ind)
-    for i=1:N
-      if intcoords[i] < imin[i]
-        imin[i] = intcoords[i]
-      end
-      if intcoords[i] > imax[i]
-        imax[i] = intcoords[i]
-      end
-    end
-  end
+  # coordinate names
+  coordnames = [Symbol("x$i") for i=1:N]
 
   # view the underlying data
-  data = Dict((var, view(array, [imin[i]:imax[i] for i=1:N]...)) for (var,array) in geodata.data)
+  varcols = Dict(var => view(array, inds) for (var,array) in geodata.data)
+  dfvars = DataFrame(varcols)
 
-  # new origin and same spacing
-  origin  = [geodata.origin[i] + (imin[i] - 1)*geodata.spacing[i] for i=1:N]
-  spacing = [geodata.spacing...]
+  # retrieve coordinates
+  coords = Matrix{T}(length(inds), N)
+  for ind in inds
+    coords[ind,:] .= coordinates(geodata, ind)
+  end
+  dfcoords = DataFrame(coords, coordnames)
 
-  RegularGridData(data, origin, spacing)
+  # create full dataframe
+  data = hcat(dfvars, dfcoords)
+
+  GeoDataFrame(data, coordnames)
 end
 
 # ------------

@@ -59,8 +59,8 @@ export
   readtable,
 
   # domains
-  RegularGrid,
   PointCollection,
+  RegularGrid,
   origin,
   spacing,
 
