@@ -54,7 +54,7 @@ RegularGridData(data::Dict{Symbol,<:AbstractArray}, origin::Vector{T}, spacing::
 RegularGridData{T}(data::Dict{Symbol,<:AbstractArray{<:Any,N}}) where {N,T<:Real} =
   RegularGridData{T,N}(data, (zeros(T,N)...), (ones(T,N)...))
 
-coordinates(geodata::RegularGridData{T,N}) where {T<:Real,N} = Dict(Symbol("x$i") => T for i=1:N)
+coordinates(geodata::RegularGridData{T,N}) where {N,T<:Real} = Dict(Symbol("x$i") => T for i=1:N)
 
 variables(geodata::RegularGridData) = Dict(var => eltype(array) for (var,array) in geodata.data)
 
@@ -102,6 +102,6 @@ function Base.show(io::IO, ::MIME"text/plain", geodata::RegularGridData{T,N}) wh
   println(io, "  spacing: ", geodata.spacing)
   println(io, "  variables")
   for (var, array) in geodata.data
-    println(io, "    └─$var ($(eltype(array)))")
+    println(io, "    └─", var, " (", eltype(array), ")")
   end
 end
