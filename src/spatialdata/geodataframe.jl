@@ -77,14 +77,14 @@ end
 
 npoints(geodata::GeoDataFrame) = nrow(geodata.data)
 
-function coordinates(geodata::GeoDataFrame, idx::Int)
+function coordinates(geodata::GeoDataFrame, ind::Int)
   rawdata = geodata.data
   cnames = geodata.coordnames
 
-  [rawdata[idx,cname] for cname in cnames]
+  [rawdata[ind,cname] for cname in cnames]
 end
 
-value(geodata::GeoDataFrame, idx::Int, var::Symbol) = geodata.data[idx,var]
+value(geodata::GeoDataFrame, ind::Int, var::Symbol) = geodata.data[ind,var]
 
 Base.view(geodata::GeoDataFrame, inds::AbstractVector{Int}) =
   GeoDataFrame(view(geodata.data, inds), geodata.coordnames)
