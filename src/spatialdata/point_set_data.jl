@@ -8,8 +8,9 @@
 
 Spatial `data` georeferenced with coordinate matrix `coords`.
 The `data` argument is a dictionary mapping variable names to Julia
-vectors with the actual data. See [`PointSet`](@ref) for coordinates
-conventions.
+arrays with the actual data.
+
+See also: [`PointSet`](@ref)
 """
 struct PointSetData{T<:Real,N} <: AbstractSpatialData
   data::Dict{Symbol,<:AbstractArray}

@@ -30,6 +30,8 @@ values of zeros and ones:
 ```julia
 julia> RegularGridData{Float64}(data)
 ```
+
+See also: [`RegularGrid`](@ref)
 """
 struct RegularGridData{T<:Real,N} <: AbstractSpatialData
   data::Dict{Symbol,<:AbstractArray}
