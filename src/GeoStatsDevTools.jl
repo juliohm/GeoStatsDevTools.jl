@@ -11,8 +11,8 @@ using Distances
 using Distributions
 using DataFrames
 using StaticArrays
-using CSV
 using RecipesBase
+using CSV
 
 # won't be neeeded in Julia v0.7
 using Parameters
@@ -23,6 +23,7 @@ importall GeoStatsBase
 include("spatialdata/geodataframe.jl")
 include("spatialdata/point_set_data.jl")
 include("spatialdata/regular_grid_data.jl")
+include("spatialdata/structured_grid_data.jl")
 
 # domains
 include("domains/point_set.jl")
@@ -58,6 +59,7 @@ export
   GeoDataFrame,
   PointSetData,
   RegularGridData,
+  StructuredGridData,
   readtable,
 
   # domains
