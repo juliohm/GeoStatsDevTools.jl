@@ -68,24 +68,14 @@ end
 value(geodata::RegularGridData, ind::Int, var::Symbol) = geodata.data[var][ind]
 
 function Base.view(geodata::RegularGridData{T,N}, inds::AbstractVector{Int}) where {N,T<:Real}
-  # coordinate names
-  coordnames = [Symbol("x$i") for i=1:N]
+  data = Dict(var => view(array, inds) for (var,array) in geodata.data)
 
-  # view the underlying data
-  varcols = Dict(var => view(array, inds) for (var,array) in geodata.data)
-  dfvars = DataFrame(varcols)
-
-  # retrieve coordinates
-  coords = Matrix{T}(length(inds), N)
+  coords = Matrix{T}(N, length(inds))
   for ind in inds
-    coords[ind,:] .= coordinates(geodata, ind)
+    coords[:,ind] .= coordinates(geodata, ind)
   end
-  dfcoords = DataFrame(coords, coordnames)
 
-  # create full dataframe
-  data = hcat(dfvars, dfcoords)
-
-  GeoDataFrame(data, coordnames)
+  PointSetData(data, coords)
 end
 
 # ------------
@@ -101,7 +91,6 @@ function Base.show(io::IO, ::MIME"text/plain", geodata::RegularGridData{T,N}) wh
   println(io, "  origin:  ", geodata.origin)
   println(io, "  spacing: ", geodata.spacing)
   println(io, "  variables")
-  for (var, array) in geodata.data
-    println(io, "    └─", var, " (", eltype(array), ")")
-  end
+  varlines = ["    └─$var ($(eltype(array)))" for (var, array) in geodata.data]
+  print(io, join(varlines, "\n"))
 end
