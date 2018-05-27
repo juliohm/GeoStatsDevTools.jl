@@ -3,7 +3,7 @@
 # Licensed under the ISC License. See LICENCE in the project root.
 # ------------------------------------------------------------------
 
-@recipe function f(solution::EstimationSolution{<:PointCollection}; variables=nothing)
+@recipe function f(solution::EstimationSolution{<:PointSet}; variables=nothing)
   # retrieve domain geometry
   sdomain = domain(solution)
   dim = ndims(sdomain)

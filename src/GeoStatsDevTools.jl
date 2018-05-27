@@ -24,8 +24,8 @@ include("spatialdata/geodataframe.jl")
 include("spatialdata/regular_grid_data.jl")
 
 # domains
+include("domains/point_set.jl")
 include("domains/regular_grid.jl")
-include("domains/point_collection.jl")
 
 # domain navigation
 include("paths.jl")
@@ -47,10 +47,10 @@ include("solutions/simulation_solution.jl")
 
 # plot recipes
 include("plotrecipes/hscatter.jl")
+include("plotrecipes/solutions/estimation_point_set.jl")
+include("plotrecipes/solutions/simulation_point_set.jl")
 include("plotrecipes/solutions/estimation_regular_grid.jl")
 include("plotrecipes/solutions/simulation_regular_grid.jl")
-include("plotrecipes/solutions/estimation_point_collection.jl")
-include("plotrecipes/solutions/simulation_point_collection.jl")
 
 export
   # spatial data
@@ -59,7 +59,7 @@ export
   readtable,
 
   # domains
-  PointCollection,
+  PointSet,
   RegularGrid,
   origin,
   spacing,

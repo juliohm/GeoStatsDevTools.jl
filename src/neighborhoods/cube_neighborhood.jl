@@ -78,7 +78,7 @@ function (neigh::CubeNeighborhood{<:RegularGrid})(location::Int)
   neighbors
 end
 
-function (neigh::CubeNeighborhood{<:PointCollection})(location::Int)
+function (neigh::CubeNeighborhood{<:PointSet})(location::Int)
   # retrieve domain
   ndomain = neigh.domain
 

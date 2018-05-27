@@ -59,7 +59,7 @@ function (neigh::BallNeighborhood{<:RegularGrid})(location::Int)
   neighbors
 end
 
-function (neigh::BallNeighborhood{<:PointCollection})(location::Int)
+function (neigh::BallNeighborhood{<:PointSet})(location::Int)
   # retrieve domain
   ndomain = neigh.domain
 
