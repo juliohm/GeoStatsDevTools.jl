@@ -139,7 +139,7 @@ If you have any questions, please contact our community on the [gitter channel](
 [travis-img]: https://travis-ci.org/juliohm/GeoStatsDevTools.jl.svg?branch=master
 [travis-url]: https://travis-ci.org/juliohm/GeoStatsDevTools.jl
 
-[julia-pkg-img]: http://pkg.julialang.org/badges/GeoStatsDevTools_0.6.svg
+[julia-pkg-img]: http://pkg.julialang.org/badges/GeoStatsDevTools_0.7.svg
 [julia-pkg-url]: http://pkg.julialang.org/?pkg=GeoStatsDevTools
 
 [codecov-img]: https://codecov.io/gh/juliohm/GeoStatsDevTools.jl/branch/master/graph/badge.svg

@@ -14,7 +14,7 @@
   @test length(z) == 1
 
   # show methods
-  rawdata = DataFrames.DataFrame(x=[1,2,3],y=[4,5,6])
+  rawdata = DataFrame(x=[1,2,3],y=[4,5,6])
   geodata = GeoDataFrame(rawdata, [:x,:y])
   @test sprint(show, geodata) == "3×2 GeoDataFrame (x and y)"
   @test sprint(show, MIME"text/plain"(), geodata) == "3×2 GeoDataFrame (x and y)\n\n│ Row │ x │ y │\n├─────┼───┼───┤\n│ 1   │ 1 │ 4 │\n│ 2   │ 2 │ 5 │\n│ 3   │ 3 │ 6 │"

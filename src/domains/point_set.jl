@@ -42,5 +42,5 @@ end
 
 function Base.show(io::IO, ::MIME"text/plain", ps::PointSet{T,N}) where {N,T<:Real}
   println(io, ps)
-  Base.showarray(io, ps.coords, false, header=false)
+  Base.print_array(io, ps.coords)
 end

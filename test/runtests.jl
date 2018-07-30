@@ -1,8 +1,9 @@
 using GeoStatsDevTools
 using GeoStatsBase
+using DataFrames: DataFrame
 using Plots; gr(size=(600,400))
 using VisualRegressionTests
-using Base.Test
+using Test
 
 # setup GR backend for Travis CI
 ENV["GKSwstype"] = "100"

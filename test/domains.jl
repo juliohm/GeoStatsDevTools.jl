@@ -1,4 +1,4 @@
-@testset "Domains" begin
+@testset "Spatial domain" begin
   @testset "RegularGrid" begin
     grid1 = RegularGrid{Float32}(200,100)
     @test ndims(grid1) == 2
@@ -24,13 +24,12 @@
   end
 
   @testset "PointSet" begin
-    ps = PointSet(eye(3))
-    @test npoints(ps) == 3
-    @test coordinates(ps, 1) == [1., 0., 0.]
-    @test coordinates(ps, 2) == [0., 1., 0.]
-    @test coordinates(ps, 3) == [0., 0., 1.]
+    ps = PointSet([1. 0.; 0. 1.])
+    @test npoints(ps) == 2
+    @test coordinates(ps, 1) == [1., 0.]
+    @test coordinates(ps, 2) == [0., 1.]
 
-    @test sprint(show, ps) == "3×3 PointSet{Float64,3}"
-    @test sprint(show, MIME"text/plain"(), ps) == "3×3 PointSet{Float64,3}\n 1.0  0.0  0.0\n 0.0  1.0  0.0\n 0.0  0.0  1.0"
+    @test sprint(show, ps) == "2×2 PointSet{Float64,2}"
+    @test sprint(show, MIME"text/plain"(), ps) == "2×2 PointSet{Float64,2}\n 1.0  0.0\n 0.0  1.0"
   end
 end

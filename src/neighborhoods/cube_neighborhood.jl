@@ -29,7 +29,7 @@ function (neigh::CubeNeighborhood{<:RegularGrid})(location::Int)
   nd = ndims(neigh.domain)
 
   # cube center in multi-dimensional index format
-  center = ind2sub(sz, location)
+  center = CartesianIndices(sz)[location]
 
   # number of units to reach the sides of the cube
   units = ntuple(i -> @inbounds(return floor(Int, neigh.radius / sp[i])), nd)
@@ -42,7 +42,7 @@ function (neigh::CubeNeighborhood{<:RegularGrid})(location::Int)
   ncubepoints = prod(bottomright[i] - topleft[i] + 1 for i=1:nd)
 
   # pre-allocate memory
-  neighbors = Vector{Int}(ncubepoints)
+  neighbors = Vector{Int}(undef, ncubepoints)
 
   if nd == 1
     n = 1
@@ -66,12 +66,10 @@ function (neigh::CubeNeighborhood{<:RegularGrid})(location::Int)
       n += 1
     end
   else # higher dimensions
-    istart = CartesianIndex(tuple(topleft...))
-    iend   = CartesianIndex(tuple(bottomright...))
-    irange = CartesianRange(istart, iend)
+    irange = CartesianIndices(ntuple(i -> topleft[i]:bottomright[i], nd))
 
     for (n,idx) in enumerate(irange)
-      @inbounds neighbors[n] = sub2ind(sz, idx.I...)
+      @inbounds neighbors[n] = LinearIndices(sz)[idx.I...]
     end
   end
 

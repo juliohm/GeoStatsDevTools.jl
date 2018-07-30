@@ -34,7 +34,7 @@ struct Ellipsoidal{N,T} <: Metric
     @assert N ∈ [2,3] "dimension must be either 2 or 3"
 
     # scaling matrix
-    Λ = spdiagm(one(T)./semiaxes.^2)
+    Λ = Diagonal(one(T)./semiaxes.^2)
 
     # rotation matrix
     if N == 2

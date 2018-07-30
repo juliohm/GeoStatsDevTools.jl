@@ -30,15 +30,15 @@ below for estimation and simulation solvers.
 """
 macro metasolver(solver, solvertype, body)
   # discard any content that doesn't start with @param or @global
-  content = filter(arg -> arg.head == :macrocall, body.args)
+  content = filter(arg -> arg isa Expr, body.args)
 
   # lines starting with @param refer to variable parameters
   vparams = filter(p -> p.args[1] == Symbol("@param"), content)
-  vparams = map(p -> p.args[2], vparams)
+  vparams = map(p -> p.args[3], vparams)
 
   # lines starting with @global refer to global solver parameters
   gparams = filter(p -> p.args[1] == Symbol("@global"), content)
-  gparams = map(p -> p.args[2], gparams)
+  gparams = map(p -> p.args[3], gparams)
 
   # add default value of `nothing` if necessary
   gparams = map(p -> p isa Symbol ? :($p = nothing) : p, gparams)

@@ -7,17 +7,24 @@ __precompile__()
 
 module GeoStatsDevTools
 
+using Printf
+using Random
 using Distances
 using Distributions
+using LinearAlgebra
 using DataFrames
 using StaticArrays
+using Parameters
 using RecipesBase
 using CSV
 
-# won't be neeeded in Julia v0.7
-using Parameters
+using GeoStatsBase
 
-importall GeoStatsBase
+# implement methods for spatial data
+import GeoStatsBase: coordinates, variables, npoints, value
+
+# implement methods for spatial domain
+import GeoStatsBase: coordinates!, npoints, nearestlocation
 
 # spatial data
 include("spatialdata/geodataframe.jl")
@@ -25,7 +32,7 @@ include("spatialdata/point_set_data.jl")
 include("spatialdata/regular_grid_data.jl")
 include("spatialdata/structured_grid_data.jl")
 
-# domains
+# spatial domain
 include("domains/point_set.jl")
 include("domains/regular_grid.jl")
 
@@ -37,7 +44,7 @@ include("neighborhoods.jl")
 include("distances.jl")
 include("distributions.jl")
 
-# helper functions
+# utilities
 include("utils.jl")
 
 # helper macros

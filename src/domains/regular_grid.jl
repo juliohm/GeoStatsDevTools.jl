@@ -42,12 +42,12 @@ struct RegularGrid{T<:Real,N} <: AbstractDomain{T,N}
 end
 
 RegularGrid{T}(dims::Dims{N}) where {N,T<:Real} =
-  RegularGrid{T,N}(dims, (zeros(T,length(dims))...), (ones(T,length(dims))...))
+  RegularGrid{T,N}(dims, (zeros(T,N)...,), (ones(T,N)...,))
 
 RegularGrid{T}(dims::Vararg{Int,N}) where {N,T<:Real} = RegularGrid{T}(dims)
 
 RegularGrid(dims::Vector{Int}, origin::Vector{T}, spacing::Vector{T}) where {T<:Real} =
-  RegularGrid{T,length(dims)}((dims...), (origin...), (spacing...))
+  RegularGrid{T,length(dims)}((dims...,), (origin...,), (spacing...,))
 
 npoints(grid::RegularGrid) = prod(grid.dims)
 
@@ -57,7 +57,7 @@ spacing(grid::RegularGrid) = grid.spacing
 
 function coordinates!(buff::AbstractVector{T}, grid::RegularGrid{T,N},
                       location::Int) where {N,T<:Real}
-  intcoords = ind2sub(grid.dims, location)
+  intcoords = CartesianIndices(grid.dims)[location]
   for i in 1:N
     @inbounds buff[i] = grid.origin[i] + (intcoords[i] - 1)*grid.spacing[i]
   end
@@ -81,7 +81,7 @@ function nearestlocation(grid::RegularGrid{T,N}, coords::AbstractVector{T}) wher
   elseif N == 3
     @inbounds return c[1] + sz[1]*(c[2]-1) + sz[1]*sz[2]*(c[3]-1)
   else # higher dimensions
-    sub2ind(sz, c...)
+    LinearIndices(sz)[c...]
   end
 end
 
