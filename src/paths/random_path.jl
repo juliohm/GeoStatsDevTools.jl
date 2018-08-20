@@ -17,7 +17,7 @@ struct RandomPath{D<:AbstractDomain} <: AbstractPath{D}
     new(domain, permut)
   end
 end
+
 RandomPath(domain) = RandomPath{typeof(domain)}(domain, randperm(npoints(domain)))
-Base.start(p::RandomPath)       = Base.start(p.permut)
-Base.next(p::RandomPath, state) = Base.next(p.permut, state)
-Base.done(p::RandomPath, state) = Base.done(p.permut, state)
+
+Base.iterate(p::RandomPath, state=1) = state > npoints(p.domain) ? nothing : (p.permut[state], state + 1)

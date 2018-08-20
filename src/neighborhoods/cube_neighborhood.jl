@@ -84,7 +84,7 @@ function (neigh::CubeNeighborhood{<:PointSet})(location::Int)
   xₒ = coordinates(ndomain, location)
 
   # pre-allocate memory for neighbors coordinates
-  x = MVector{ndims(ndomain),coordtype(ndomain)}()
+  x = MVector{ndims(ndomain),coordtype(ndomain)}(undef)
 
   neighbors = Vector{Int}()
   for loc in 1:npoints(ndomain)

@@ -2,12 +2,8 @@ using GeoStatsDevTools
 using GeoStatsBase
 using DataFrames: DataFrame
 using Plots; gr(size=(600,400))
-using VisualRegressionTests
+# using VisualRegressionTests
 using Test
-
-# setup GR backend for Travis CI
-ENV["GKSwstype"] = "100"
-ENV["PLOTS_TEST"] = "true"
 
 # list of maintainers
 maintainers = ["juliohm"]
@@ -33,8 +29,8 @@ testfiles = [
   "paths.jl",
   "neighborhoods.jl",
   "mappers.jl",
-  "problems.jl",
-  "plotrecipes.jl"
+  "problems.jl"
+  # "plotrecipes.jl"
 ]
 
 @testset "GeoStatsDevTools.jl" begin
