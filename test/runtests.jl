@@ -2,7 +2,7 @@ using GeoStatsDevTools
 using GeoStatsBase
 using DataFrames: DataFrame
 using Plots; gr(size=(600,400))
-# using VisualRegressionTests
+using VisualRegressionTests
 using Test
 
 # list of maintainers
@@ -29,8 +29,8 @@ testfiles = [
   "paths.jl",
   "neighborhoods.jl",
   "mappers.jl",
-  "problems.jl"
-  # "plotrecipes.jl"
+  "problems.jl",
+  "plotrecipes.jl"
 ]
 
 @testset "GeoStatsDevTools.jl" begin

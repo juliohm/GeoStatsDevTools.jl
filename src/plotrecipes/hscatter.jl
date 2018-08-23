@@ -17,8 +17,8 @@
 
   # compute pairwise distance
   m, n = length(z₁), length(z₂)
-  ds = [evaluate(distance, view(X₁,:,i), view(X₂,:,j)) for j in 1:n for i in j:m]
-  inds = [sub2ind((m, n), i, j) for j in 1:n for i in j:m]
+  pairs = [(i,j) for j in 1:n for i in j:m]
+  ds = [evaluate(distance, view(X₁,:,i), view(X₂,:,j)) for (i,j) in pairs]
 
   # use quartiles by default
   lags == nothing && (lags = quantile(ds, [.00,.25,.50,.75]))
@@ -31,16 +31,17 @@
 
   for (i, lag) in enumerate(lags)
     # find indices with given lag
-    match = find(abs.(ds - lag) .< tol)
+    match = findall(abs.(ds .- lag) .< tol)
 
     if isempty(match)
-      warn("no points were found with lag = $lag, skipping...")
+      @warn "no points were found with lag = $lag, skipping..."
       continue
     end
 
     # scatter plot coordinates
-    ind₁, ind₂ = ind2sub((m, n), inds[match])
-    x, y = z₁[ind₁], z₂[ind₂]
+    mpairs = view(pairs, match)
+    x = z₁[first.(mpairs)]
+    y = z₂[last.(mpairs)]
 
     # plot identity line
     @series begin
@@ -62,7 +63,7 @@
     @series begin
       subplot := i
       seriestype := :scatter
-      title --> @sprintf "h = %.1f, corr = %.2f" lag cor(x, y)
+      title --> @sprintf "lag = %.1f, corr = %.2f" lag cor(x, y)
 
       x, y
     end
