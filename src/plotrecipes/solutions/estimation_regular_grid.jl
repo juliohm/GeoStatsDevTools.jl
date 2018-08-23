@@ -48,14 +48,14 @@
         seriestype --> :contourf
         seriescolor --> :bluesreds
         title --> string(var, " mean")
-        flipdim(rotr90(M), 2)
+        reverse(rotr90(M), dims=2)
       end
       @series begin
         subplot := 2i
         seriestype --> :contourf
         seriescolor --> :bluesreds
         title --> string(var, " variance")
-        flipdim(rotr90(V), 2)
+        reverse(rotr90(V), dims=2)
       end
     elseif dim == 3 # plot a volume
       @series begin

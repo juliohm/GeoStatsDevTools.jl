@@ -56,7 +56,7 @@
           seriescolor --> :bluesreds
           clims --> (vmin, vmax)
           title --> string(var, " $j")
-          flipdim(rotr90(R), 2)
+          reverse(rotr90(R), dims=2)
         end
       elseif dim == 3 # plot a volume
         @series begin
