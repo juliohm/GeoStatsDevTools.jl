@@ -25,7 +25,7 @@ function bounding_grid(spatialdata::AbstractSpatialData, dims::Vector)
 
   for (var,V) in variables(spatialdata)
     X, z = valid(spatialdata, var)
-    databounds = extrema(X, 2)
+    databounds = extrema(X, dims=2)
 
     for i in 1:N
       xmin, xmax = databounds[i]
