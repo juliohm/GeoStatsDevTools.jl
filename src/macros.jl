@@ -93,10 +93,10 @@ macro metasolver(solver, solvertype, body)
       println(io, solver)
       for (var, varparams) in solver.params
         println(io, "  └─$var")
-        pnames = setdiff(fieldnames(varparams), [:__dummy__])
+        pnames = setdiff(fieldnames(typeof(varparams)), [:__dummy__])
         for pname in pnames
           pval = getfield(varparams, pname)
-          println(io, "    └─$pname = $pval")
+          pval ≠ nothing && println(io, "    └─$pname = $pval")
         end
       end
     end
