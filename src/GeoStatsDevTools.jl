@@ -24,6 +24,9 @@ import GeoStatsBase: coordinates, variables, npoints, value
 # implement methods for spatial domain
 import GeoStatsBase: coordinates!, npoints, nearestlocation
 
+# implement methods for solutions
+import GeoStatsBase: digest
+
 # spatial data
 include("spatialdata/geodataframe.jl")
 include("spatialdata/point_set_data.jl")
