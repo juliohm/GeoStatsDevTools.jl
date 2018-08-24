@@ -96,7 +96,11 @@ macro metasolver(solver, solvertype, body)
         pnames = setdiff(fieldnames(typeof(varparams)), [:__dummy__])
         for pname in pnames
           pval = getfield(varparams, pname)
-          pval ≠ nothing && println(io, "    └─$pname = $pval")
+          if pval ≠ nothing
+            print(io, "    └─$pname = ")
+            show(IOContext(io, :compact => true), pval)
+            println()
+          end
         end
       end
     end
