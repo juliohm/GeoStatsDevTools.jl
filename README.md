@@ -31,7 +31,8 @@ can use solver macros:
 end
 ```
 
-The `@estimsolver` macro defines a new estimation solver `MySolver`, a parameter type `MySolverParam`, and an outer constructor that accepts parameters for each variable as well as global parameters.
+The `@estimsolver` macro defines a new estimation solver `MySolver`, a parameter type `MySolverParam`, and an
+outer constructor that accepts parameters for each variable as well as global parameters.
 
 Similarly, simulation solvers can be created with the `@simsolver` macro.
 
@@ -90,8 +91,10 @@ For illustration purposes, we write an estimation solver that, for each location
 2-norm of the coordinates as the mean and the ∞-norm as the variance:
 
 ```julia
-importall GeoStatsBase
+using GeoStatsBase
 using GeoStatsDevTools
+
+import GeoStatsBase: solve
 
 @estimsolver NormSolver begin
   @param pmean = 2
