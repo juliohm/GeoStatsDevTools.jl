@@ -5,19 +5,25 @@
 
 """
     RegularGrid(dims, origin, spacing)
-    RegularGrid{T}(dims)
 
 A regular grid with dimensions `dims`, lower left corner at `origin`
 and cell spacing `spacing`. The three arguments must have the same length.
 
-In the first constructor, all the arguments are specified as vectors. In
-the second constructor, one needs to specify the type of the coordinates
-and the dimensions of the grid. In that case, the origin and spacing default
-to (0,0,...) and (1,1,...), respectively.
+    RegularGrid(start, finish, dims=dims)
+
+Alternatively, construct a regular grid from a `start` point (lower left)
+to a `finish` point (upper right), optionally passing `dims`.
+
+    RegularGrid{T}(dims)
+    RegularGrid{T}(dim1, dim2, ...)
+
+Finally, a regular grid can be constructed by only passing the dimensions
+`dims` as a tuple, or by passing each dimension `dim1`, `dim2`, ... separately.
+In this case, the origin and spacing default to (0,0,...) and (1,1,...).
 
 ## Examples
 
-Create a 3D regular grid with 100x100x50 locations:
+Create a 3D grid with 100x100x50 locations:
 
 ```julia
 julia> RegularGrid{Float64}(100,100,50)
@@ -26,7 +32,13 @@ julia> RegularGrid{Float64}(100,100,50)
 Create a 2D grid with 100x100 locations and origin at (10.,20.) units:
 
 ```julia
-julia> RegularGrid([100,100],[10.,20.],[1.,1.])
+julia> RegularGrid((100,100),(10.,20.),(1.,1.))
+```
+
+Create a 1D grid from -1 to 1 with 100 locations:
+
+```julia
+julia> RegularGrid((-1.,),(1.,), dims=(100,))
 ```
 """
 struct RegularGrid{T<:Real,N} <: AbstractDomain{T,N}
@@ -41,13 +53,17 @@ struct RegularGrid{T<:Real,N} <: AbstractDomain{T,N}
   end
 end
 
+RegularGrid(dims::Dims{N}, origin::NTuple{N,T}, spacing::NTuple{N,T}) where {N,T<:Real} =
+  RegularGrid{T,N}(dims, origin, spacing)
+
+RegularGrid(start::NTuple{N,T}, finish::NTuple{N,T};
+            dims::Dims{N}=ntuple(i -> round(Int, finish[i]-start[i]), N)) where {N,T<:Real} =
+  RegularGrid{T,N}(dims, start, ntuple(i -> (finish[i]-start[i])/dims[i], N))
+
 RegularGrid{T}(dims::Dims{N}) where {N,T<:Real} =
   RegularGrid{T,N}(dims, (zeros(T,N)...,), (ones(T,N)...,))
 
 RegularGrid{T}(dims::Vararg{Int,N}) where {N,T<:Real} = RegularGrid{T}(dims)
-
-RegularGrid(dims::Vector{Int}, origin::Vector{T}, spacing::Vector{T}) where {T<:Real} =
-  RegularGrid{T,length(dims)}((dims...,), (origin...,), (spacing...,))
 
 npoints(grid::RegularGrid) = prod(grid.dims)
 
