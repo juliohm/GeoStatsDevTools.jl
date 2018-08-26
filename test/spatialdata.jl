@@ -6,7 +6,7 @@
   X, z = valid(data3D, :value)
   @test size(X,2) == 100
   @test length(z) == 100
-  @test_throws AssertionError readtable(joinpath(datadir,"data3D.tsv"), delim='\t', coordnames=[:a])
+  @test_throws AssertionError readgeotable(joinpath(datadir,"data3D.tsv"), delim='\t', coordnames=[:a])
 
   # missing data and NaN
   X, z = valid(missdata, :value)

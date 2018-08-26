@@ -68,7 +68,7 @@ export
   PointSetData,
   RegularGridData,
   StructuredGridData,
-  readtable,
+  readgeotable,
 
   # domains
   PointSet,

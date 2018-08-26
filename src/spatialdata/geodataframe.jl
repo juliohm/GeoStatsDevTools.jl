@@ -20,7 +20,7 @@ julia> GeoDataFrame(data, [:x,:y,:z])
 ```
 
 Alternatively, load the data directly into a `GeoDataFrame` object
-by using the method [`readtable`](@ref).
+by using the method [`readgeotable`](@ref).
 
 ### Notes
 
@@ -42,7 +42,7 @@ end
 GeoDataFrame(data, coordnames) = GeoDataFrame{typeof(data)}(data, coordnames)
 
 """
-    readtable(args; coordnames=[:x,:y,:z], kwargs)
+    readgeotable(args; coordnames=[:x,:y,:z], kwargs)
 
 Read data from disk using `CSV.read`, optionally specifying
 the columns `coordnames` with spatial coordinates.
@@ -53,7 +53,7 @@ documentation for more details.
 
 This function returns a [`GeoDataFrame`](@ref) object.
 """
-function readtable(args...; coordnames=[:x,:y,:z], kwargs...)
+function readgeotable(args...; coordnames=[:x,:y,:z], kwargs...)
   data = CSV.read(args...; kwargs...)
   GeoDataFrame(data, coordnames)
 end
