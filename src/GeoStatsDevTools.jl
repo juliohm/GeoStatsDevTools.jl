@@ -68,7 +68,6 @@ export
   PointSetData,
   RegularGridData,
   StructuredGridData,
-  readgeotable,
 
   # domains
   PointSet,
@@ -94,7 +93,8 @@ export
   cdf,
 
   # helper functions
-  bounding_grid,
+  readgeotable,
+  boundgrid,
 
   # helper macros
   @estimsolver,

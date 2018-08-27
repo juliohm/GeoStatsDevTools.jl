@@ -30,6 +30,7 @@ testfiles = [
   "neighborhoods.jl",
   "mappers.jl",
   "problems.jl",
+  "utils.jl",
   "plotrecipes.jl"
 ]
 

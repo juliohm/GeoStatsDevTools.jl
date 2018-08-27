@@ -41,23 +41,6 @@ end
 
 GeoDataFrame(data, coordnames) = GeoDataFrame{typeof(data)}(data, coordnames)
 
-"""
-    readgeotable(args; coordnames=[:x,:y,:z], kwargs)
-
-Read data from disk using `CSV.read`, optionally specifying
-the columns `coordnames` with spatial coordinates.
-
-The arguments `args` and keyword arguments `kwargs` are
-forwarded to the `CSV.read` function, please check their
-documentation for more details.
-
-This function returns a [`GeoDataFrame`](@ref) object.
-"""
-function readgeotable(args...; coordnames=[:x,:y,:z], kwargs...)
-  data = CSV.read(args...; kwargs...)
-  GeoDataFrame(data, coordnames)
-end
-
 function coordinates(geodata::GeoDataFrame)
   rawdata = geodata.data
   cnames = geodata.coordnames

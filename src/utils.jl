@@ -4,12 +4,12 @@
 # ------------------------------------------------------------------
 
 """
-    bounding_grid(spatialdata, dimensions)
+    boundgrid(spatialdata, dims)
 
-Returns a `RegularGrid` of given `dimensions` covering all the
+Returns a `RegularGrid` of given `dims` covering all the
 locations in `spatialdata`.
 """
-function bounding_grid(spatialdata::AbstractSpatialData, dims::Vector)
+function boundgrid(spatialdata::AbstractSpatialData, dims::Dims)
   # retrieve data coordinates
   datacoords = coordinates(spatialdata)
   N = length(datacoords)
@@ -20,21 +20,34 @@ function bounding_grid(spatialdata::AbstractSpatialData, dims::Vector)
   # determine coordinate type
   T = promote_type([T for (var,T) in datacoords]...)
 
-  bottomleft = fill(typemax(T), N)
-  upperright = fill(typemin(T), N)
+  start  = fill(typemax(T), N)
+  finish = fill(typemin(T), N)
 
-  for (var,V) in variables(spatialdata)
-    X, z = valid(spatialdata, var)
-    databounds = extrema(X, dims=2)
-
-    for i in 1:N
-      xmin, xmax = databounds[i]
-      xmin < bottomleft[i] && (bottomleft[i] = xmin)
-      xmax > upperright[i] && (upperright[i] = xmax)
+  for ind in 1:npoints(spatialdata)
+    x = coordinates(spatialdata, ind)
+    for d in 1:N
+      x[d] < start[d] && (start[d] = x[d])
+      x[d] > finish[d] && (finish[d] = x[d])
     end
   end
 
-  spacing = [(upperright[i] - bottomleft[i]) / dims[i] for i in 1:N]
-
-  RegularGrid(dims, bottomleft, spacing)
+  RegularGrid(tuple(start...), tuple(finish...), dims=dims)
 end
+
+"""
+    readgeotable(args; coordnames=[:x,:y,:z], kwargs)
+
+Read data from disk using `CSV.read`, optionally specifying
+the columns `coordnames` with spatial coordinates.
+
+The arguments `args` and keyword arguments `kwargs` are
+forwarded to the `CSV.read` function, please check their
+documentation for more details.
+
+This function returns a [`GeoDataFrame`](@ref) object.
+"""
+function readgeotable(args...; coordnames=[:x,:y,:z], kwargs...)
+  data = CSV.read(args...; kwargs...)
+  GeoDataFrame(data, coordnames)
+end
+

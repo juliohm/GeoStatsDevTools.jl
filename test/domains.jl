@@ -24,8 +24,8 @@
     @test size(grid) == (200,100)
     @test npoints(grid) == 200*100
     @test coordinates(grid, 1) == [-1.,-1.]
+    @test coordinates(grid, 200*100) == [1.,1.]
     @test origin(grid) == (-1.,-1.)
-    @test spacing(grid) == (0.01,0.02)
 
     grid = RegularGrid{Float64}(100,200)
     @test sprint(show, grid) == "100×200 RegularGrid{Float64,2}"
