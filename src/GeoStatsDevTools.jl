@@ -5,7 +5,6 @@
 
 module GeoStatsDevTools
 
-using Printf
 using Random
 using Distances
 using Distributions
@@ -56,7 +55,6 @@ include("solutions/estimation_solution.jl")
 include("solutions/simulation_solution.jl")
 
 # plot recipes
-include("plotrecipes/hscatter.jl")
 include("plotrecipes/solutions/estimation_point_set.jl")
 include("plotrecipes/solutions/simulation_point_set.jl")
 include("plotrecipes/solutions/estimation_regular_grid.jl")

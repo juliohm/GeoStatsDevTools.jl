@@ -23,7 +23,6 @@ data1D    = readgeotable(joinpath(datadir,"data1D.tsv"), delim='\t', coordnames=
 data2D    = readgeotable(joinpath(datadir,"data2D.tsv"), delim='\t', coordnames=[:x,:y])
 data3D    = readgeotable(joinpath(datadir,"data3D.tsv"), delim='\t')
 missdata  = readgeotable(joinpath(datadir,"missing.tsv"), delim='\t', coordnames=[:x,:y])
-samples2D = readgeotable(joinpath(datadir,"samples2D.tsv"), delim='\t', coordnames=[:x,:y])
 
 # list of tests
 testfiles = [
@@ -35,8 +34,7 @@ testfiles = [
   "neighborhoods.jl",
   "mappers.jl",
   "problems.jl",
-  "utils.jl",
-  "plotrecipes.jl"
+  "utils.jl"
 ]
 
 @testset "GeoStatsDevTools.jl" begin
