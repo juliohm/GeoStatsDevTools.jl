@@ -3,7 +3,7 @@ using GeoStatsBase
 using DataFrames: DataFrame
 using Plots; gr(size=(600,400))
 using VisualRegressionTests
-using Test
+using Test, Pkg
 
 # list of maintainers
 maintainers = ["juliohm"]
@@ -14,6 +14,7 @@ ismaintainer = "USER" ∈ keys(ENV) && ENV["USER"] ∈ maintainers
 datadir = joinpath(@__DIR__,"data")
 
 if ismaintainer
+  Pkg.add("Gtk")
   using Gtk
 end
 
