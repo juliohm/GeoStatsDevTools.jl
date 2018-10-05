@@ -99,7 +99,7 @@ macro metasolver(solver, solvertype, body)
           if pval ≠ nothing
             print(io, "    └─$pname = ")
             show(IOContext(io, :compact => true), pval)
-            println()
+            println(io, "")
           end
         end
       end
