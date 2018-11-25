@@ -12,7 +12,7 @@ arrays with the actual data.
 
 See also: [`PointSet`](@ref)
 """
-struct PointSetData{T<:Real,N} <: AbstractSpatialData
+struct PointSetData{T<:Real,N} <: AbstractSpatialData{T,N}
   data::Dict{Symbol,<:AbstractArray}
   coords # AbstractMatrix
 

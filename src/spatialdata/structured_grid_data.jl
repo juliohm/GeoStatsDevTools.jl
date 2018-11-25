@@ -23,7 +23,7 @@ julia> data = Dict(:precipitation => precipitation, :temperature => temperature)
 julia> StructuredGridData(data, LAT, LON)
 ```
 """
-struct StructuredGridData{T<:Real,N} <: AbstractSpatialData
+struct StructuredGridData{T<:Real,N} <: AbstractSpatialData{T,N}
   data::Dict{Symbol,<:AbstractArray}
   coords::Matrix{T}
 

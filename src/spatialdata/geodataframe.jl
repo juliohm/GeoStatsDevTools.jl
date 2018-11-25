@@ -29,17 +29,24 @@ No additional storage is required other than a vector of symbols
 with the columns names representing spatial coordinates.
 
 """
-struct GeoDataFrame{DF<:AbstractDataFrame} <: AbstractSpatialData
+struct GeoDataFrame{T<:Real,N,DF<:AbstractDataFrame} <: AbstractSpatialData{T,N}
   data::DF
   coordnames::Vector{Symbol}
 
-  function GeoDataFrame{DF}(data, coordnames) where {DF<:AbstractDataFrame}
-    @assert coordnames ⊆ names(data) "coordnames must contain valid column names"
+  function GeoDataFrame{T,N,DF}(data, coordnames) where {T<:Real,N,DF<:AbstractDataFrame}
     new(data, coordnames)
   end
 end
 
-GeoDataFrame(data, coordnames) = GeoDataFrame{typeof(data)}(data, coordnames)
+function GeoDataFrame(data, coordnames)
+  @assert coordnames ⊆ names(data) "coordnames must contain valid column names"
+  Ts = Missings.T.(eltypes(data[coordnames]))
+  T  = promote_type(Ts...)
+  N  = length(coordnames)
+  DF = typeof(data)
+
+  GeoDataFrame{T,N,DF}(data, coordnames)
+end
 
 function coordinates(geodata::GeoDataFrame)
   rawdata = geodata.data
