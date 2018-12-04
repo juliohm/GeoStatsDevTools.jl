@@ -32,7 +32,11 @@ variables(geodata::PointSetData) = Dict(var => eltype(array) for (var,array) in 
 
 npoints(geodata::PointSetData) = size(geodata.coords, 2)
 
-coordinates(geodata::PointSetData{T,N}, ind::Int) where {N,T<:Real} = geodata.coords[:,ind]
+function coordinates!(buff::AbstractVector{T}, geodata::PointSetData{T,N}, ind::Int) where {N,T<:Real}
+  for i in 1:N
+    @inbounds buff[i] = geodata.coords[i,ind]
+  end
+end
 
 value(geodata::PointSetData, ind::Int, var::Symbol) = geodata.data[var][ind]
 

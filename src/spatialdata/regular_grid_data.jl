@@ -62,9 +62,11 @@ variables(geodata::RegularGridData) = Dict(var => eltype(array) for (var,array) 
 
 npoints(geodata::RegularGridData) = prod(geodata.dims)
 
-function coordinates(geodata::RegularGridData{T,N}, ind::Int) where {N,T<:Real}
+function coordinates!(buff::AbstractVector{T}, geodata::RegularGridData{T,N}, ind::Int) where {N,T<:Real}
   intcoords = CartesianIndices(geodata.dims)[ind]
-  [geodata.origin[i] + (intcoords[i] - 1)*geodata.spacing[i] for i=1:N]
+  for i in 1:N
+    @inbounds buff[i] = geodata.origin[i] + (intcoords[i] - 1)*geodata.spacing[i]
+  end
 end
 
 value(geodata::RegularGridData, ind::Int, var::Symbol) = geodata.data[var][ind]

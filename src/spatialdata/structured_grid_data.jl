@@ -58,7 +58,11 @@ variables(geodata::StructuredGridData) = Dict(var => eltype(array) for (var,arra
 
 npoints(geodata::StructuredGridData) = size(geodata.coords, 2)
 
-coordinates(geodata::StructuredGridData{T,N}, ind::Int) where {N,T<:Real} = geodata.coords[ind]
+function coordinates!(buff::AbstractVector{T}, geodata::StructuredGridData{T,N}, ind::Int) where {N,T<:Real}
+  for i in 1:N
+    @inbounds buff[i] = geodata.coords[i,ind]
+  end
+end
 
 value(geodata::StructuredGridData, ind::Int, var::Symbol) = geodata.data[var][ind]
 
