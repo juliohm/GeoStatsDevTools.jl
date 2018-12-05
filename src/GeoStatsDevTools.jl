@@ -14,6 +14,8 @@ using StaticArrays
 using Parameters
 using RecipesBase
 using CSV
+using Statistics
+
 
 using GeoStatsBase
 
@@ -25,6 +27,7 @@ import GeoStatsBase: coordinates!, npoints, nearestlocation
 
 # implement methods for solutions
 import GeoStatsBase: digest
+import Statistics: mean, quantile, var
 
 # spatial data
 include("spatialdata/geodataframe.jl")
@@ -60,6 +63,11 @@ include("plotrecipes/solutions/simulation_point_set.jl")
 include("plotrecipes/solutions/estimation_regular_grid.jl")
 include("plotrecipes/solutions/simulation_regular_grid.jl")
 
+
+#post processing
+include("statistics.jl")
+
+
 export
   # spatial data
   GeoDataFrame,
@@ -93,6 +101,11 @@ export
   # helper functions
   readgeotable,
   boundgrid,
+  
+  #re-export statistics
+  mean,
+  quantile,
+  var,
 
   # helper macros
   @estimsolver,
