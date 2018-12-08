@@ -78,6 +78,7 @@ export
 
   # partitions
   DirectionalPartition,
+  subsets,
 
   # paths
   SimplePath,
