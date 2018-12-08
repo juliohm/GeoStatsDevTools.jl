@@ -36,6 +36,9 @@ include("spatialdata/structured_grid_data.jl")
 include("domains/point_set.jl")
 include("domains/regular_grid.jl")
 
+# data partitions
+include("partitions.jl")
+
 # domain navigation
 include("paths.jl")
 include("neighborhoods.jl")
@@ -72,6 +75,9 @@ export
   RegularGrid,
   origin,
   spacing,
+
+  # partitions
+  DirectionalPartition,
 
   # paths
   SimplePath,
