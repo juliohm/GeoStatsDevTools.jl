@@ -1,4 +1,7 @@
 @testset "Spatial data" begin
+  data3D   = readgeotable(joinpath(datadir,"data3D.tsv"), delim='\t')
+  missdata = readgeotable(joinpath(datadir,"missing.tsv"), delim='\t', coordnames=[:x,:y])
+
   # basic checks
   @test coordinates(data3D) == Dict(var => Float64 for var in [:x,:y,:z])
   @test variables(data3D) == Dict(:value => Float64)
@@ -6,7 +9,6 @@
   X, z = valid(data3D, :value)
   @test size(X,2) == 100
   @test length(z) == 100
-  @test_throws AssertionError readgeotable(joinpath(datadir,"data3D.tsv"), delim='\t', coordnames=[:a])
 
   # missing data and NaN
   X, z = valid(missdata, :value)

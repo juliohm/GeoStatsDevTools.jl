@@ -1,4 +1,7 @@
 @testset "Mappers" begin
+  data1D = readgeotable(joinpath(datadir,"data1D.tsv"), delim='\t', coordnames=[:x])
+  data2D = readgeotable(joinpath(datadir,"data2D.tsv"), delim='\t', coordnames=[:x,:y])
+
   @testset "SimpleMapper" begin
     @testset "RegularGrid" begin
       grid1D = RegularGrid{Float64}(100)
