@@ -50,11 +50,12 @@ struct RegularGridData{T<:Real,N} <: AbstractSpatialData{T,N}
   end
 end
 
-RegularGridData(data::Dict{Symbol,<:AbstractArray}, origin::Vector{T}, spacing::Vector{T}) where {T<:Real} =
-  RegularGridData{T,length(origin)}(data, (origin...,), (spacing...,))
+RegularGridData(data::Dict{Symbol,<:AbstractArray},
+                origin::NTuple{N,T}, spacing::NTuple{N,T}) where {N,T<:Real} =
+  RegularGridData{T,length(origin)}(data, origin, spacing)
 
 RegularGridData{T}(data::Dict{Symbol,<:AbstractArray{<:Any,N}}) where {N,T<:Real} =
-  RegularGridData{T,N}(data, (zeros(T,N)...,), (ones(T,N)...,))
+  RegularGridData{T,N}(data, ntuple(i->zero(T), N), ntuple(i->one(T), N))
 
 coordinates(geodata::RegularGridData{T,N}) where {N,T<:Real} = Dict(Symbol("x$i") => T for i=1:N)
 
