@@ -77,6 +77,7 @@ export
   spacing,
 
   # partitions
+  AbstractPartition,
   DirectionalPartition,
   subsets,
 
