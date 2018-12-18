@@ -14,7 +14,6 @@ using StaticArrays
 using Parameters
 using RecipesBase
 using CSV
-using Statistics
 
 
 using GeoStatsBase
