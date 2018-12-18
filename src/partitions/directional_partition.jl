@@ -4,7 +4,7 @@
 # ------------------------------------------------------------------
 
 @doc raw"""
-    DirectionalPartition(spatialdata, direction; atol=10., btol=.95)
+    DirectionalPartition(spatialdata, direction; atol=20., btol=.95)
 
 A partition of `spatialdata` along a given `direction` with
 angle tolerance `atol` in degrees and bandwidth tolerance `btol`.
@@ -23,7 +23,7 @@ struct DirectionalPartition{S<:AbstractSpatialData} <: AbstractPartition
 end
 
 function DirectionalPartition(spatialdata::AbstractSpatialData{T,N},
-                              direction::NTuple{N,T}; atol=10., btol=.95) where {N,T<:Real}
+                              direction::NTuple{N,T}; atol=20., btol=.95) where {N,T<:Real}
   # angle tolerance in radians
   θtol = deg2rad(atol)
 
