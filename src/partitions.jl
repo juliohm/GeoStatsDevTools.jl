@@ -42,3 +42,4 @@ Base.length(partition::AbstractPartition) = length(partition.subsets)
 # IMPLEMENTATIONS
 #------------------
 include("partitions/directional_partition.jl")
+include("partitions/planar_partition.jl")

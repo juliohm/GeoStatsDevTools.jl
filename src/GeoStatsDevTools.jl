@@ -79,6 +79,7 @@ export
   # partitions
   AbstractPartition,
   DirectionalPartition,
+  PlanarPartition,
   subsets,
 
   # paths
