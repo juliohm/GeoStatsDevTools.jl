@@ -7,8 +7,7 @@
 
 A partition of `spatialdata` into a family of hyperplanes defined
 by a `normal` direction. Two points `x` and `y` belong to the same
-hyperplane when `(x - y) ⋅ normal ≈ 0`. `tol` is the tolerance used
-in the comparison with zero.
+hyperplane when `(x - y) ⋅ normal < tol`.
 """
 struct PlanarPartition{S<:AbstractSpatialData} <: AbstractPartition
   spatialdata::S
@@ -33,9 +32,8 @@ function PlanarPartition(spatialdata::AbstractSpatialData{T,N},
     for subset in subsets
       coordinates!(y, spatialdata, subset[1])
       @. y = x - y
-      normalize!(y)
 
-      if isapprox(y ⋅ n, 0., atol=tol)
+      if abs(y ⋅ n) < tol
         push!(subset, i)
         inserted = true
         break
