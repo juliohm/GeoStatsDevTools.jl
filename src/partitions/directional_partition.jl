@@ -3,9 +3,9 @@
 # ------------------------------------------------------------------
 
 @doc raw"""
-    DirectionalPartition(spatialdata, direction; atol=20., btol=.95)
+    DirectionalPartitioner(direction; atol=20., btol=.95)
 
-A partition of `spatialdata` along a given `direction` with
+A method for partitioning spatial data along a given `direction` with
 angle tolerance `atol` in degrees and bandwidth tolerance `btol`.
 ```
       ________________
@@ -16,18 +16,22 @@ angle tolerance `atol` in degrees and bandwidth tolerance `btol`.
      \________________
 ```
 """
-struct DirectionalPartition{S<:AbstractSpatialData} <: AbstractPartition
-  spatialdata::S
-  subsets::Vector{Vector{Int}}
+struct DirectionalPartitioner{T<:Real,N} <: AbstractPartitioner
+  direction::NTuple{N,T}
+  atol::Float64
+  btol::Float64
 end
 
-function DirectionalPartition(spatialdata::AbstractSpatialData{T,N},
-                              direction::NTuple{N,T}; atol=20., btol=.95) where {N,T<:Real}
+DirectionalPartitioner(direction; atol=20., btol=.95) =
+  DirectionalPartitioner{eltype(direction),length(direction)}(direction, atol, btol)
+
+function partition(spatialdata::AbstractSpatialData{T,N},
+                   partitioner::DirectionalPartitioner{T,N}) where {N,T<:Real}
   # angle tolerance in radians
-  θtol = deg2rad(atol)
+  θtol = deg2rad(partitioner.atol)
 
   # normalized direction
-  u = MVector{N,T}(direction)
+  u = MVector{N,T}(partitioner.direction)
   normalize!(u)
 
   # pre-allocate memory for coordinates
@@ -48,7 +52,7 @@ function DirectionalPartition(spatialdata::AbstractSpatialData{T,N},
       θ = acos(u ⋅ y)
       θ > π/2 && (θ = π - θ)
 
-      if θ < θtol && l*sin(θ) < btol
+      if θ < θtol && l*sin(θ) < partitioner.btol
         push!(subset, i)
         inserted = true
         break
@@ -60,5 +64,5 @@ function DirectionalPartition(spatialdata::AbstractSpatialData{T,N},
     end
   end
 
-  DirectionalPartition{typeof(spatialdata)}(spatialdata, subsets)
+  SpatialPartition{typeof(spatialdata)}(spatialdata, subsets)
 end

@@ -76,9 +76,11 @@ export
   spacing,
 
   # partitions
-  AbstractPartition,
-  DirectionalPartition,
-  PlanarPartition,
+  SpatialPartition,
+  PredicatePartitioner,
+  DirectionalPartitioner,
+  PlanarPartitioner,
+  partition,
   subsets,
 
   # paths

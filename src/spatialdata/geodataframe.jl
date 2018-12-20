@@ -91,7 +91,7 @@ end
 
 function Base.show(io::IO, ::MIME"text/plain", geodata::GeoDataFrame)
   println(io, geodata)
-  show(io, geodata.data, allcols=true, rowlabel=:Row, summary=false)
+  show(io, geodata.data, allcols=true, summary=false)
 end
 
 function Base.show(io::IO, ::MIME"text/html", geodata::GeoDataFrame)

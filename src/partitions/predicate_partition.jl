@@ -3,26 +3,18 @@
 # ------------------------------------------------------------------
 
 """
-    PlanarPartitioner(normal; tol=1e-6)
+    PredicatePartitioner(predicate)
 
-A method for partitioning spatial data into a family of hyperplanes defined
-by a `normal` direction. Two points `x` and `y` belong to the same
-hyperplane when `(x - y) ⋅ normal < tol`.
+A method for partitioning spatial data based on a `predicate`. Given
+two coordinates `x` and `y`, the value `predicate(x,y)` informs whether
+or not the points belong to the same subset.
 """
-struct PlanarPartitioner{T<:Real,N} <: AbstractPartitioner
-  normal::NTuple{N,T}
-  tol::Float64
+struct PredicatePartitioner <: AbstractPartitioner
+  predicate::Function
 end
 
-PlanarPartitioner(normal; tol=1e-6) =
-  PlanarPartitioner{eltype(normal),length(normal)}(normal, tol)
-
 function partition(spatialdata::AbstractSpatialData{T,N},
-                   partitioner::PlanarPartitioner{T,N}) where {N,T<:Real}
-  # normalized normal
-  n = MVector{N,T}(partitioner.normal)
-  normalize!(n)
-
+                   partitioner::PredicatePartitioner) where {N,T<:Real}
   # pre-allocate memory for coordinates
   x = MVector{N,T}(undef)
   y = MVector{N,T}(undef)
@@ -34,9 +26,8 @@ function partition(spatialdata::AbstractSpatialData{T,N},
     inserted = false
     for subset in subsets
       coordinates!(y, spatialdata, subset[1])
-      @. y = x - y
 
-      if abs(y ⋅ n) < partitioner.tol
+      if partitioner.predicate(x, y)
         push!(subset, i)
         inserted = true
         break
