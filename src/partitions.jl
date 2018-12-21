@@ -12,6 +12,9 @@ struct SpatialPartition{S<:AbstractSpatialData}
   subsets::Vector{Vector{Int}}
 end
 
+SpatialPartition(spatialdata, subsets) =
+  SpatialPartition{typeof(spatialdata)}(spatialdata, subsets)
+
 """
     subsets(partition)
 
@@ -60,3 +63,4 @@ partition(::AbstractSpatialData, ::AbstractPartitioner) = error("not implemented
 include("partitions/predicate_partition.jl")
 include("partitions/directional_partition.jl")
 include("partitions/planar_partition.jl")
+include("partitions/hierarchical_partition.jl")

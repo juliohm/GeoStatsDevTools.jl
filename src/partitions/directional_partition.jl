@@ -64,5 +64,5 @@ function partition(spatialdata::AbstractSpatialData{T,N},
     end
   end
 
-  SpatialPartition{typeof(spatialdata)}(spatialdata, subsets)
+  SpatialPartition(spatialdata, subsets)
 end
