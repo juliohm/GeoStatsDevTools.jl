@@ -15,7 +15,6 @@ using Parameters
 using RecipesBase
 using CSV
 
-
 using GeoStatsBase
 
 # implement methods for spatial data
@@ -62,10 +61,8 @@ include("plotrecipes/solutions/simulation_point_set.jl")
 include("plotrecipes/solutions/estimation_regular_grid.jl")
 include("plotrecipes/solutions/simulation_regular_grid.jl")
 
-
-#post processing
+# post processing
 include("statistics.jl")
-
 
 export
   # spatial data
@@ -101,7 +98,7 @@ export
   readgeotable,
   boundgrid,
   
-  #re-export statistics
+  # statistics
   mean,
   quantile,
   var,
