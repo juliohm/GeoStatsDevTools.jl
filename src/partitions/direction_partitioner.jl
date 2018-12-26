@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------
 
 @doc raw"""
-    DirectionalPartitioner(direction; atol=20., btol=.95)
+    DirectionPartitioner(direction; atol=20., btol=.95)
 
 A method for partitioning spatial data along a given `direction` with
 angle tolerance `atol` in degrees and bandwidth tolerance `btol`.
@@ -16,17 +16,17 @@ angle tolerance `atol` in degrees and bandwidth tolerance `btol`.
      \________________
 ```
 """
-struct DirectionalPartitioner{T<:Real,N} <: AbstractPartitioner
+struct DirectionPartitioner{T<:Real,N} <: AbstractPartitioner
   direction::NTuple{N,T}
   atol::Float64
   btol::Float64
 end
 
-DirectionalPartitioner(direction; atol=20., btol=.95) =
-  DirectionalPartitioner{eltype(direction),length(direction)}(direction, atol, btol)
+DirectionPartitioner(direction; atol=20., btol=.95) =
+  DirectionPartitioner{eltype(direction),length(direction)}(direction, atol, btol)
 
 function partition(spatialdata::AbstractSpatialData{T,N},
-                   partitioner::DirectionalPartitioner{T,N}) where {N,T<:Real}
+                   partitioner::DirectionPartitioner{T,N}) where {N,T<:Real}
   # angle tolerance in radians
   θtol = deg2rad(partitioner.atol)
 

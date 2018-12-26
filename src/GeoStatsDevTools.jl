@@ -77,9 +77,9 @@ export
 
   # partitions
   SpatialPartition,
-  PredicatePartitioner,
-  DirectionalPartitioner,
-  PlanarPartitioner,
+  PlanePartitioner,
+  DirectionPartitioner,
+  SpatialPredicatePartitioner,
   HierarchicalPartitioner,
   partition,
   subsets,

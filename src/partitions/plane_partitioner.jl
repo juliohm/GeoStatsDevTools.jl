@@ -3,22 +3,22 @@
 # ------------------------------------------------------------------
 
 """
-    PlanarPartitioner(normal; tol=1e-6)
+    PlanePartitioner(normal; tol=1e-6)
 
 A method for partitioning spatial data into a family of hyperplanes defined
 by a `normal` direction. Two points `x` and `y` belong to the same
 hyperplane when `(x - y) ⋅ normal < tol`.
 """
-struct PlanarPartitioner{T<:Real,N} <: AbstractPartitioner
+struct PlanePartitioner{T<:Real,N} <: AbstractPartitioner
   normal::NTuple{N,T}
   tol::Float64
 end
 
-PlanarPartitioner(normal; tol=1e-6) =
-  PlanarPartitioner{eltype(normal),length(normal)}(normal, tol)
+PlanePartitioner(normal; tol=1e-6) =
+  PlanePartitioner{eltype(normal),length(normal)}(normal, tol)
 
 function partition(spatialdata::AbstractSpatialData{T,N},
-                   partitioner::PlanarPartitioner{T,N}) where {N,T<:Real}
+                   partitioner::PlanePartitioner{T,N}) where {N,T<:Real}
   # normalized normal
   n = MVector{N,T}(partitioner.normal)
   normalize!(n)

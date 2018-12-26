@@ -3,18 +3,18 @@
 # ------------------------------------------------------------------
 
 """
-    PredicatePartitioner(predicate)
+    SpatialPredicatePartitioner(predicate)
 
 A method for partitioning spatial data based on a `predicate`. Given
 two coordinates `x` and `y`, the value `predicate(x,y)` informs whether
 or not the points belong to the same subset.
 """
-struct PredicatePartitioner <: AbstractPartitioner
+struct SpatialPredicatePartitioner <: AbstractPartitioner
   predicate::Function
 end
 
 function partition(spatialdata::AbstractSpatialData{T,N},
-                   partitioner::PredicatePartitioner) where {N,T<:Real}
+                   partitioner::SpatialPredicatePartitioner) where {N,T<:Real}
   # pre-allocate memory for coordinates
   x = MVector{N,T}(undef)
   y = MVector{N,T}(undef)
