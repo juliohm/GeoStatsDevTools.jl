@@ -20,6 +20,9 @@
   # plot layout: mean and variance for each variable
   layout := (length(variables), 2)
 
+  # shared plot attributes
+  legend --> false
+
   for (i,var) in enumerate(variables)
     # results in grid format
     M = reshape(solution.mean[var], sz)
@@ -30,14 +33,12 @@
       @series begin
         subplot := 2i - 1
         seriestype --> :path
-        legend --> false
         title --> string(var, " mean")
         x, M
       end
       @series begin
         subplot := 2i
         seriestype --> :path
-        legend --> false
         title --> string(var, " variance")
         x, V
       end
@@ -46,6 +47,7 @@
         subplot := 2i - 1
         seriestype --> :contourf
         seriescolor --> :bluesreds
+        aspect_ratio --> :equal
         title --> string(var, " mean")
         reverse(rotr90(M), dims=2)
       end
@@ -53,6 +55,7 @@
         subplot := 2i
         seriestype --> :contourf
         seriescolor --> :bluesreds
+        aspect_ratio --> :equal
         title --> string(var, " variance")
         reverse(rotr90(V), dims=2)
       end
@@ -61,6 +64,7 @@
         subplot := 2i - 1
         seriestype --> :volume
         seriescolor --> :bluesreds
+        aspect_ratio --> :equal
         title --> string(var, " mean")
         M
       end
@@ -68,6 +72,7 @@
         subplot := 2i
         seriestype --> :volume
         seriescolor --> :bluesreds
+        aspect_ratio --> :equal
         title --> string(var, " variance")
         V
       end

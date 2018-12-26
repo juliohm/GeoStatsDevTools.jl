@@ -27,6 +27,9 @@
   # select realizations at random
   inds = sample(1:nreals, N, replace=false)
 
+  # shared plot attributes
+  legend --> false
+
   for (i,var) in enumerate(variables)
     reals = solution.realizations[var][inds]
 
@@ -44,7 +47,6 @@
         @series begin
           subplot := (i-1)*N + j
           seriestype := :path
-          legend := false
           title --> string(var, " $j")
           x, R
         end
@@ -54,6 +56,7 @@
           seriestype := :heatmap
           seriescolor --> :bluesreds
           clims --> (vmin, vmax)
+          aspect_ratio --> :equal
           title --> string(var, " $j")
           reverse(rotr90(R), dims=2)
         end
@@ -63,6 +66,7 @@
           seriestype := :volume
           seriescolor --> :bluesreds
           clims --> (vmin, vmax)
+          aspect_ratio --> :equal
           title --> string(var, " $j")
           R
         end

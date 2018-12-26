@@ -17,6 +17,9 @@
   # plot layout: mean and variance for each variable
   layout := (length(variables), 2)
 
+  # shared plot attributes
+  legend --> false
+
   for (i,var) in enumerate(variables)
     X  = hcat([coordinates(sdomain, i) for i in 1:npoints(sdomain)]...)
     μ  = solution.mean[var]
@@ -26,14 +29,12 @@
       @series begin
         subplot := 2i - 1
         seriestype := :scatter
-        legend := false
         title --> string(var, " mean")
         X[1,:], μ
       end
       @series begin
         subplot := 2i
         seriestype := :scatter
-        legend := false
         title --> string(var, " variance")
         X[1,:], σ²
       end
@@ -43,7 +44,7 @@
         seriestype := :scatter
         color := μ
         markercolor --> :bluesreds
-        legend --> false
+        aspect_ratio --> :equal
         title --> string(var, " mean")
         X[1,:], X[2,:]
       end
@@ -52,7 +53,7 @@
         seriestype := :scatter
         color := σ²
         markercolor --> :bluesreds
-        legend --> false
+        aspect_ratio --> :equal
         title --> string(var, " variance")
         X[1,:], X[2,:]
       end
@@ -62,7 +63,7 @@
         seriestype := :scatter
         color := μ
         markercolor --> :bluesreds
-        legend --> false
+        aspect_ratio --> :equal
         title --> string(var, " mean")
         X[1,:], X[2,:], X[3,:]
       end
@@ -71,7 +72,7 @@
         seriestype := :scatter
         color := σ²
         markercolor --> :bluesreds
-        legend --> false
+        aspect_ratio --> :equal
         title --> string(var, " variance")
         X[1,:], X[2,:], X[3,:]
       end

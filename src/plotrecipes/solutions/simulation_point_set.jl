@@ -24,8 +24,14 @@
   # select realizations at random
   inds = sample(1:nreals, N, replace=false)
 
+  # shared plot attributes
+  legend --> false
+
   # retrieve coordinates
-  X = hcat([coordinates(sdomain, i) for i in 1:npoints(sdomain)]...)
+  X = Matrix{coordtype(sdomain)}(undef, ndims(sdomain), npoints(sdomain))
+  for i in 1:npoints(sdomain)
+    coordinates!(view(X,:,i), sdomain, i)
+  end
 
   for (i,var) in enumerate(variables)
     reals = solution.realizations[var][inds]
@@ -40,7 +46,6 @@
         @series begin
           subplot := (i-1)*N + j
           seriestype := :scatter
-          legend := false
           title --> string(var, " $j")
           X[1,:], real
         end
@@ -51,7 +56,7 @@
           color := real
           markercolor --> :bluesreds
           clims --> (vmin, vmax)
-          legend --> false
+          aspect_ratio --> :equal
           title --> string(var, " $j")
           X[1,:], X[2,:]
         end
@@ -62,7 +67,7 @@
           color = real
           markercolor --> :bluesreds
           clims --> (vmin, vmax)
-          legend --> false
+          aspect_ratio --> :equal
           title --> string(var, " $j")
           X[1,:], X[2,:], X[3,:]
         end
