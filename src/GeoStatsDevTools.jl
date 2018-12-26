@@ -91,6 +91,7 @@ export
   # neighborhoods
   CubeNeighborhood,
   BallNeighborhood,
+  CylinderNeighborhood,
 
   # distances
   Ellipsoidal,
