@@ -46,4 +46,8 @@
     neigh1 = BallNeighborhood(ps2D, 1.)
     @test neigh1(1) == [1,2,3]
   end
+
+  @testset "CylinderNeighborhood" begin
+    # TODO
+  end
 end

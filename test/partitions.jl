@@ -37,6 +37,16 @@
       @test all(ns .== n)
     end
   end
+
   @testset "PlanePartitioner" begin
+    # TODO
+  end
+
+  @testset "SpatialPredicatePartitioner" begin
+    # TODO
+  end
+
+  @testset "HierarchicalPartitioner" begin
+    # TODO
   end
 end
