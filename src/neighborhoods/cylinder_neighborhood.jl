@@ -47,7 +47,7 @@ function (neigh::CylinderNeighborhood)(location::Int)
   for loc in 1:npoints(ndomain)
     coordinates!(x, ndomain, loc)
 
-    if abs(x[end] - xₒ[end]) < h && norm(x[1:end-1] .- xₒ[1:end-1]) < r
+    if abs(x[end] - xₒ[end]) ≤ h && norm(x[1:end-1] .- xₒ[1:end-1]) ≤ r
       push!(neighbors, loc)
     end
   end
