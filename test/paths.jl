@@ -14,4 +14,8 @@
     path = RandomPath(grid)
     @test all(1 .≤ collect(path) .≤ 100*100)
   end
+
+  @testset "SourcePath" begin
+    # TODO
+  end
 end
