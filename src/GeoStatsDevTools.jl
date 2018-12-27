@@ -87,6 +87,7 @@ export
   # paths
   SimplePath,
   RandomPath,
+  SourcePath,
 
   # neighborhoods
   CubeNeighborhood,

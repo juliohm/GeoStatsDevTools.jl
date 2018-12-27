@@ -28,3 +28,4 @@ Base.eltype(::Type{P}) where {P<:AbstractPath} = Int
 #------------------
 include("paths/simple_path.jl")
 include("paths/random_path.jl")
+include("paths/source_path.jl")
