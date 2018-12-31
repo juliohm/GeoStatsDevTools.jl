@@ -35,7 +35,6 @@ function quantile(solution::SimulationSolution, p::Real)
       slice = getindex.(reals, i)
       values[variable][i] = quantile(slice, p)
     end
-    
   end
     
   SpatialStatistic(solution.domain, values)
