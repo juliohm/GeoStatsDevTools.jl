@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------
+# Licensed under the ISC License. See LICENCE in the project root.
+# ------------------------------------------------------------------
+
 struct SpatialStatistic{D<:AbstractDomain}
   domain::D
   values::Dict{Symbol,Vector} 
@@ -7,14 +11,14 @@ SpatialStatistic(domain, values) = SpatialStatistic{typeof(domain)}(domain, valu
 
 function mean(solution::SimulationSolution)
   # output dictionary
-  values = Dict(variable => mean(real) for (variable, real) in solution.realizations)
+  values = Dict(variable => mean(reals) for (variable, reals) in solution.realizations)
     
   SpatialStatistic(solution.domain, values)
 end
 
 function var(solution::SimulationSolution)
   # output dictionary
-  values = Dict(variable => var(real) for (variable, real) in solution.realizations)
+  values = Dict(variable => var(reals) for (variable, reals) in solution.realizations)
     
   SpatialStatistic(solution.domain, values)
 end
@@ -24,10 +28,14 @@ function quantile(solution::SimulationSolution, p::Real)
   values = Dict{Symbol,Vector}()
   
   # loop over solution realizations
-  for (variable, real) in solution.realizations
-    # pixelwise slices
-    slices = [getindex.(real, i) for i in 1:npoints(solution.domain)]
-    values[variable] = quantile.(slices, p)
+  for (variable, reals) in solution.realizations
+    values[variable] = Vector{Real}(undef, npoints(solution.domain))
+    # loop over pixels
+    for i in 1:npoints(solution.domain)
+      slice = getindex.(reals, i)
+      values[variable][i] = quantile(slice, p)
+    end
+    
   end
     
   SpatialStatistic(solution.domain, values)
