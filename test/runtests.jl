@@ -29,7 +29,8 @@ testfiles = [
   "neighborhoods.jl",
   "mappers.jl",
   "problems.jl",
-  "utils.jl"
+  "utils.jl",
+  "statistics.jl"
 ]
 
 @testset "GeoStatsDevTools.jl" begin
