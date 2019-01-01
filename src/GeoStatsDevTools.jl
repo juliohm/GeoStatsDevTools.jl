@@ -57,14 +57,14 @@ include("macros.jl")
 include("solutions/estimation_solution.jl")
 include("solutions/simulation_solution.jl")
 
+# spatial statistics
+include("statistics.jl")
+
 # plot recipes
 include("plotrecipes/solutions/estimation_point_set.jl")
 include("plotrecipes/solutions/simulation_point_set.jl")
 include("plotrecipes/solutions/estimation_regular_grid.jl")
 include("plotrecipes/solutions/simulation_regular_grid.jl")
-
-# post processing
-include("statistics.jl")
 
 export
   # spatial data
@@ -110,7 +110,7 @@ export
   # helper functions
   readgeotable,
   boundgrid,
-  
+
   # statistics
   mean,
   quantile,
