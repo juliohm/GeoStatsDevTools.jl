@@ -10,69 +10,27 @@ A ball neighborhood of a given `radius` on a spatial `domain`.
 struct BallNeighborhood{D<:AbstractDomain} <: AbstractNeighborhood{D}
   # input fields
   domain::D
-  radius # we cannot use coordtype(D) here yet in Julia v0.6
+  radius
+  metric::Metric
 
   # state fields
-  cube::CubeNeighborhood{D}
+  kdtree::KDTree
 
-  function BallNeighborhood{D}(domain, radius) where D<:AbstractDomain
+  function BallNeighborhood{D}(domain, radius, metric) where D<:AbstractDomain
     @assert radius > 0 "radius must be positive"
     @assert typeof(radius) == coordtype(domain) "radius and domain coordinate type must match"
 
-    # cube of same radius
-    cube = CubeNeighborhood(domain, radius)
+    # fit search tree
+    kdtree = KDTree(coordinates(domain), metric)
 
-    new(domain, radius, cube)
+    new(domain, radius, metric, kdtree)
   end
 end
 
-BallNeighborhood(domain::D, radius) where {D<:AbstractDomain} = BallNeighborhood{D}(domain, radius)
+BallNeighborhood(domain, radius, metric=Euclidean()) =
+  BallNeighborhood{typeof(domain)}(domain, radius, metric)
 
-function (neigh::BallNeighborhood{<:RegularGrid})(location::Int)
-  # retrieve domain
-  ndomain = neigh.domain
-
-  # get neighbors in cube of same radius
-  cneighbors = neigh.cube(location)
-
-  # coordinates of the center
-  xₒ = coordinates(ndomain, location)
-
-  # pre-allocate memory for neighbors coordinates
-  x = MVector{ndims(ndomain),coordtype(ndomain)}(undef)
-
-  # discard neighbors outside of sphere
-  neighbors = Vector{Int}()
-  for neighbor in cneighbors
-    coordinates!(x, ndomain, neighbor)
-
-    # compute ||x-xₒ||^2
-    sum² = zero(eltype(x))
-    for i=1:ndims(ndomain)
-      sum² += (x[i] - xₒ[i])^2
-    end
-
-    sum² ≤ neigh.radius^2 && push!(neighbors, neighbor)
-  end
-
-  neighbors
-end
-
-function (neigh::BallNeighborhood{<:PointSet})(location::Int)
-  # retrieve domain
-  ndomain = neigh.domain
-
-  # center in real coordinates
-  xₒ = coordinates(ndomain, location)
-
-  # pre-allocate memory for neighbors coordinates
-  x = MVector{ndims(ndomain),coordtype(ndomain)}(undef)
-
-  neighbors = Vector{Int}()
-  for loc in 1:npoints(ndomain)
-    coordinates!(x, ndomain, loc)
-    norm(x .- xₒ) ≤ neigh.radius && push!(neighbors, loc)
-  end
-
-  neighbors
+function (neigh::BallNeighborhood)(location::Int)
+  xₒ = coordinates(neigh.domain, location)
+  inrange(neigh.kdtree, xₒ, neigh.radius, true)
 end
