@@ -20,8 +20,20 @@ struct SourcePath{D<:AbstractDomain} <: AbstractPath{D}
     @assert length(unique(sources)) == length(sources) "non-unique sources"
     @assert length(sources) ≤ npoints(domain) "more sources than points in domain"
 
-    # pre-compute path from sources
-    path = path_from_sources(domain, sources)
+    # coordinate matrix for source points
+    S = coordinates(domain, sources)
+
+    # fit search tree
+    kdtree = KDTree(S)
+
+    # coordinate matrix for all other points
+    others = setdiff(1:npoints(domain), sources)
+    X = coordinates(domain, others)
+
+    # compute distances to sources
+    _, dists = knn(kdtree, X, length(sources), true)
+
+    path = vcat(sources, view(others, sortperm(dists)))
 
     new(domain, sources, path)
   end
@@ -30,44 +42,3 @@ end
 SourcePath(domain, sources) = SourcePath{typeof(domain)}(domain, sources)
 
 Base.iterate(p::SourcePath, state=1) = state > npoints(p.domain) ? nothing : (p.path[state], state + 1)
-
-function path_from_sources(domain::RegularGrid, sources::AbstractVector{Int})
-  # retrieve domain specs
-  sz = size(domain)
-  nd = ndims(domain)
-  npts = npoints(domain)
-
-  # breadth-first search
-  frontier = copy(sources)
-  opened = Set{Int}()
-
-  # pre-allocate memory for result
-  path = Vector{Int}(undef, npts)
-
-  counter = 0
-  while !isempty(frontier)
-    # pop first location
-    location = frontier[1]
-    deleteat!(frontier, 1)
-
-    # add location to path and opened set
-    counter += 1
-    path[counter] = location
-    push!(opened, location)
-
-    # lookup nearest neighbors
-    center = CartesianIndices(sz)[location]
-    start  = @. max(center.I - 1, 1)
-    finish = @. min(center.I + 1, sz)
-
-    crange = CartesianIndices(ntuple(i -> start[i]:finish[i], nd))
-
-    for loc in LinearIndices(sz)[crange]
-      if loc ∉ frontier && loc ∉ opened
-        push!(frontier, loc)
-      end
-    end
-  end
-
-  path
-end

@@ -10,6 +10,7 @@ using Distributions
 using LinearAlgebra
 using DataFrames
 using StaticArrays
+using NearestNeighbors
 using Parameters
 using RecipesBase
 using CSV
@@ -24,7 +25,9 @@ import GeoStatsBase: coordinates!, npoints, nearestlocation
 
 # implement methods for solutions
 import GeoStatsBase: digest
-import Statistics: mean, quantile, var
+
+# implement methods for spatial statistics
+import Statistics: mean, var, quantile
 
 # spatial data
 include("spatialdata/geodataframe.jl")
@@ -113,8 +116,8 @@ export
 
   # statistics
   mean,
-  quantile,
   var,
+  quantile,
 
   # helper macros
   @estimsolver,
