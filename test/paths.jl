@@ -16,6 +16,15 @@
   end
 
   @testset "SourcePath" begin
-    # TODO
+    grid = RegularGrid{Float64}(3,3)
+    pset = PointSet(coordinates(grid))
+
+    for sdomain in [grid, pset]
+      path = SourcePath(sdomain, [1,9])
+      @test collect(path) == [1,9,2,4,6,8,5,3,7]
+
+      path = SourcePath(sdomain, [1])
+      @test collect(path) == [1,2,4,5,3,7,6,8,9]
+    end
   end
 end
