@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------
 
 """
-    AbstractNeighborhood
+    AbstractNeighborhood{D}
 
 A neighborhood on a spatial domain of type `D`.
 """
