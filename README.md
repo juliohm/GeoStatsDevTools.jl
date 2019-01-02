@@ -49,8 +49,7 @@ end
 ```
 
 At a given location of a domain, we can query neighboring locations with the concept of neighborhoods. Various
-neighborhood types such as `CubeNeighborhood` and `BallNeighborhood` can be used to find all locations within a
-specified radius:
+neighborhood types such as `BallNeighborhood` can be used to find all locations within a specified radius:
 
 ```julia
 # define ball neighborhood with radius 10

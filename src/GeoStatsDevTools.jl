@@ -97,7 +97,6 @@ export
   SourcePath,
 
   # neighborhoods
-  CubeNeighborhood,
   BallNeighborhood,
   CylinderNeighborhood,
 
