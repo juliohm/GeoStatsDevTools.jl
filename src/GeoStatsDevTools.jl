@@ -11,7 +11,6 @@ using LinearAlgebra
 using DataFrames
 using StaticArrays
 using NearestNeighbors
-using Parameters
 using RecipesBase
 using CSV
 
@@ -52,9 +51,6 @@ include("distributions.jl")
 
 # utilities
 include("utils.jl")
-
-# helper macros
-include("macros.jl")
 
 # digest solutions
 include("solutions/estimation_solution.jl")
@@ -116,10 +112,6 @@ export
   # statistics
   mean,
   var,
-  quantile,
+  quantile
 
-  # helper macros
-  @estimsolver,
-  @simsolver
-
-end # module
+end
