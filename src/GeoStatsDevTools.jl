@@ -95,6 +95,7 @@ export
   # neighborhoods
   BallNeighborhood,
   CylinderNeighborhood,
+  isneighbor,
 
   # distances
   Ellipsoidal,

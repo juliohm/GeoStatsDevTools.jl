@@ -34,3 +34,7 @@ function (neigh::BallNeighborhood)(location::Int)
   xₒ = coordinates(neigh.domain, location)
   inrange(neigh.kdtree, xₒ, neigh.radius, true)
 end
+
+function isneighbor(neigh::BallNeighborhood, xₒ::AbstractVector, x::AbstractVector)
+  evaluate(neigh.metric, xₒ, x) ≤ neigh.radius
+end

@@ -47,10 +47,15 @@ function (neigh::CylinderNeighborhood)(location::Int)
   for loc in 1:npoints(ndomain)
     coordinates!(x, ndomain, loc)
 
-    if abs(x[end] - xₒ[end]) ≤ h && norm(x[1:end-1] .- xₒ[1:end-1]) ≤ r
+    if isneighbor(neigh, xₒ, x)
       push!(neighbors, loc)
     end
   end
 
   neighbors
+end
+
+function isneighbor(neigh::CylinderNeighborhood, xₒ::AbstractVector, x::AbstractVector)
+  l = length(xₒ)
+  @inbounds abs(x[l] - xₒ[l]) ≤ neigh.height && norm(view(x,1:l-1) .- view(xₒ,1:l-1)) ≤ neigh.radius
 end
