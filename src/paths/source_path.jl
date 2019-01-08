@@ -29,14 +29,19 @@ struct SourcePath{D<:AbstractDomain} <: AbstractPath{D}
     # other locations that are not sources
     others = setdiff(1:npoints(domain), sources)
 
+    # process points in chunks
+    chunksize = 10^3
+    chunks = Iterators.partition(others, chunksize)
+
     # pre-allocate memory for coordinates
-    x = MVector{ndims(domain),coordtype(domain)}(undef)
+    X = Matrix{coordtype(domain)}(undef, ndims(domain), chunksize)
 
     # compute distances to sources
-    dists = map(others) do other
-      coordinates!(x, domain, other)
-      _, d = knn(kdtree, x, length(sources), true)
-      d
+    dists = []
+    for chunk in chunks
+      coordinates!(X, domain, chunk)
+      _, ds = knn(kdtree, X[:,1:length(chunk)], length(sources), true)
+      append!(dists, ds)
     end
 
     path = vcat(sources, view(others, sortperm(dists)))
