@@ -49,4 +49,3 @@ function readgeotable(args...; coordnames=[:x,:y,:z], kwargs...)
   data = CSV.read(args...; kwargs...)
   GeoDataFrame(data, coordnames)
 end
-

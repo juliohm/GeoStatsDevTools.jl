@@ -52,6 +52,9 @@ include("distributions.jl")
 # utilities
 include("utils.jl")
 
+# iterators
+include("iterators.jl")
+
 # digest solutions
 include("solutions/estimation_solution.jl")
 include("solutions/simulation_solution.jl")
@@ -106,9 +109,12 @@ export
   quantile,
   cdf,
 
-  # helper functions
+  # utilities
   readgeotable,
   boundgrid,
+
+  # iterators
+  ShiftIterator,
 
   # statistics
   mean,
