@@ -26,12 +26,18 @@ struct SourcePath{D<:AbstractDomain} <: AbstractPath{D}
     # fit search tree
     kdtree = KDTree(S)
 
-    # coordinate matrix for all other points
+    # other locations that are not sources
     others = setdiff(1:npoints(domain), sources)
-    X = coordinates(domain, others)
+
+    # pre-allocate memory for coordinates
+    x = MVector{ndims(domain),coordtype(domain)}(undef)
 
     # compute distances to sources
-    _, dists = knn(kdtree, X, length(sources), true)
+    dists = map(others) do other
+      coordinates!(x, domain, other)
+      _, d = knn(kdtree, x, length(sources), true)
+      d
+    end
 
     path = vcat(sources, view(others, sortperm(dists)))
 
