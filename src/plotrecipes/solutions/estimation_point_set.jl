@@ -21,7 +21,7 @@
   legend --> false
 
   for (i,var) in enumerate(variables)
-    X  = hcat([coordinates(sdomain, i) for i in 1:npoints(sdomain)]...)
+    X = coordinates(sdomain)
     μ  = solution.mean[var]
     σ² = solution.variance[var]
 

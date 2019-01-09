@@ -28,10 +28,7 @@
   legend --> false
 
   # retrieve coordinates
-  X = Matrix{coordtype(sdomain)}(undef, ndims(sdomain), npoints(sdomain))
-  for i in 1:npoints(sdomain)
-    coordinates!(view(X,:,i), sdomain, i)
-  end
+  X = coordinates(sdomain)
 
   for (i,var) in enumerate(variables)
     reals = solution.realizations[var][inds]
