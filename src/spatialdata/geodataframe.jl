@@ -47,7 +47,7 @@ function GeoDataFrame(data, coordnames)
   GeoDataFrame{T,N,DF}(data, coordnames)
 end
 
-function coordinates(geodata::GeoDataFrame)
+function coordnames(geodata::GeoDataFrame)
   rawdata = geodata.data
   cnames = geodata.coordnames
   ctypes = Base.nonmissingtype.(eltypes(rawdata[cnames]))

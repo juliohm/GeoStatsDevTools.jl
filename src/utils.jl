@@ -10,7 +10,7 @@ locations in `spatialdata`.
 """
 function boundgrid(spatialdata::AbstractSpatialData, dims::Dims)
   # retrieve data coordinates
-  datacoords = coordinates(spatialdata)
+  datacoords = coordnames(spatialdata)
   N = length(datacoords)
 
   @assert length(dims) == N "dimensions must match number of coordinates in data"

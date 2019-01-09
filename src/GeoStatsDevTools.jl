@@ -17,7 +17,7 @@ using CSV
 using GeoStatsBase
 
 # implement methods for spatial data
-import GeoStatsBase: coordinates, variables, npoints, value
+import GeoStatsBase: coordnames, coordinates!, variables, npoints, value
 
 # implement methods for spatial domain
 import GeoStatsBase: coordinates!, npoints, nearestlocation

@@ -56,7 +56,7 @@ RegularGridData(data::Dict{Symbol,<:AbstractArray},
 RegularGridData{T}(data::Dict{Symbol,<:AbstractArray{<:Any,N}}) where {N,T<:Real} =
   RegularGridData{T,N}(data, ntuple(i->zero(T), N), ntuple(i->one(T), N))
 
-coordinates(geodata::RegularGridData{T,N}) where {N,T<:Real} = Dict(Symbol("x$i") => T for i=1:N)
+coordnames(geodata::RegularGridData{T,N}) where {N,T<:Real} = Dict(Symbol("x$i") => T for i=1:N)
 
 variables(geodata::RegularGridData) = Dict(var => eltype(array) for (var,array) in geodata.data)
 

@@ -4,7 +4,7 @@
     missdata = readgeotable(joinpath(datadir,"missing.tsv"), delim='\t', coordnames=[:x,:y])
 
     # basic checks
-    @test coordinates(data3D) == Dict(var => Float64 for var in [:x,:y,:z])
+    @test coordnames(data3D) == Dict(var => Float64 for var in [:x,:y,:z])
     @test variables(data3D) == Dict(:value => Float64)
     @test npoints(data3D) == 100
     X, z = valid(data3D, :value)
@@ -30,7 +30,7 @@
     ps = PointSetData(Dict(:value => z), X)
 
     # basic checks
-    @test coordinates(ps) == Dict(var => Float64 for var in [:x1,:x2,:x3])
+    @test coordnames(ps) == Dict(var => Float64 for var in [:x1,:x2,:x3])
     @test variables(ps) == Dict(:value => Float64)
     @test npoints(ps) == 100
     X, z = valid(ps, :value)
