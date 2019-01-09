@@ -40,7 +40,7 @@ struct SourcePath{D<:AbstractDomain} <: AbstractPath{D}
     dists = []
     for chunk in chunks
       coordinates!(X, domain, chunk)
-      _, ds = knn(kdtree, X[:,1:length(chunk)], length(sources), true)
+      _, ds = knn(kdtree, view(X,:,1:length(chunk)), length(sources), true)
       append!(dists, ds)
     end
 
