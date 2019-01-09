@@ -45,6 +45,9 @@ include("partitions.jl")
 include("paths.jl")
 include("neighborhoods.jl")
 
+# neighborhood search
+include("neighborsearch.jl")
+
 # distances and distributions
 include("distances.jl")
 include("distributions.jl")
@@ -97,6 +100,11 @@ export
   BallNeighborhood,
   CylinderNeighborhood,
   isneighbor,
+
+  # neighborhood search
+  NearestNeighborSearcher,
+  LocalNeighborSearcher,
+  search!,
 
   # distances
   Ellipsoidal,
