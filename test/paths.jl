@@ -27,4 +27,14 @@
       @test collect(path) == [1,2,4,5,3,7,6,8,9]
     end
   end
+
+  @testset "ShiftedPath" begin
+    path = SimplePath(RegularGrid{Float64}(3,3))
+    @test collect(ShiftedPath(path,  0)) == collect(1:9)
+    @test collect(ShiftedPath(path,  1)) == vcat(collect(2:9), [1])
+    @test collect(ShiftedPath(path, -1)) == vcat([9], collect(1:8))
+    @test length(ShiftedPath(path,  0)) == 9
+    @test length(ShiftedPath(path,  1)) == 9
+    @test length(ShiftedPath(path, -1)) == 9
+  end
 end

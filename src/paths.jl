@@ -10,6 +10,13 @@ A path on a spatial domain of type `D`.
 abstract type AbstractPath{D<:AbstractDomain} end
 
 """
+    Base.iterate(path, state=1)
+
+Iterate `path` from a given `state`.
+"""
+Base.iterate(p::AbstractPath, state=1) = error("not implemented")
+
+"""
     Base.length(path)
 
 Return the length of a `path`.
@@ -29,3 +36,4 @@ Base.eltype(::Type{P}) where {P<:AbstractPath} = Int
 include("paths/simple_path.jl")
 include("paths/random_path.jl")
 include("paths/source_path.jl")
+include("paths/shifted_path.jl")

@@ -52,9 +52,6 @@ include("distributions.jl")
 # utilities
 include("utils.jl")
 
-# iterators
-include("iterators.jl")
-
 # digest solutions
 include("solutions/estimation_solution.jl")
 include("solutions/simulation_solution.jl")
@@ -94,6 +91,7 @@ export
   SimplePath,
   RandomPath,
   SourcePath,
+  ShiftedPath,
 
   # neighborhoods
   BallNeighborhood,
@@ -112,9 +110,6 @@ export
   # utilities
   readgeotable,
   boundgrid,
-
-  # iterators
-  ShiftIterator,
 
   # statistics
   mean,
