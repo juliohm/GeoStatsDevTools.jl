@@ -16,16 +16,15 @@ struct LocalNeighborSearcher{N<:AbstractNeighborhood,P,V<:AbstractVector} <: Abs
   buff::V
 end
 
-function LocalNeighborSearcher(domain::D, K::Int, neigh::N,
-                               path::P, offset::Int) where {D<:AbstractDomain,
-                                                            N<:AbstractNeighborhood{D},
-                                                            P<:AbstractPath{D}}
+function LocalNeighborSearcher(domain::AbstractDomain, K::Int,
+                               neigh::AbstractNeighborhood,
+                               path::AbstractPath, offset::Int)
   @assert 1 ≤ K ≤ npoints(domain) "number of neighbors must be in interval [1, npoints(domain)]"
 
   # pre-allocate memory for coordinates
   buff = MVector{ndims(domain),coordtype(domain)}(undef)
 
-  LocalNeighborSearcher{N,P,typeof(buff)}(neigh, K, path, offset, buff)
+  LocalNeighborSearcher{typeof(neigh),typeof(path),typeof(buff)}(neigh, K, path, offset, buff)
 end
 
 function search!(neighbors::AbstractVector{Int},
