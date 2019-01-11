@@ -60,6 +60,7 @@ partition(::AbstractSpatialData, ::AbstractPartitioner) = error("not implemented
 #------------------
 # IMPLEMENTATIONS
 #------------------
+include("partitions/uniform_partitioner.jl")
 include("partitions/plane_partitioner.jl")
 include("partitions/direction_partitioner.jl")
 include("partitions/spatial_predicate_partitioner.jl")

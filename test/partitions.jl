@@ -1,4 +1,18 @@
 @testset "Partitions" begin
+  @testset "UniformPartitioner" begin
+    spatialdata = RegularGridData{Float64}(Dict(:z => rand(3,3)))
+
+    Random.seed!(123)
+    p = partition(spatialdata, UniformPartitioner(3, false))
+    @test subsets(p) == [[1,2,3], [4,5,6], [7,8,9]]
+    p = partition(spatialdata, UniformPartitioner(3))
+    @test subsets(p) == [[8,6,9], [4,1,7], [2,3,5]]
+
+    spatialdata = RegularGridData{Float64}(Dict(:z => rand(2,3)))
+    p = partition(spatialdata, UniformPartitioner(3, false))
+    @test subsets(p) == [[1,2], [3,4], [5,6]]
+  end
+
   @testset "DirectionPartitioner" begin
     spatialdata = RegularGridData{Float64}(Dict(:z => rand(3,3)))
 

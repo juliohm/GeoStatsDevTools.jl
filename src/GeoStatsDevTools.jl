@@ -83,6 +83,7 @@ export
 
   # partitions
   SpatialPartition,
+  UniformPartitioner,
   PlanePartitioner,
   DirectionPartitioner,
   SpatialPredicatePartitioner,

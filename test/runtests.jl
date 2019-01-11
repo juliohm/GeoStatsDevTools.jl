@@ -1,5 +1,6 @@
 using GeoStatsDevTools
 using GeoStatsBase
+using Random
 using Distances: Euclidean, Chebyshev
 using DataFrames: DataFrame
 using Plots; gr(size=(600,400))
