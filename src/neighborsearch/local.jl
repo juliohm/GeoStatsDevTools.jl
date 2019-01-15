@@ -8,29 +8,27 @@
 A search method that finds at most `K` neighbors in
 `neighborhood` of `domain` with a search `path`.
 """
-struct LocalNeighborSearcher{D<:AbstractDomain,
+mutable struct LocalNeighborSearcher{D<:AbstractDomain,
                              N<:AbstractNeighborhood,
                              P<:AbstractPath,
                              V<:AbstractVector} <: AbstractNeighborSearcher
   domain::D
-  neigh::N
   K::Int
+  neigh::N
   path::P
-  offset::Int
   buff::V
 end
 
 function LocalNeighborSearcher(domain::D, K::Int,
-                               neigh::N, path::P,
-                               offset::Int) where {D<:AbstractDomain,
-                                                   N<:AbstractNeighborhood,
-                                                   P<:AbstractPath}
+                               neigh::N, path::P) where {D<:AbstractDomain,
+                                                         N<:AbstractNeighborhood,
+                                                         P<:AbstractPath}
   @assert 1 ≤ K ≤ npoints(domain) "number of neighbors must be in interval [1, npoints(domain)]"
 
   # pre-allocate memory for coordinates
   buff = MVector{ndims(domain),coordtype(domain)}(undef)
 
-  LocalNeighborSearcher{D,N,P,typeof(buff)}(domain, neigh, K, path, offset, buff)
+  LocalNeighborSearcher{D,N,P,typeof(buff)}(domain, K, neigh, path, buff)
 end
 
 function search!(neighbors::AbstractVector{Int},
@@ -38,7 +36,7 @@ function search!(neighbors::AbstractVector{Int},
                  searcher::LocalNeighborSearcher,
                  mask::AbstractVector{Bool}) where {T<:Real,N}
   x = searcher.buff
-  path = ShiftedPath(searcher.path, searcher.offset)
+  path = searcher.path
 
   nneigh = 0
   @inbounds for loc in path
