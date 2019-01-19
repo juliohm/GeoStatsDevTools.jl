@@ -4,7 +4,7 @@
 
 @recipe function f(spatialdata::AbstractSpatialData; variables=nothing)
   # retrieve underlying domain
-  sdomain = domain(spatialdata)
+  sdomain = extract_domain(spatialdata)
 
   # valid variables
   validvars = sort(collect(keys(GeoStatsBase.variables(spatialdata))))
@@ -32,6 +32,6 @@
 end
 
 # extract the underlying domain of a given spatial data type
-domain(spatialdata::AbstractSpatialData) = PointSet(coordinates(spatialdata))
-domain(spatialdata::RegularGridData) =
+extract_domain(spatialdata::AbstractSpatialData) = PointSet(coordinates(spatialdata))
+extract_domain(spatialdata::RegularGridData) =
   RegularGrid(size(spatialdata), origin(spatialdata), spacing(spatialdata))
