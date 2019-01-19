@@ -33,11 +33,11 @@
 
     if visualtests
       gr(size=(800,800))
-      @plottest plot(RegularGrid{Float64}(10)) joinpath(datadir,"grid1D.png")
-      @plottest plot(RegularGrid{Float64}(10,20)) joinpath(datadir,"grid2D.png")
-      @plottest plot(RegularGrid{Float64}(10,20,30)) joinpath(datadir,"grid3D.png")
-      @plottest plot(RegularGrid{Float64}(10),[1,2,3,4,5,5,4,3,2,1]) joinpath(datadir,"grid1D-data.png")
-      @plottest plot(RegularGrid{Float64}(10,10),1:100) joinpath(datadir,"grid2D-data.png")
+      @plottest plot(RegularGrid{Float64}(10)) joinpath(datadir,"grid1D.png") !istravis
+      @plottest plot(RegularGrid{Float64}(10,20)) joinpath(datadir,"grid2D.png") !istravis
+      @plottest plot(RegularGrid{Float64}(10,20,30)) joinpath(datadir,"grid3D.png") !istravis
+      @plottest plot(RegularGrid{Float64}(10),[1,2,3,4,5,5,4,3,2,1]) joinpath(datadir,"grid1D-data.png") !istravis
+      @plottest plot(RegularGrid{Float64}(10,10),1:100) joinpath(datadir,"grid2D-data.png") !istravis
     end
   end
 
@@ -53,12 +53,12 @@
     if visualtests
       gr(size=(800,800))
       Random.seed!(2019)
-      @plottest plot(PointSet(rand(1,10))) joinpath(datadir,"pset1D.png")
-      @plottest plot(PointSet(rand(2,10))) joinpath(datadir,"pset2D.png")
-      @plottest plot(PointSet(rand(3,10))) joinpath(datadir,"pset3D.png")
-      @plottest plot(PointSet(rand(1,10)),1:10) joinpath(datadir,"pset1D-data.png")
-      @plottest plot(PointSet(rand(2,10)),1:10) joinpath(datadir,"pset2D-data.png")
-      @plottest plot(PointSet(rand(3,10)),1:10) joinpath(datadir,"pset3D-data.png")
+      @plottest plot(PointSet(rand(1,10))) joinpath(datadir,"pset1D.png") !istravis
+      @plottest plot(PointSet(rand(2,10))) joinpath(datadir,"pset2D.png") !istravis
+      @plottest plot(PointSet(rand(3,10))) joinpath(datadir,"pset3D.png") !istravis
+      @plottest plot(PointSet(rand(1,10)),1:10) joinpath(datadir,"pset1D-data.png") !istravis
+      @plottest plot(PointSet(rand(2,10)),1:10) joinpath(datadir,"pset2D-data.png") !istravis
+      @plottest plot(PointSet(rand(3,10)),1:10) joinpath(datadir,"pset3D-data.png") !istravis
     end
   end
 end

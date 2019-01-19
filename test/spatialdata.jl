@@ -27,7 +27,7 @@
       gr(size=(800,800))
       df = DataFrame(x=[25.,50.,75.],y=[25.,75.,50.],z=[1.,0.,1.])
       sdata = GeoDataFrame(df, [:x,:y])
-      @plottest plot(sdata) joinpath(datadir,"GeoDataFrame.png")
+      @plottest plot(sdata) joinpath(datadir,"GeoDataFrame.png") !istravis
     end
   end
 
@@ -52,7 +52,7 @@
     if visualtests
       gr(size=(800,800))
       sdata = PointSetData(Dict(:z => [1.,0.,1.]), [25. 50. 75.; 25. 75. 50.])
-      @plottest plot(sdata) joinpath(datadir,"PointSetData.png")
+      @plottest plot(sdata) joinpath(datadir,"PointSetData.png") !istravis
     end
   end
 
