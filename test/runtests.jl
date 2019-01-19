@@ -2,8 +2,7 @@ using GeoStatsDevTools
 using GeoStatsBase
 using Distances: Euclidean, Chebyshev
 using DataFrames: DataFrame
-using Plots; gr(size=(600,400))
-using VisualRegressionTests
+using Plots, VisualRegressionTests
 using Test, Pkg, Random
 
 # environment settings

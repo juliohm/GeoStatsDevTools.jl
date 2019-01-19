@@ -9,14 +9,16 @@
     seriestype --> :path
     coordinates(domain)[1,:], Z
   elseif N == 2
-    aspect_ratio --> :equal
     seriestype --> :heatmap
+    aspect_ratio --> :equal
     seriescolor --> :bluesreds
+    colorbar --> true
     reverse(rotr90(Z), dims=2)
   elseif N == 3
-    aspect_ratio --> :equal
     seriestype --> :volume
+    aspect_ratio --> :equal
     seriescolor --> :bluesreds
+    colorbar --> true
     Z
   else
     @error "cannot plot in more than 3 dimensions"

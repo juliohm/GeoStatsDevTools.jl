@@ -60,6 +60,10 @@ coordnames(geodata::RegularGridData{T,N}) where {N,T<:Real} = Dict(Symbol("x$i")
 
 variables(geodata::RegularGridData) = Dict(var => eltype(array) for (var,array) in geodata.data)
 
+Base.size(geodata::RegularGridData) = geodata.dims
+origin(geodata::RegularGridData) = geodata.origin
+spacing(geodata::RegularGridData) = geodata.spacing
+
 npoints(geodata::RegularGridData) = prod(geodata.dims)
 
 function coordinates!(buff::AbstractVector{T}, geodata::RegularGridData{T,N}, ind::Int) where {N,T<:Real}

@@ -63,6 +63,7 @@ include("solutions/simulation_solution.jl")
 include("statistics.jl")
 
 # plot recipes
+include("plotrecipes/spatialdata.jl")
 include("plotrecipes/domains/point_set.jl")
 include("plotrecipes/domains/regular_grid.jl")
 include("plotrecipes/solutions/estimation.jl")
