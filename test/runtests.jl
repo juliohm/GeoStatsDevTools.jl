@@ -1,21 +1,17 @@
 using GeoStatsDevTools
 using GeoStatsBase
-using Random
 using Distances: Euclidean, Chebyshev
 using DataFrames: DataFrame
 using Plots; gr(size=(600,400))
 using VisualRegressionTests
-using Test, Pkg
-
-# list of maintainers
-maintainers = ["juliohm"]
+using Test, Pkg, Random
 
 # environment settings
+islinux = Sys.islinux()
 istravis = "TRAVIS" ∈ keys(ENV)
-ismaintainer = "USER" ∈ keys(ENV) && ENV["USER"] ∈ maintainers
 datadir = joinpath(@__DIR__,"data")
-
-if ismaintainer
+visualtests = !istravis || (istravis && islinux)
+if !istravis
   Pkg.add("Gtk")
   using Gtk
 end

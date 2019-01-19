@@ -63,10 +63,10 @@ include("solutions/simulation_solution.jl")
 include("statistics.jl")
 
 # plot recipes
-include("plotrecipes/solutions/estimation_point_set.jl")
-include("plotrecipes/solutions/simulation_point_set.jl")
-include("plotrecipes/solutions/estimation_regular_grid.jl")
-include("plotrecipes/solutions/simulation_regular_grid.jl")
+include("plotrecipes/domains/point_set.jl")
+include("plotrecipes/domains/regular_grid.jl")
+include("plotrecipes/solutions/estimation.jl")
+include("plotrecipes/solutions/simulation.jl")
 
 export
   # spatial data
