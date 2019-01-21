@@ -59,3 +59,17 @@ function isneighbor(neigh::CylinderNeighborhood, xₒ::AbstractVector, x::Abstra
   l = length(xₒ)
   @inbounds abs(x[l] - xₒ[l]) ≤ neigh.height && norm(view(x,1:l-1) .- view(xₒ,1:l-1)) ≤ neigh.radius
 end
+
+# ------------
+# IO methods
+# ------------
+function Base.show(io::IO, neigh::CylinderNeighborhood)
+  r = neigh.radius; h = neigh.height
+  print(io, "CylinderNeighborhood($r, $h)")
+end
+
+function Base.show(io::IO, ::MIME"text/plain", neigh::CylinderNeighborhood)
+  println(io, "CylinderNeighborhood")
+  println(io, "  radius: ", neigh.radius)
+  println(io, "  height: ", neigh.height)
+end

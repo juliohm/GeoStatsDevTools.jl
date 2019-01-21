@@ -38,3 +38,17 @@ end
 function isneighbor(neigh::BallNeighborhood, xₒ::AbstractVector, x::AbstractVector)
   evaluate(neigh.metric, xₒ, x) ≤ neigh.radius
 end
+
+# ------------
+# IO methods
+# ------------
+function Base.show(io::IO, neigh::BallNeighborhood)
+  r = neigh.radius
+  print(io, "BallNeighborhood($r)")
+end
+
+function Base.show(io::IO, ::MIME"text/plain", neigh::BallNeighborhood)
+  println(io, "BallNeighborhood")
+  println(io, "  radius: ", neigh.radius)
+  println(io, "  metric: ", neigh.metric)
+end

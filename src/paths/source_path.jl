@@ -53,3 +53,14 @@ end
 SourcePath(domain, sources) = SourcePath{typeof(domain)}(domain, sources)
 
 Base.iterate(p::SourcePath, state=1) = state > npoints(p.domain) ? nothing : (p.path[state], state + 1)
+
+# ------------
+# IO methods
+# ------------
+function Base.show(io::IO, path::SourcePath)
+  print(io, "SourcePath")
+end
+
+function Base.show(io::IO, ::MIME"text/plain", path::SourcePath)
+  println(io, path)
+end

@@ -35,3 +35,14 @@ function Base.iterate(path::ShiftedPath, state=1)
 end
 
 Base.length(path::ShiftedPath) = path.length
+
+# ------------
+# IO methods
+# ------------
+function Base.show(io::IO, path::ShiftedPath)
+  print(io, "ShiftedPath")
+end
+
+function Base.show(io::IO, ::MIME"text/plain", path::ShiftedPath)
+  println(io, path)
+end
