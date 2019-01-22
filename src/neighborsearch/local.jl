@@ -9,9 +9,9 @@ A search method that finds at most `K` neighbors in
 `neighborhood` of `domain` with a search `path`.
 """
 mutable struct LocalNeighborSearcher{D<:AbstractDomain,
-                             N<:AbstractNeighborhood,
-                             P<:AbstractPath,
-                             V<:AbstractVector} <: AbstractNeighborSearcher
+                                     N<:AbstractNeighborhood,
+                                     P<:AbstractPath,
+                                     V<:AbstractVector} <: AbstractNeighborSearcher
   domain::D
   K::Int
   neigh::N
@@ -23,7 +23,7 @@ function LocalNeighborSearcher(domain::D, K::Int,
                                neigh::N, path::P) where {D<:AbstractDomain,
                                                          N<:AbstractNeighborhood,
                                                          P<:AbstractPath}
-  @assert 1 ≤ K ≤ npoints(domain) "number of neighbors must be in interval [1, npoints(domain)]"
+  @assert 1 ≤ K ≤ npoints(domain) "number of neighbors must be smaller than number of locations"
 
   # pre-allocate memory for coordinates
   buff = MVector{ndims(domain),coordtype(domain)}(undef)
