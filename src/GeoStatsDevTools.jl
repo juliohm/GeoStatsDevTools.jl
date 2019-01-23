@@ -68,6 +68,7 @@ include("plotrecipes/domains/point_set.jl")
 include("plotrecipes/domains/regular_grid.jl")
 include("plotrecipes/solutions/estimation.jl")
 include("plotrecipes/solutions/simulation.jl")
+include("plotrecipes/statistics.jl")
 
 export
   # spatial data
