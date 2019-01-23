@@ -39,13 +39,6 @@ end
 
 value(geodata::PointSetData, ind::Int, var::Symbol) = geodata.data[var][ind]
 
-function Base.view(geodata::PointSetData{T,N}, inds::AbstractVector{Int}) where {N,T<:Real}
-  data = Dict(var => view(array, inds) for (var,array) in geodata.data)
-  coords = view(geodata.coords, :, inds)
-
-  PointSetData(data, coords)
-end
-
 # ------------
 # IO methods
 # ------------

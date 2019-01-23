@@ -77,9 +77,6 @@ end
 
 value(geodata::GeoDataFrame, ind::Int, var::Symbol) = geodata.data[ind,var]
 
-Base.view(geodata::GeoDataFrame, inds::AbstractVector{Int}) =
-  GeoDataFrame(view(geodata.data, inds, :), geodata.coordnames)
-
 # ------------
 # IO methods
 # ------------
