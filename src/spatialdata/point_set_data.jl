@@ -25,8 +25,6 @@ end
 PointSetData(data::Dict{Symbol,<:AbstractArray}, coords::AbstractMatrix{T}) where {T<:Real} =
   PointSetData{T,size(coords,1)}(data, coords)
 
-coordnames(geodata::PointSetData{T,N}) where {N,T<:Real} = Dict(Symbol("x$i") => T for i=1:N)
-
 variables(geodata::PointSetData) = Dict(var => eltype(array) for (var,array) in geodata.data)
 
 npoints(geodata::PointSetData) = size(geodata.coords, 2)

@@ -51,8 +51,6 @@ function StructuredGridData(data::Dict{Symbol,<:AbstractArray},
   StructuredGridData{T,N}(data, coords)
 end
 
-coordnames(geodata::StructuredGridData{T,N}) where {N,T<:Real} = Dict(Symbol("x$i") => T for i=1:N)
-
 variables(geodata::StructuredGridData) = Dict(var => eltype(array) for (var,array) in geodata.data)
 
 npoints(geodata::StructuredGridData) = size(geodata.coords, 2)
