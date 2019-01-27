@@ -39,6 +39,7 @@ end
 
 function GeoDataFrame(data, coordnames)
   @assert coordnames ⊆ names(data) "coordnames must contain valid column names"
+
   Ts = Base.nonmissingtype.(eltypes(data[coordnames]))
   T  = promote_type(Ts...)
   N  = length(coordnames)
@@ -52,7 +53,7 @@ function coordnames(geodata::GeoDataFrame)
   cnames = geodata.coordnames
   ctypes = Base.nonmissingtype.(eltypes(rawdata[cnames]))
 
-  Dict(var => T for (var,T) in zip(cnames,ctypes))
+  collect(zip(cnames,ctypes))
 end
 
 function variables(geodata::GeoDataFrame)

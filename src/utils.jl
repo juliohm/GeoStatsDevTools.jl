@@ -8,16 +8,8 @@
 Returns a `RegularGrid` of given `dims` covering all the
 locations in `spatialdata`.
 """
-function boundgrid(spatialdata::AbstractSpatialData, dims::Dims)
-  # retrieve data coordinates
-  datacoords = coordnames(spatialdata)
-  N = length(datacoords)
-
-  @assert length(dims) == N "dimensions must match number of coordinates in data"
+function boundgrid(spatialdata::AbstractSpatialData{T,N}, dims::Dims{N}) where {N,T<:Real}
   @assert all(dims .> 0) "dimensions must be positive"
-
-  # determine coordinate type
-  T = promote_type([T for (var,T) in datacoords]...)
 
   start  = fill(typemax(T), N)
   finish = fill(typemin(T), N)
