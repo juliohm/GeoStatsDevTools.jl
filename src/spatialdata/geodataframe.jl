@@ -51,9 +51,8 @@ end
 function coordnames(geodata::GeoDataFrame)
   rawdata = geodata.data
   cnames = geodata.coordnames
-  ctypes = Base.nonmissingtype.(eltypes(rawdata[cnames]))
 
-  collect(zip(cnames,ctypes))
+  Tuple(cnames)
 end
 
 function variables(geodata::GeoDataFrame)
