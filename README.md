@@ -1,6 +1,6 @@
 # GeoStatsDevTools.jl
 
-[![][travis-img]][travis-url] [![][julia-pkg-img]][julia-pkg-url] [![][codecov-img]][codecov-url]
+[![][travis-img]][travis-url] [![][codecov-img]][codecov-url]
 
 This package contains developer tools for the [GeoStats.jl](https://github.com/juliohm/GeoStats.jl)
 framework. It is intended to be used in conjunction with [GeoStatsBase.jl](https://github.com/juliohm/GeoStatsBase.jl)
@@ -13,9 +13,6 @@ If you have any questions, please contact our community on the [gitter channel](
 
 [travis-img]: https://travis-ci.org/juliohm/GeoStatsDevTools.jl.svg?branch=master
 [travis-url]: https://travis-ci.org/juliohm/GeoStatsDevTools.jl
-
-[julia-pkg-img]: http://pkg.julialang.org/badges/GeoStatsDevTools_0.7.svg
-[julia-pkg-url]: http://pkg.julialang.org/?pkg=GeoStatsDevTools
 
 [codecov-img]: https://codecov.io/gh/juliohm/GeoStatsDevTools.jl/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/juliohm/GeoStatsDevTools.jl
