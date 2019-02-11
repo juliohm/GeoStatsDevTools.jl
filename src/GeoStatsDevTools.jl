@@ -4,15 +4,17 @@
 
 module GeoStatsDevTools
 
+using Reexport
 using Random
 using Distances
-using Distributions
 using LinearAlgebra
 using DataFrames
 using StaticArrays
 using NearestNeighbors
 using RecipesBase
 using CSV
+
+@reexport using Distributions
 
 using GeoStatsBase
 
