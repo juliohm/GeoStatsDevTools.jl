@@ -58,7 +58,7 @@ function transform!(samples::AbstractVector,
                     origin::ContinuousUnivariateDistribution,
                     target::ContinuousUnivariateDistribution)
   for i in eachindex(samples)
-    p = cdf(origin, samples[i])
+    p = cdf(origin, samples[i]) - eps()
     samples[i] = quantile(target, p)
   end
 end

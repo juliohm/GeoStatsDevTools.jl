@@ -117,6 +117,7 @@ export
 
   # distributions
   EmpiricalDistribution,
+  transform!,
   quantile,
   cdf,
 
