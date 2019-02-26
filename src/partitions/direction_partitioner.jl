@@ -5,8 +5,8 @@
 @doc raw"""
     DirectionPartitioner(direction; atol=20., btol=.95)
 
-A method for partitioning spatial data along a given `direction` with
-angle tolerance `atol` in degrees and bandwidth tolerance `btol`.
+A method for partitioning spatial objects along a given `direction`
+with angle tolerance `atol` in degrees and bandwidth tolerance `btol`.
 ```
       ________________
      /        | btol
@@ -16,53 +16,22 @@ angle tolerance `atol` in degrees and bandwidth tolerance `btol`.
      \________________
 ```
 """
-struct DirectionPartitioner{T<:Real,N} <: AbstractPartitioner
-  direction::NTuple{N,T}
+struct DirectionPartitioner{T<:Real,N} <: AbstractSpatialFunctionPartitioner
+  direction::SVector{N,T}
   atol::Float64
   btol::Float64
 end
 
-DirectionPartitioner(direction; atol=20., btol=.95) =
-  DirectionPartitioner{eltype(direction),length(direction)}(direction, atol, btol)
+DirectionPartitioner(direction::NTuple{N,T}; atol=20., btol=.95) where {T<:Real,N} =
+  DirectionPartitioner{T,N}(normalize(SVector(direction)), deg2rad(atol), btol)
 
-function partition(spatialdata::AbstractSpatialData{T,N},
-                   partitioner::DirectionPartitioner{T,N}) where {N,T<:Real}
-  # angle tolerance in radians
-  θtol = deg2rad(partitioner.atol)
+(p::DirectionPartitioner)(x, y) = begin
+  @. y = x - y
+  l = norm(y)
+  @. y = y / l
 
-  # normalized direction
-  u = MVector{N,T}(partitioner.direction)
-  normalize!(u)
+  θ = acos(p.direction ⋅ y)
+  θ > π/2 && (θ = π - θ)
 
-  # pre-allocate memory for coordinates
-  x = MVector{N,T}(undef)
-  y = MVector{N,T}(undef)
-
-  subsets = Vector{Vector{Int}}()
-  for i in 1:npoints(spatialdata)
-    coordinates!(x, spatialdata, i)
-
-    inserted = false
-    for subset in subsets
-      coordinates!(y, spatialdata, subset[1])
-      @. y = x - y
-      l = norm(y)
-      @. y = y / l
-
-      θ = acos(u ⋅ y)
-      θ > π/2 && (θ = π - θ)
-
-      if θ < θtol && l*sin(θ) < partitioner.btol
-        push!(subset, i)
-        inserted = true
-        break
-      end
-    end
-
-    if !inserted
-      push!(subsets, [i])
-    end
-  end
-
-  SpatialPartition(spatialdata, subsets)
+  θ < p.atol && l*sin(θ) < p.btol
 end

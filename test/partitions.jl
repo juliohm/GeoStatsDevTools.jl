@@ -56,10 +56,6 @@
     # TODO
   end
 
-  @testset "SpatialPredicatePartitioner" begin
-    # TODO
-  end
-
   @testset "HierarchicalPartitioner" begin
     # TODO
   end

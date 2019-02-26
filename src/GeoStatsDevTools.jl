@@ -90,7 +90,7 @@ export
   UniformPartitioner,
   PlanePartitioner,
   DirectionPartitioner,
-  SpatialPredicatePartitioner,
+  FunctionPartitioner,
   HierarchicalPartitioner,
   partition,
   subsets,

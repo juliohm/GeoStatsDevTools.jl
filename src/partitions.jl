@@ -7,18 +7,18 @@
 
 A partition of spatial data.
 """
-struct SpatialPartition{S<:AbstractSpatialData}
-  spatialdata::S
+struct SpatialPartition{D<:AbstractDataOrDomain}
+  object::D
   subsets::Vector{Vector{Int}}
 end
 
-SpatialPartition(spatialdata, subsets) =
-  SpatialPartition{typeof(spatialdata)}(spatialdata, subsets)
+SpatialPartition(object, subsets) =
+  SpatialPartition{typeof(object)}(object, subsets)
 
 """
     subsets(partition)
 
-Return the subsets of indices in spatial data
+Return the subsets of indices in spatial object
 that make up the `partition`.
 """
 subsets(partition::SpatialPartition) = partition.subsets
@@ -26,13 +26,13 @@ subsets(partition::SpatialPartition) = partition.subsets
 """
     Base.iterate(partition)
 
-Iterate the partition returning views of spatial data.
+Iterate the partition returning views of spatial object.
 """
 function Base.iterate(partition::SpatialPartition, state=1)
   if state > length(partition.subsets)
     nothing
   else
-    view(partition.spatialdata, partition.subsets[state]), state + 1
+    view(partition.object, partition.subsets[state]), state + 1
   end
 end
 
@@ -46,16 +46,81 @@ Base.length(partition::SpatialPartition) = length(partition.subsets)
 """
     AbstractPartitioner
 
-A method for partitioning spatial data.
+A method for partitioning spatial objects.
 """
 abstract type AbstractPartitioner end
 
 """
-    partition(spatialdata, partitioner)
+    AbstractFunctionPartitioner
 
-Partition `spatialdata` with partition method `partitioner`.
+A method for partitioning spatial objects with partition functions.
 """
-partition(::AbstractSpatialData, ::AbstractPartitioner) = error("not implemented")
+abstract type AbstractFunctionPartitioner <: AbstractPartitioner end
+
+"""
+    AbstractSpatialFunctionPartitioner
+
+A method for partitioning spatial objects with spatial partition functions.
+"""
+abstract type AbstractSpatialFunctionPartitioner <: AbstractPartitioner end
+
+"""
+    partition(object, partitioner)
+
+Partition `object` with partition method `partitioner`.
+"""
+partition(::AbstractDataOrDomain, ::AbstractPartitioner) = error("not implemented")
+
+function partition(object::AbstractDataOrDomain{T,N},
+                   partitioner::AbstractFunctionPartitioner) where {N,T<:Real}
+  subsets = Vector{Vector{Int}}()
+  for i in 1:npoints(object)
+    inserted = false
+    for subset in subsets
+      j = subset[1]
+      if partitioner(i, j)
+        push!(subset, i)
+        inserted = true
+        break
+      end
+    end
+
+    if !inserted
+      push!(subsets, [i])
+    end
+  end
+
+  SpatialPartition(object, subsets)
+end
+
+function partition(object::AbstractDataOrDomain{T,N},
+                   partitioner::AbstractSpatialFunctionPartitioner) where {N,T<:Real}
+  # pre-allocate memory for coordinates
+  x = MVector{N,T}(undef)
+  y = MVector{N,T}(undef)
+
+  subsets = Vector{Vector{Int}}()
+  for i in 1:npoints(object)
+    coordinates!(x, object, i)
+
+    inserted = false
+    for subset in subsets
+      coordinates!(y, object, subset[1])
+
+      if partitioner(x, y)
+        push!(subset, i)
+        inserted = true
+        break
+      end
+    end
+
+    if !inserted
+      push!(subsets, [i])
+    end
+  end
+
+  SpatialPartition(object, subsets)
+end
 
 #------------------
 # IMPLEMENTATIONS
@@ -63,5 +128,5 @@ partition(::AbstractSpatialData, ::AbstractPartitioner) = error("not implemented
 include("partitions/uniform_partitioner.jl")
 include("partitions/plane_partitioner.jl")
 include("partitions/direction_partitioner.jl")
-include("partitions/spatial_predicate_partitioner.jl")
+include("partitions/function_partitioner.jl")
 include("partitions/hierarchical_partitioner.jl")
