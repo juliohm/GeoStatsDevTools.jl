@@ -21,7 +21,6 @@ Mean of simulation `solution`.
 """
 function mean(solution::SimulationSolution)
   values = Dict(variable => mean(reals) for (variable, reals) in solution.realizations)
-
   SpatialStatistic(solution.domain, values)
 end
 
@@ -32,7 +31,6 @@ Variance of simulation `solution`.
 """
 function var(solution::SimulationSolution)
   values = Dict(variable => var(reals) for (variable, reals) in solution.realizations)
-
   SpatialStatistic(solution.domain, values)
 end
 
