@@ -20,7 +20,7 @@ to georeference the data:
 
 ```julia
 julia> data = Dict(:porosity => poro, :permeability => perm)
-julia> RegularGridData(data, [0.,0.,0.], [1.,1.,1.])
+julia> RegularGridData(data, (0.,0.,0.), (1.,1.,1.))
 ```
 
 Alternatively, one can omit `origin` and `spacing` for default
