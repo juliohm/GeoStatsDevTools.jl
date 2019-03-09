@@ -14,7 +14,7 @@ struct PlanePartitioner{T<:Real,N} <: AbstractSpatialFunctionPartitioner
   tol::Float64
 end
 
-PlanePartitioner(normal; tol=1e-6) =
-  PlanePartitioner{eltype(normal),length(normal)}(normalize(SVector(normal)), tol)
+PlanePartitioner(normal::NTuple{N,T}; tol=1e-6) where {T<:Real,N} =
+  PlanePartitioner{T,N}(normalize(SVector(normal)), tol)
 
 (p::PlanePartitioner)(x, y) = abs((x - y) ⋅ p.normal) < p.tol
