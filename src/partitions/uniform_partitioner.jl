@@ -16,9 +16,9 @@ end
 
 UniformPartitioner(k::Int) = UniformPartitioner(k, true)
 
-function partition(spatialdata::AbstractSpatialData{T,N},
+function partition(object::AbstractDataOrDomain{T,N},
                    partitioner::UniformPartitioner) where {N,T<:Real}
-  npts = npoints(spatialdata)
+  npts = npoints(object)
   nset = partitioner.k
 
   @assert nset ≤ npts "number of subsets must be smaller than number of points"
@@ -26,5 +26,5 @@ function partition(spatialdata::AbstractSpatialData{T,N},
   inds = partitioner.shuffle ? shuffle(1:npts) : collect(1:npts)
   subsets = collect(Iterators.partition(inds, npts ÷ nset))
 
-  SpatialPartition(spatialdata, subsets)
+  SpatialPartition(object, subsets)
 end
