@@ -74,7 +74,7 @@ partition(::AbstractDataOrDomain, ::AbstractPartitioner) = error("not implemente
 function partition(object::AbstractDataOrDomain{T,N},
                    partitioner::AbstractFunctionPartitioner) where {N,T<:Real}
   subsets = Vector{Vector{Int}}()
-  for i in 1:npoints(object)
+  for i in randperm(npoints(object))
     inserted = false
     for subset in subsets
       j = subset[1]
@@ -100,7 +100,7 @@ function partition(object::AbstractDataOrDomain{T,N},
   y = MVector{N,T}(undef)
 
   subsets = Vector{Vector{Int}}()
-  for i in 1:npoints(object)
+  for i in randperm(npoints(object))
     coordinates!(x, object, i)
 
     inserted = false
