@@ -7,16 +7,16 @@
 
 A ball neighborhood of a given `radius` on a spatial `domain`.
 """
-struct BallNeighborhood{D<:AbstractDomain} <: AbstractNeighborhood{D}
+struct BallNeighborhood{D<:AbstractDomain,M<:Metric} <: AbstractNeighborhood{D}
   # input fields
   domain::D
   radius
-  metric::Metric
+  metric::M
 
   # state fields
   kdtree::KDTree
 
-  function BallNeighborhood{D}(domain, radius, metric) where D<:AbstractDomain
+  function BallNeighborhood{D,M}(domain, radius, metric) where {D<:AbstractDomain,M<:Metric}
     @assert radius > 0 "radius must be positive"
     @assert typeof(radius) == coordtype(domain) "radius and domain coordinate type must match"
 
@@ -27,8 +27,8 @@ struct BallNeighborhood{D<:AbstractDomain} <: AbstractNeighborhood{D}
   end
 end
 
-BallNeighborhood(domain, radius, metric=Euclidean()) =
-  BallNeighborhood{typeof(domain)}(domain, radius, metric)
+BallNeighborhood(domain::D, radius, metric::M=Euclidean()) where {D<:AbstractDomain,M<:Metric} =
+  BallNeighborhood{D,M}(domain, radius, metric)
 
 function (neigh::BallNeighborhood)(location::Int)
   xₒ = coordinates(neigh.domain, location)
