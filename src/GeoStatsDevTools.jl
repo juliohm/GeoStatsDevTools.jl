@@ -90,6 +90,7 @@ export
   # partitions
   SpatialPartition,
   UniformPartitioner,
+  BallPartitioner,
   PlanePartitioner,
   DirectionPartitioner,
   FunctionPartitioner,

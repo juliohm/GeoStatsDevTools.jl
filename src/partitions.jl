@@ -126,6 +126,7 @@ end
 # IMPLEMENTATIONS
 #------------------
 include("partitions/uniform_partitioner.jl")
+include("partitions/ball_partitioner.jl")
 include("partitions/plane_partitioner.jl")
 include("partitions/direction_partitioner.jl")
 include("partitions/function_partitioner.jl")
