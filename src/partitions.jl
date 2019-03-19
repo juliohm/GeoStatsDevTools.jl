@@ -62,7 +62,7 @@ abstract type AbstractFunctionPartitioner <: AbstractPartitioner end
 
 A method for partitioning spatial objects with spatial partition functions.
 """
-abstract type AbstractSpatialFunctionPartitioner <: AbstractPartitioner end
+abstract type AbstractSpatialFunctionPartitioner <: AbstractFunctionPartitioner end
 
 """
     partition(object, partitioner)
@@ -130,4 +130,5 @@ include("partitions/ball_partitioner.jl")
 include("partitions/plane_partitioner.jl")
 include("partitions/direction_partitioner.jl")
 include("partitions/function_partitioner.jl")
+include("partitions/product_partitioner.jl")
 include("partitions/hierarchical_partitioner.jl")

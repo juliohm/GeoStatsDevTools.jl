@@ -94,6 +94,7 @@ export
   PlanePartitioner,
   DirectionPartitioner,
   FunctionPartitioner,
+  ProductPartitioner,
   HierarchicalPartitioner,
   partition,
   subsets,
