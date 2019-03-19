@@ -14,8 +14,6 @@ struct HierarchicalPartitioner <: AbstractPartitioner
   second::AbstractPartitioner
 end
 
-→(first, second) = HierarchicalPartitioner(first, second)
-
 function partition(spatialdata::AbstractSpatialData,
                    partitioner::HierarchicalPartitioner)
   result = Vector{Vector{Int}}()
@@ -35,3 +33,5 @@ function partition(spatialdata::AbstractSpatialData,
 
   SpatialPartition(spatialdata, result)
 end
+
+→(first, second) = HierarchicalPartitioner(first, second)
