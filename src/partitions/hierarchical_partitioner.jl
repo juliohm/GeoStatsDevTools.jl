@@ -14,6 +14,7 @@ struct HierarchicalPartitioner <: AbstractPartitioner
   second::AbstractPartitioner
 end
 
+→(first, second) = HierarchicalPartitioner(first, second)
 
 function partition(spatialdata::AbstractSpatialData,
                    partitioner::HierarchicalPartitioner)

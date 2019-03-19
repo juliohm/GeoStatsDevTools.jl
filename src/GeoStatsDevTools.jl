@@ -98,6 +98,7 @@ export
   HierarchicalPartitioner,
   partition,
   subsets,
+  →,
 
   # paths
   SimplePath,
