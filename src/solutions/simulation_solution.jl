@@ -8,6 +8,7 @@ function Base.getindex(solution::SimulationSolution{<:RegularGrid}, var::Symbol)
 end
 
 function digest(solution::SimulationSolution{<:RegularGrid})
+  Base.depwarn("digest(solution) is deprecated, use solution[:var] instead", :digest)
   # solution variables
   variables = collect(keys(solution.realizations))
 

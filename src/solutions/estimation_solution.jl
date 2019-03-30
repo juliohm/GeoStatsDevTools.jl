@@ -10,6 +10,7 @@ function Base.getindex(solution::EstimationSolution{<:RegularGrid}, var::Symbol)
 end
 
 function digest(solution::EstimationSolution{<:RegularGrid})
+  Base.depwarn("digest(solution) is deprecated, use solution[:var] instead", :digest)
   # solution variables
   variables = keys(solution.mean)
 
