@@ -5,6 +5,9 @@ using DataFrames: DataFrame
 using Plots, VisualRegressionTests
 using Test, Pkg, Random
 
+# workaround GR warnings
+ENV["GKSwstype"] = "100"
+
 # environment settings
 islinux = Sys.islinux()
 istravis = "TRAVIS" ∈ keys(ENV)
