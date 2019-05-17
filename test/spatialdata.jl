@@ -57,7 +57,29 @@
   end
 
   @testset "RegularGridData" begin
-    # TODO
+    g = RegularGridData{Float64}(Dict(:value => rand(100,100)))
+    @test size(g) == (100, 100)
+    @test origin(g) == (0., 0.)
+    @test spacing(g) == (1., 1.)
+
+    # basic checks
+    @test coordnames(g) == (:x1, :x2)
+    @test variables(g) == Dict(:value => Float64)
+    @test npoints(g) == 10000
+    X, z = valid(g, :value)
+    @test size(X) == (2, 10000)
+    @test length(z) == 10000
+
+    # show methods
+    g = RegularGridData(Dict(:z => [1 2; 3 4]), (0.,0.), (1.,1.))
+    @test sprint(show, g) == "2×2 RegularGridData{Float64,2}"
+    @test sprint(show, MIME"text/plain"(), g) == "2×2 RegularGridData{Float64,2}\n  origin:  (0.0, 0.0)\n  spacing: (1.0, 1.0)\n  variables\n    └─z (Int64)"
+
+    if visualtests
+      gr(size=(800,800))
+      sdata = RegularGridData(Dict(:z => [1 2; 3 4]), (0.,0.), (0.1,0.1))
+      @plottest plot(sdata) joinpath(datadir,"RegularGridData.png") !istravis
+    end
   end
 
   @testset "StructuredGridData" begin
