@@ -52,3 +52,8 @@ function Base.show(io::IO, grid::StructuredGrid{T,N}) where {N,T<:Real}
   dims = join(grid.dims, "×")
   print(io, "$dims StructuredGrid{$T,$N}")
 end
+
+function Base.show(io::IO, ::MIME"text/plain", grid::StructuredGrid{T,N}) where {N,T<:Real}
+  println(io, grid)
+  Base.print_array(io, grid.coords)
+end

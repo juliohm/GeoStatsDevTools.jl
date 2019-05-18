@@ -61,4 +61,42 @@
       @plottest plot(PointSet(rand(3,10)),1:10) joinpath(datadir,"pset3D-data.png") !istravis
     end
   end
+
+  @testset "StructuredGrid" begin
+    nx, ny, nz = 20, 10, 10
+
+    X = [1.,5.,6.,10.]
+    g1 = StructuredGrid(X)
+    @test npoints(g1) == 4
+    @test coordinates(g1) == [1. 5. 6. 10.]
+
+    @test sprint(show, g1) == "4 StructuredGrid{Float64,1}"
+    @test sprint(show, MIME"text/plain"(), g1) == "4 StructuredGrid{Float64,1}\n 1.0  5.0  6.0  10.0"
+
+    X  = [x for x in range(0,10,length=nx), j in 1:ny]
+    Y  = sin.(X) .+ [0.5j for i in 1:nx, j in 1:ny]
+    g2 = StructuredGrid(X, Y)
+    @test npoints(g2) == nx*ny
+    @test size(g2) == (nx, ny)
+    @test size(coordinates(g2)) == (2, nx*ny)
+
+    @test sprint(show, g2) == "20×10 StructuredGrid{Float64,2}"
+
+    X = [x for x in range(0,10,length=nx), j in 1:ny, k in 1:nz]
+    Y = sin.(X) .+ [0.5j for i in 1:nx, j in 1:ny, k in 1:nz]
+    Z = [1.0(k-1) for i in 1:nx, j in 1:ny, k in 1:nz]
+    g3 = StructuredGrid(X, Y, Z)
+    @test npoints(g3) == nx*ny*nz
+    @test size(g3) == (nx, ny, nz)
+    @test size(coordinates(g3)) == (3, nx*ny*nz)
+
+    @test sprint(show, g3) == "20×10×10 StructuredGrid{Float64,3}"
+
+    if visualtests
+      gr(size=(800,800))
+      @plottest plot(g1) joinpath(datadir,"sgrid1D.png") !istravis
+      @plottest plot(g2) joinpath(datadir,"sgrid2D.png") !istravis
+      @plottest plot(g3,camera=(30,60)) joinpath(datadir,"sgrid3D.png") !istravis
+    end
+  end
 end
