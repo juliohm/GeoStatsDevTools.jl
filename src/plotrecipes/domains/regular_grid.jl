@@ -37,12 +37,8 @@ end
 
   if N == 1
     @series begin
-      seriestype --> :scatter
-      X[1,:], fill(0, sz[1])
-    end
-    @series begin
-      seriestype --> :path
-      [X[1,1],X[1,end]], [0,0]
+      seriestype --> :scatterpath
+      X[1,:], fill(zero(T), sz[1])
     end
   elseif N == 2
     aspect_ratio --> :equal
