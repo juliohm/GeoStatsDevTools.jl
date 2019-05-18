@@ -1,5 +1,6 @@
 using GeoStatsDevTools
 using GeoStatsBase
+using DelimitedFiles
 using Distances: Euclidean, Chebyshev
 using DataFrames: DataFrame
 using Plots, VisualRegressionTests

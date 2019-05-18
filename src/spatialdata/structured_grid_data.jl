@@ -53,6 +53,8 @@ end
 
 variables(geodata::StructuredGridData) = Dict(var => eltype(array) for (var,array) in geodata.data)
 
+Base.size(geodata::StructuredGridData) = geodata.dims
+
 npoints(geodata::StructuredGridData) = size(geodata.coords, 2)
 
 function coordinates!(buff::AbstractVector{T}, geodata::StructuredGridData{T,N}, ind::Int) where {N,T<:Real}

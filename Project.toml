@@ -18,6 +18,7 @@ StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [extras]
+DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 GR = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
 ImageMagick = "6218d12a-5da1-5696-b52f-db25d2ecc6d1"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
@@ -28,7 +29,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 VisualRegressionTests = "34922c18-7c2a-561c-bac1-01e79b2c4c92"
 
 [targets]
-test = ["Pkg", "GR", "VisualRegressionTests", "Test", "Plots", "ImageMagick", "QuartzImageIO", "Random"]
+test = ["DelimitedFiles", "Pkg", "GR", "VisualRegressionTests", "Test", "Plots", "ImageMagick", "QuartzImageIO", "Random"]
 
 [compat]
 CSV = "≥ 0.2.0"
@@ -40,4 +41,4 @@ NearestNeighbors = "≥ 0.4.3"
 RecipesBase = "≥ 0.2.3"
 Reexport = "≥ 0.2.0"
 StaticArrays = "≥ 0.7.0"
-julia = "≥ 1.0.0"
+julia = "1"
