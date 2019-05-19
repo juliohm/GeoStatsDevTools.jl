@@ -3,25 +3,25 @@
 # ------------------------------------------------------------------
 
 @recipe function f(domain::StructuredGrid{T,N}, data::AbstractVector) where {N,T<:Real}
-  Z = reshape(data, size(domain))
+  X = coordinates(domain)
 
   if N == 1
     seriestype --> :path
-    coordinates(domain)[1,:], Z
+    X[1,:], data
   elseif N == 2
-    # TODO
-    seriestype --> :heatmap
+    seriestype --> :scatter
     aspect_ratio --> :equal
     seriescolor --> :bluesreds
+    zcolor --> data
     colorbar --> true
-    @error "not implemented"
+    X[1,:], X[2,:]
   elseif N == 3
-    # TODO
-    seriestype --> :volume
+    seriestype --> :scatter
     aspect_ratio --> :equal
     seriescolor --> :bluesreds
+    zcolor --> data
     colorbar --> true
-    @error "not implemented"
+    X[1,:], X[2,:], X[3,:]
   else
     @error "cannot plot in more than 3 dimensions"
   end
