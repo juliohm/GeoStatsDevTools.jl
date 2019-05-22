@@ -11,12 +11,12 @@ A cylinder neighborhood with a given `radius` and `height` on a spatial `domain`
 
 The `height` parameter is only half of the actual cylinder height.
 """
-struct CylinderNeighborhood{D<:AbstractDomain} <: AbstractNeighborhood{D}
+struct CylinderNeighborhood{T<:Real,N,D<:AbstractDomain{T,N}} <: AbstractNeighborhood{D}
   domain::D
-  radius
-  height
+  radius::T
+  height::T
 
-  function CylinderNeighborhood{D}(domain, radius, height) where {D<:AbstractDomain}
+  function CylinderNeighborhood{T,N,D}(domain, radius, height) where {T<:Real,N,D<:AbstractDomain}
     @assert radius > 0 "cylinder radius must be positive"
     @assert height > 0 "cylinder height must be positive"
     @assert typeof(radius) == coordtype(domain) "radius type must match coordinate type"
@@ -26,8 +26,8 @@ struct CylinderNeighborhood{D<:AbstractDomain} <: AbstractNeighborhood{D}
   end
 end
 
-CylinderNeighborhood(domain::D, radius, height) where {D<:AbstractDomain} =
-  CylinderNeighborhood{D}(domain, radius, height)
+CylinderNeighborhood(domain::D, radius::T, height::T) where {T<:Real,N,D<:AbstractDomain{T,N}} =
+  CylinderNeighborhood{T,N,D}(domain, radius, height)
 
 function (neigh::CylinderNeighborhood)(location::Int)
   # retrieve domain
