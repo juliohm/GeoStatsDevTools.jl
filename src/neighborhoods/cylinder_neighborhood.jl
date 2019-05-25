@@ -19,9 +19,6 @@ struct CylinderNeighborhood{T<:Real,N,D<:AbstractDomain{T,N}} <: AbstractNeighbo
   function CylinderNeighborhood{T,N,D}(domain, radius, height) where {T<:Real,N,D<:AbstractDomain}
     @assert radius > 0 "cylinder radius must be positive"
     @assert height > 0 "cylinder height must be positive"
-    @assert typeof(radius) == coordtype(domain) "radius type must match coordinate type"
-    @assert typeof(height) == coordtype(domain) "height type must match coordinate type"
-
     new(domain, radius, height)
   end
 end
@@ -30,15 +27,16 @@ CylinderNeighborhood(domain::D, radius::T, height::T) where {T<:Real,N,D<:Abstra
   CylinderNeighborhood{T,N,D}(domain, radius, height)
 
 function (neigh::CylinderNeighborhood)(location::Int)
+  neigh(coordinates(neigh.domain, location))
+end
+
+function (neigh::CylinderNeighborhood)(xₒ::AbstractVector)
   # retrieve domain
   ndomain = neigh.domain
 
   # neighborhood specs
   r = neigh.radius
   h = neigh.height
-
-  # center in real coordinates
-  xₒ = coordinates(ndomain, location)
 
   # pre-allocate memory for neighbors coordinates
   x = MVector{ndims(ndomain),coordtype(ndomain)}(undef)

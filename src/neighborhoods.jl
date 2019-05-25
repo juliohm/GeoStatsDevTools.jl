@@ -13,9 +13,9 @@ abstract type AbstractNeighborhood{D<:AbstractDomain} end
 # at a given location:
 #
 # julia> neighborhood(location)
+# julia> neighborhood(xₒ)
 #
-# The operator () returns the neighbors (as integers) and
-# is implemented differently depending on the domain type.
+# The operator () returns the neighbors (as integers).
 
 """
     isneighbor(neighborhood, center, location)

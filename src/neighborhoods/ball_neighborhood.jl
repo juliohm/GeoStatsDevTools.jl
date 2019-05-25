@@ -18,11 +18,7 @@ struct BallNeighborhood{T<:Real,N,D<:AbstractDomain{T,N},M<:Metric} <: AbstractN
 
   function BallNeighborhood{T,N,D,M}(domain, radius, metric) where {T<:Real,N,D<:AbstractDomain{T,N},M<:Metric}
     @assert radius > 0 "radius must be positive"
-    @assert typeof(radius) == coordtype(domain) "radius and domain coordinate type must match"
-
-    # fit search tree
     kdtree = KDTree(coordinates(domain), metric)
-
     new(domain, radius, metric, kdtree)
   end
 end
@@ -31,7 +27,10 @@ BallNeighborhood(domain::D, radius::T, metric::M=Euclidean()) where {T<:Real,N,D
   BallNeighborhood{T,N,D,M}(domain, radius, metric)
 
 function (neigh::BallNeighborhood)(location::Int)
-  xₒ = coordinates(neigh.domain, location)
+  neigh(coordinates(neigh.domain, location))
+end
+
+function (neigh::BallNeighborhood)(xₒ::AbstractVector)
   inrange(neigh.kdtree, xₒ, neigh.radius, true)
 end
 
