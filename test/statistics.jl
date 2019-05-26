@@ -5,19 +5,19 @@
 
   # mean
   mean2D = mean(solution2D)
-  @test mean2D.domain == solution2D.domain
-  @test mean2D.values[:value][1] == 2.
+  @test value(mean2D, 1, :value) == 2.
+  @test domain(mean2D) == solution2D.domain
 
   # variance
   variance2D = var(solution2D)
-  @test variance2D.domain == solution2D.domain
-  @test variance2D.values[:value][1] == 1.
+  @test value(variance2D, 1, :value) == 1.
+  @test domain(variance2D) == solution2D.domain
 
   # quantile (scalar)
   p = 0.5
   quantile2D = quantile(solution2D, p)
-  @test quantile2D.domain == solution2D.domain
-  @test quantile2D.values[:value][1] == 2.
+  @test value(quantile2D, 1, :value) == 2.
+  @test domain(quantile2D) == solution2D.domain
 
   # quantile (vector)
   ps = [0.0, 0.5, 1.0]

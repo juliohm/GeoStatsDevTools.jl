@@ -48,6 +48,8 @@ function GeoDataFrame(data, coordnames)
   GeoDataFrame{T,N,DF}(data, coordnames)
 end
 
+domain(geodata::GeoDataFrame) = PointSet(coordinates(geodata))
+
 function coordnames(geodata::GeoDataFrame)
   rawdata = geodata.data
   cnames = geodata.coordnames

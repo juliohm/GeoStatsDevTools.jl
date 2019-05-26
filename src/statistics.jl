@@ -3,16 +3,14 @@
 # ------------------------------------------------------------------
 
 """
-    SpatialStatistic{D}
+    SpatialStatistic
 
-A spatial statistic on a spatial domain of type `D`.
+A spatial statistic defined over a spatial domain.
 """
-struct SpatialStatistic{D<:AbstractDomain}
+struct SpatialStatistic{T<:Real,N,D<:AbstractDomain{T,N}} <: AbstractSpatialData{T,N}
+  data::Dict{Symbol,<:AbstractArray}
   domain::D
-  values::Dict{Symbol,Vector}
 end
-
-SpatialStatistic(domain, values) = SpatialStatistic{typeof(domain)}(domain, values)
 
 """
     mean(solution)
@@ -20,8 +18,8 @@ SpatialStatistic(domain, values) = SpatialStatistic{typeof(domain)}(domain, valu
 Mean of simulation `solution`.
 """
 function mean(solution::SimulationSolution)
-  values = Dict(variable => mean(reals) for (variable, reals) in solution.realizations)
-  SpatialStatistic(solution.domain, values)
+  data = Dict(variable => mean(reals) for (variable, reals) in solution.realizations)
+  SpatialStatistic(data, solution.domain)
 end
 
 """
@@ -30,8 +28,8 @@ end
 Variance of simulation `solution`.
 """
 function var(solution::SimulationSolution)
-  values = Dict(variable => var(reals) for (variable, reals) in solution.realizations)
-  SpatialStatistic(solution.domain, values)
+  data = Dict(variable => var(reals) for (variable, reals) in solution.realizations)
+  SpatialStatistic(data, solution.domain)
 end
 
 """
@@ -40,16 +38,16 @@ end
 p-quantile of simulation `solution`.
 """
 function quantile(solution::SimulationSolution, p::Real)
-  values = []
+  data = []
   for (variable, reals) in solution.realizations
     quantiles = map(1:npoints(solution.domain)) do location
       slice = getindex.(reals, location)
       quantile(slice, p)
     end
-    push!(values, variable => quantiles)
+    push!(data, variable => quantiles)
   end
 
-  SpatialStatistic(solution.domain, Dict(values))
+  SpatialStatistic(Dict(data), solution.domain)
 end
 
 quantile(solution::SimulationSolution, ps::AbstractVector) = [quantile(solution, p) for p in ps]
@@ -58,12 +56,12 @@ quantile(solution::SimulationSolution, ps::AbstractVector) = [quantile(solution,
 # IO methods
 # ------------
 function Base.show(io::IO, statistic::SpatialStatistic)
-  dim = ndims(statistic.domain)
-  print(io, "$(dim)D SpatialStatistic")
+  N = ndims(statistic.domain)
+  print(io, "$(N)D SpatialStatistic")
 end
 
 function Base.show(io::IO, ::MIME"text/plain", statistic::SpatialStatistic)
   println(io, statistic)
   println(io, "  domain: ", statistic.domain)
-  print(  io, "  variables: ", join(keys(statistic.values), ", ", " and "))
+  print(  io, "  variables: ", join(keys(statistic.data), ", ", " and "))
 end

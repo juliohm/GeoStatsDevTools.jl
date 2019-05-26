@@ -19,7 +19,7 @@ using CSV
 using GeoStatsBase
 
 # implement methods for spatial data
-import GeoStatsBase: coordnames, coordinates!, variables, npoints, value
+import GeoStatsBase: domain, coordnames, coordinates!, variables, npoints, value
 
 # implement methods for spatial domain
 import GeoStatsBase: coordinates!, npoints, nearestlocation
@@ -66,15 +66,14 @@ include("solutions/simulation_solution.jl")
 include("statistics.jl")
 
 # plot recipes
-include("plotrecipes/spatialdata.jl")
 include("plotrecipes/domains/point_set.jl")
 include("plotrecipes/domains/regular_grid.jl")
 include("plotrecipes/domains/structured_grid.jl")
 include("plotrecipes/domains/abstract_domain.jl")
+include("plotrecipes/spatialdata.jl")
 include("plotrecipes/partitions.jl")
 include("plotrecipes/solutions/estimation.jl")
 include("plotrecipes/solutions/simulation.jl")
-include("plotrecipes/statistics.jl")
 
 export
   # spatial data
