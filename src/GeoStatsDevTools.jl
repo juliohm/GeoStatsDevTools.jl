@@ -24,9 +24,6 @@ import GeoStatsBase: domain, coordnames, coordinates!, variables, npoints, value
 # implement methods for spatial domain
 import GeoStatsBase: coordinates!, npoints, nearestlocation
 
-# implement methods for solutions
-import GeoStatsBase: digest
-
 # implement methods for spatial statistics
 import Statistics: mean, var, quantile
 
@@ -58,7 +55,7 @@ include("distributions.jl")
 # utilities
 include("utils.jl")
 
-# digest solutions
+# solutions
 include("solutions/estimation_solution.jl")
 include("solutions/simulation_solution.jl")
 
