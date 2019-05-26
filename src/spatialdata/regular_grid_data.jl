@@ -34,57 +34,42 @@ See also: [`RegularGrid`](@ref)
 """
 struct RegularGridData{T<:Real,N} <: AbstractSpatialData{T,N}
   data::Dict{Symbol,<:AbstractArray}
-  origin::NTuple{N,T}
-  spacing::NTuple{N,T}
+  domain::RegularGrid{T,N}
 
-  # state fields
-  dims::Dims{N}
-
-  function RegularGridData{T,N}(data, origin, spacing) where {N,T<:Real}
+  function RegularGridData{T,N}(data, domain) where {N,T<:Real}
     sizes = [size(array) for array in values(data)]
     @assert length(unique(sizes)) == 1 "data dimensions must be the same for all variables"
     @assert length(sizes[1]) == N "inconsistent number of dimensions for given origin/spacing"
-    @assert all(spacing .> 0) "spacing must be positive"
-    new(data, origin, spacing, sizes[1])
+    new(data, domain)
   end
 end
 
-RegularGridData(data::Dict{Symbol,<:AbstractArray},
-                origin::NTuple{N,T}, spacing::NTuple{N,T}) where {N,T<:Real} =
-  RegularGridData{T,length(origin)}(data, origin, spacing)
+function RegularGridData(data::Dict{Symbol,<:AbstractArray},
+                origin::NTuple{N,T}, spacing::NTuple{N,T}) where {N,T<:Real}
+  array, _ = iterate(values(data))
+  dims     = size(array)
+  RegularGridData{T,length(origin)}(data, RegularGrid(dims, origin, spacing))
+end
 
 RegularGridData{T}(data::Dict{Symbol,<:AbstractArray{<:Any,N}}) where {N,T<:Real} =
-  RegularGridData{T,N}(data, ntuple(i->zero(T), N), ntuple(i->one(T), N))
+  RegularGridData(data, ntuple(i->zero(T), N), ntuple(i->one(T), N))
 
-variables(geodata::RegularGridData) = Dict(var => eltype(array) for (var,array) in geodata.data)
-
-Base.size(geodata::RegularGridData) = geodata.dims
-origin(geodata::RegularGridData) = geodata.origin
-spacing(geodata::RegularGridData) = geodata.spacing
-
-npoints(geodata::RegularGridData) = prod(geodata.dims)
-
-function coordinates!(buff::AbstractVector{T}, geodata::RegularGridData{T,N}, ind::Int) where {N,T<:Real}
-  intcoords = CartesianIndices(geodata.dims)[ind]
-  for i in 1:N
-    @inbounds buff[i] = geodata.origin[i] + (intcoords[i] - 1)*geodata.spacing[i]
-  end
-end
-
-value(geodata::RegularGridData, ind::Int, var::Symbol) = geodata.data[var][ind]
+Base.size(geodata::RegularGridData) = size(geodata.domain)
+origin(geodata::RegularGridData) = origin(geodata.domain)
+spacing(geodata::RegularGridData) = spacing(geodata.domain)
 
 # ------------
 # IO methods
 # ------------
 function Base.show(io::IO, geodata::RegularGridData{T,N}) where {N,T<:Real}
-  dims = join(geodata.dims, "×")
+  dims = join(size(geodata), "×")
   print(io, "$dims RegularGridData{$T,$N}")
 end
 
 function Base.show(io::IO, ::MIME"text/plain", geodata::RegularGridData{T,N}) where {N,T<:Real}
   println(io, geodata)
-  println(io, "  origin:  ", geodata.origin)
-  println(io, "  spacing: ", geodata.spacing)
+  println(io, "  origin:  ", origin(geodata))
+  println(io, "  spacing: ", spacing(geodata))
   println(io, "  variables")
   varlines = ["    └─$var ($(eltype(array)))" for (var, array) in geodata.data]
   print(io, join(varlines, "\n"))

@@ -30,18 +30,18 @@ import GeoStatsBase: digest
 # implement methods for spatial statistics
 import Statistics: mean, var, quantile
 
+# spatial domain
+include("domains/point_set.jl")
+include("domains/regular_grid.jl")
+include("domains/structured_grid.jl")
+
 # spatial data
 include("spatialdata/geodataframe.jl")
 include("spatialdata/point_set_data.jl")
 include("spatialdata/regular_grid_data.jl")
 include("spatialdata/structured_grid_data.jl")
 
-# spatial domain
-include("domains/point_set.jl")
-include("domains/regular_grid.jl")
-include("domains/structured_grid.jl")
-
-# data partitions
+# spatial partitions
 include("partitions.jl")
 
 # domain navigation

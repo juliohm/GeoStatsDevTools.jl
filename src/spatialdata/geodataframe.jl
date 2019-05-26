@@ -75,8 +75,6 @@ function coordinates!(buff::AbstractVector, geodata::GeoDataFrame, ind::Int)
   end
 end
 
-value(geodata::GeoDataFrame, ind::Int, var::Symbol) = geodata.data[ind,var]
-
 # ------------
 # IO methods
 # ------------

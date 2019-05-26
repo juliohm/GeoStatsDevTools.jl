@@ -19,8 +19,6 @@ julia> StructuredGrid(LAT, LON)
 """
 struct StructuredGrid{T<:Real,N} <: AbstractDomain{T,N}
   coords::Matrix{T}
-
-  # state fields
   dims::Dims{N}
 end
 
