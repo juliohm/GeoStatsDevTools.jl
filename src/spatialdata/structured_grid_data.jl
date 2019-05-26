@@ -49,10 +49,3 @@ function Base.show(io::IO, geodata::StructuredGridData{T,N}) where {N,T<:Real}
   dims = join(size(geodata), "×")
   print(io, "$dims StructuredGridData{$T,$N}")
 end
-
-function Base.show(io::IO, ::MIME"text/plain", geodata::StructuredGridData{T,N}) where {N,T<:Real}
-  println(io, geodata)
-  println(io, "  variables")
-  varlines = ["    └─$var ($(eltype(array)))" for (var, array) in geodata.data]
-  print(io, join(varlines, "\n"))
-end

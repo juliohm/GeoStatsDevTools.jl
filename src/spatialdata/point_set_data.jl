@@ -32,10 +32,3 @@ function Base.show(io::IO, geodata::PointSetData{T,N}) where {N,T<:Real}
   npts = npoints(geodata)
   print(io, "$npts PointSetData{$T,$N}")
 end
-
-function Base.show(io::IO, ::MIME"text/plain", geodata::PointSetData{T,N}) where {N,T<:Real}
-  println(io, geodata)
-  println(io, "  variables")
-  varlines = ["    └─$var ($(eltype(array)))" for (var, array) in geodata.data]
-  print(io, join(varlines, "\n"))
-end
