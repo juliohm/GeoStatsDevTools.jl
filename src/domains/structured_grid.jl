@@ -43,6 +43,9 @@ function coordinates!(buff::AbstractVector{T}, grid::StructuredGrid{T,N},
   buff .= grid.coords[:,location]
 end
 
+coordextrema(grid::StructuredGrid{T,N}) where {N,T<:Real} =
+  SVector{N}(grid.coords[:,1]), SVector{N}(grid.coords[:,end])
+
 # ------------
 # IO methods
 # ------------
