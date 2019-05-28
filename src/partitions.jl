@@ -7,8 +7,8 @@
 
 A partition of spatial data.
 """
-struct SpatialPartition{D<:AbstractDataOrDomain}
-  object::D
+struct SpatialPartition{O<:AbstractSpatialObject}
+  object::O
   subsets::Vector{Vector{Int}}
 end
 
@@ -69,9 +69,9 @@ abstract type AbstractSpatialFunctionPartitioner <: AbstractFunctionPartitioner 
 
 Partition `object` with partition method `partitioner`.
 """
-partition(::AbstractDataOrDomain, ::AbstractPartitioner) = error("not implemented")
+partition(::AbstractSpatialObject, ::AbstractPartitioner) = error("not implemented")
 
-function partition(object::AbstractDataOrDomain{T,N},
+function partition(object::AbstractSpatialObject{T,N},
                    partitioner::AbstractFunctionPartitioner) where {N,T<:Real}
   subsets = Vector{Vector{Int}}()
   for i in randperm(npoints(object))
@@ -93,7 +93,7 @@ function partition(object::AbstractDataOrDomain{T,N},
   SpatialPartition(object, subsets)
 end
 
-function partition(object::AbstractDataOrDomain{T,N},
+function partition(object::AbstractSpatialObject{T,N},
                    partitioner::AbstractSpatialFunctionPartitioner) where {N,T<:Real}
   # pre-allocate memory for coordinates
   x = MVector{N,T}(undef)

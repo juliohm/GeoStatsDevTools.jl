@@ -16,7 +16,7 @@ end
 
 UniformPartitioner(k::Int) = UniformPartitioner(k, true)
 
-function partition(object::AbstractDataOrDomain{T,N},
+function partition(object::AbstractSpatialObject{T,N},
                    partitioner::UniformPartitioner) where {N,T<:Real}
   npts = npoints(object)
   nset = partitioner.k
