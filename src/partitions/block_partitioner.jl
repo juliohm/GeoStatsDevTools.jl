@@ -38,5 +38,7 @@ function partition(object::AbstractSpatialObject{T,N},
     append!(subsets[i], j)
   end
 
+  filter!(!isempty, subsets)
+
   SpatialPartition(object, subsets)
 end
