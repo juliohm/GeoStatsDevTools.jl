@@ -53,7 +53,27 @@
     end
   end
 
+  @testset "FractionPartitioner" begin
+    # TODO
+  end
+
+  @testset "BlockPartitioner" begin
+    # TODO
+  end
+
+  @testset "BallPartitioner" begin
+    # TODO
+  end
+
   @testset "PlanePartitioner" begin
+    # TODO
+  end
+
+  @testset "FunctionPartitioner" begin
+    # TODO
+  end
+
+  @testset "ProductPartitioner" begin
     # TODO
   end
 

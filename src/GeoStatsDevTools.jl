@@ -90,6 +90,7 @@ export
   SpatialPartition,
   UniformPartitioner,
   FractionPartitioner,
+  BlockPartitioner,
   BallPartitioner,
   PlanePartitioner,
   DirectionPartitioner,

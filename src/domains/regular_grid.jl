@@ -78,9 +78,9 @@ function coordinates!(buff::AbstractVector{T}, grid::RegularGrid{T,N},
 end
 
 function coordextrema(grid::RegularGrid)
-  bottomleft = SVector(grid.origin)
+  lowerleft  = SVector(grid.origin)
   upperright = SVector(@. grid.origin + (grid.dims - 1)*grid.spacing)
-  bottomleft, upperright
+  lowerleft, upperright
 end
 
 function nearestlocation(grid::RegularGrid{T,N}, coords::AbstractVector{T}) where {N,T<:Real}
