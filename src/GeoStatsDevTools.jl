@@ -6,6 +6,7 @@ module GeoStatsDevTools
 
 using Reexport
 using Random
+using StatsBase
 using Distances
 using LinearAlgebra
 using DataFrames
@@ -37,6 +38,9 @@ include("spatialdata/geodataframe.jl")
 include("spatialdata/point_set_data.jl")
 include("spatialdata/regular_grid_data.jl")
 include("spatialdata/structured_grid_data.jl")
+
+# weighted spatial data
+include("weightdata.jl")
 
 # spatial partitions
 include("partitions.jl")
@@ -73,18 +77,21 @@ include("plotrecipes/solutions/estimation.jl")
 include("plotrecipes/solutions/simulation.jl")
 
 export
-  # spatial data
-  GeoDataFrame,
-  PointSetData,
-  RegularGridData,
-  StructuredGridData,
-
   # domains
   PointSet,
   RegularGrid,
   StructuredGrid,
   origin,
   spacing,
+
+  # spatial data
+  GeoDataFrame,
+  PointSetData,
+  RegularGridData,
+  StructuredGridData,
+
+  # weighted spatial data
+  WeightedSpatialData,
 
   # partitions
   SpatialPartition,

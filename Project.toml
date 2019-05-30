@@ -16,6 +16,19 @@ RecipesBase = "3cdcf5f2-1ef4-517c-9805-6587b60abb01"
 Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
+
+[compat]
+CSV = "≥ 0.2.0"
+DataFrames = "≥ 0.11.5"
+Distances = "≥ 0.5.0"
+Distributions = "≥ 0.15.0"
+GeoStatsBase = "≥ 0.4.1"
+NearestNeighbors = "≥ 0.4.3"
+RecipesBase = "≥ 0.2.3"
+Reexport = "≥ 0.2.0"
+StaticArrays = "≥ 0.7.0"
+julia = "1"
 
 [extras]
 DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
@@ -30,15 +43,3 @@ VisualRegressionTests = "34922c18-7c2a-561c-bac1-01e79b2c4c92"
 
 [targets]
 test = ["DelimitedFiles", "Pkg", "GR", "VisualRegressionTests", "Test", "Plots", "ImageMagick", "QuartzImageIO", "Random"]
-
-[compat]
-CSV = "≥ 0.2.0"
-DataFrames = "≥ 0.11.5"
-Distances = "≥ 0.5.0"
-Distributions = "≥ 0.15.0"
-GeoStatsBase = "≥ 0.4.1"
-NearestNeighbors = "≥ 0.4.3"
-RecipesBase = "≥ 0.2.3"
-Reexport = "≥ 0.2.0"
-StaticArrays = "≥ 0.7.0"
-julia = "1"
