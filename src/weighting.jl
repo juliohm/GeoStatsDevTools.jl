@@ -18,12 +18,21 @@ variables(d::WeightedSpatialData) = variables(d.spatialdata)
 
 value(d::WeightedSpatialData, ind::Int, var::Symbol) = value(d.spatialdata, ind, var)
 
-mean(d::WeightedSpatialData, v::Symbol) = mean(values(d, v), weights(d.weights))
-mean(d::WeightedSpatialData) = Dict(v => mean(d, v) for (v,V) in variables(d))
+"""
+    AbstractWeighter
 
-var(d::WeightedSpatialData, v::Symbol) = var(values(d, v), weights(d.weights),
-                                             mean=mean(d, v), corrected=false)
-var(d::WeightedSpatialData) = Dict(v => var(d, v) for (v,V) in variables(d))
+A method to weight spatial data.
+"""
+abstract type AbstractWeighter end
 
-quantile(d::WeightedSpatialData, v::Symbol, p) = quantile(values(d, v), weights(d.weights), p)
-quantile(d::WeightedSpatialData, p) = Dict(v => quantile(d, v, p) for (v,V) in variables(d))
+"""
+    weight(spatialdata, weighter)
+
+Weight `spatialdata` with `weighter` method.
+"""
+weight(spatialdata::AbstractSpatialData, weighter::AbstractWeighter) = error("not implemented")
+
+#------------------
+# IMPLEMENTATIONS
+#------------------
+include("weighting/block_weighter.jl")

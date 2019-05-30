@@ -39,11 +39,11 @@ include("spatialdata/point_set_data.jl")
 include("spatialdata/regular_grid_data.jl")
 include("spatialdata/structured_grid_data.jl")
 
-# weighted spatial data
-include("weightdata.jl")
-
 # spatial partitions
 include("partitions.jl")
+
+# spatial weighting
+include("weighting.jl")
 
 # domain navigation
 include("paths.jl")
@@ -90,9 +90,6 @@ export
   RegularGridData,
   StructuredGridData,
 
-  # weighted spatial data
-  WeightedSpatialData,
-
   # partitions
   SpatialPartition,
   UniformPartitioner,
@@ -107,6 +104,11 @@ export
   partition,
   subsets,
   →,
+
+  # weighting
+  WeightedSpatialData,
+  BlockWeighter,
+  weight,
 
   # paths
   SimplePath,
