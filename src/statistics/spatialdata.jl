@@ -13,7 +13,8 @@ var(d::WeightedSpatialData, v::Symbol) = var(values(d, v), weights(d.weights),
 var(d::WeightedSpatialData) = Dict(v => var(d, v) for (v,V) in variables(d))
 
 quantile(d::WeightedSpatialData, v::Symbol, p) = quantile(values(d, v), weights(d.weights), p)
-quantile(d::WeightedSpatialData, p) = Dict(v => quantile(d, v, p) for (v,V) in variables(d))
+quantile(d::WeightedSpatialData, p::Real) = Dict(v => quantile(d, v, p) for (v,V) in variables(d))
+quantile(d::WeightedSpatialData, ps::AbstractVector{Real}) = Dict(v => quantile(d, v, ps) for (v,V) in variables(d))
 
 #---------------
 # SPATIAL DATA
@@ -26,9 +27,12 @@ var(d::AbstractSpatialData, w::AbstractWeighter) = var(weight(d, w))
 var(d::AbstractSpatialData, blockside::Real) = var(d, BlockWeighter(blockside))
 var(d::AbstractSpatialData) = var(d, median_distance(d))
 
-quantile(d::AbstractSpatialData, p, w::AbstractWeighter) = quantile(weight(d, w), p)
-quantile(d::AbstractSpatialData, p, blockside::Real) = quantile(weight(d, BlockWeighter(blockside)), p)
-quantile(d::AbstractSpatialData, p) = quantile(d, p, median_distance(d))
+quantile(d::AbstractSpatialData, p::Real, w::AbstractWeighter) = quantile(weight(d, w), p)
+quantile(d::AbstractSpatialData, ps::AbstractVector{Real}, w::AbstractWeighter) = quantile(weight(d, w), ps)
+quantile(d::AbstractSpatialData, p::Real, blockside::Real) = quantile(weight(d, BlockWeighter(blockside)), p)
+quantile(d::AbstractSpatialData, ps::AbstractVector{Real}, blockside::Real) = quantile(weight(d, BlockWeighter(blockside)), ps)
+quantile(d::AbstractSpatialData, p::Real) = quantile(d, p, median_distance(d))
+quantile(d::AbstractSpatialData, ps::AbstractVector{Real}) = quantile(d, ps, median_distance(d))
 
 function median_distance(d::AbstractSpatialData)
   N = npoints(d)
