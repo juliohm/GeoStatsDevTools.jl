@@ -22,8 +22,13 @@ struct PointSetData{T<:Real,N} <: AbstractSpatialData{T,N}
   end
 end
 
-PointSetData(data::Dict{Symbol,<:AbstractArray}, coords::AbstractMatrix{T}) where {T<:Real} =
+PointSetData(data::Dict{Symbol,<:AbstractArray},
+             coords::AbstractMatrix{T}) where {T<:Real} =
   PointSetData{T,size(coords,1)}(data, PointSet(coords))
+
+PointSetData(data::Dict{Symbol,<:AbstractArray},
+             coords::AbstractVector{NTuple{N,T}}) where {N,T<:Real} =
+  PointSetData(data, [c[i] for i in 1:N, c in coords])
 
 # ------------
 # IO methods

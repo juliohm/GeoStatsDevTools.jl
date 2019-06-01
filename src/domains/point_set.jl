@@ -21,6 +21,9 @@ end
 PointSet(coords::AbstractMatrix{T}) where {T<:Real} =
   PointSet{T,size(coords,1)}(coords)
 
+PointSet(coords::AbstractVector{NTuple{N,T}}) where {N,T<:Real} =
+  PointSet([c[i] for i in 1:N, c in coords])
+
 npoints(ps::PointSet) = size(ps.coords, 2)
 
 function coordinates!(buff::AbstractVector{T}, ps::PointSet{T,N},
