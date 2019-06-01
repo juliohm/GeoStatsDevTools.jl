@@ -16,16 +16,3 @@ This function returns a [`GeoDataFrame`](@ref) object.
 """
 readgeotable(args...; coordnames=[:x,:y,:z], kwargs...) =
   GeoDataFrame(CSV.read(args...; kwargs...), coordnames)
-
-"""
-    boundgrid(object, dims)
-
-Returns a `RegularGrid` of given `dims` covering all the
-locations in spatial `object`.
-"""
-function boundgrid(object::AbstractSpatialObject{T,N}, dims::Dims{N}) where {N,T<:Real}
-  bounds = extent(object)
-  start  = first.(bounds)
-  finish = last.(bounds)
-  RegularGrid(tuple(start...), tuple(finish...), dims=dims)
-end

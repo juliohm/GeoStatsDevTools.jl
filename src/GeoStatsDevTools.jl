@@ -138,11 +138,9 @@ export
 
   # utilities
   readgeotable,
-  boundgrid,
 
   # statistics
-  mean,
-  var,
+  mean, var,
   quantile
 
 end

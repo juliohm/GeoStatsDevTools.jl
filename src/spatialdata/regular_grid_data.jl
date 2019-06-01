@@ -45,7 +45,7 @@ struct RegularGridData{T<:Real,N} <: AbstractSpatialData{T,N}
 end
 
 function RegularGridData(data::Dict{Symbol,<:AbstractArray},
-                origin::NTuple{N,T}, spacing::NTuple{N,T}) where {N,T<:Real}
+                         origin::NTuple{N,T}, spacing::NTuple{N,T}) where {N,T<:Real}
   array, _ = iterate(values(data))
   dims     = size(array)
   RegularGridData{T,length(origin)}(data, RegularGrid(dims, origin, spacing))
@@ -53,6 +53,16 @@ end
 
 RegularGridData{T}(data::Dict{Symbol,<:AbstractArray{<:Any,N}}) where {N,T<:Real} =
   RegularGridData(data, ntuple(i->zero(T), N), ntuple(i->one(T), N))
+
+function RegularGridData(data::Dict{Symbol,<:AbstractArray{<:Any,N}},
+                         extent::NTuple{N,A}) where {N,T<:Real,A<:Tuple{T,T}}
+  array, _ = iterate(values(data))
+  dims     = size(array)
+  start    = first.(extent)
+  finish   = last.(extent)
+  spacing = @. (finish - start) / (dims - 1)
+  RegularGridData(data, start, spacing)
+end
 
 Base.size(geodata::RegularGridData) = size(geodata.domain)
 origin(geodata::RegularGridData) = origin(geodata.domain)
