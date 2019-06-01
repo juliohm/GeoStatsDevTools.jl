@@ -58,6 +58,9 @@ Base.size(geodata::RegularGridData) = size(geodata.domain)
 origin(geodata::RegularGridData) = origin(geodata.domain)
 spacing(geodata::RegularGridData) = spacing(geodata.domain)
 
+Base.getindex(geodata::RegularGridData, var::Symbol) =
+  reshape(values(geodata, var), size(geodata))
+
 # ------------
 # IO methods
 # ------------

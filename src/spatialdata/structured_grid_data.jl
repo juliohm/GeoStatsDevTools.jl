@@ -42,6 +42,9 @@ StructuredGridData(data::Dict{Symbol,<:AbstractArray},
 
 Base.size(geodata::StructuredGridData) = size(geodata.domain)
 
+Base.getindex(geodata::StructuredGridData, var::Symbol) =
+  reshape(values(geodata, var), size(geodata))
+
 # ------------
 # IO methods
 # ------------
