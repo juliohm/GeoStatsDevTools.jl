@@ -24,6 +24,8 @@ Returns a `RegularGrid` of given `dims` covering all the
 locations in spatial `object`.
 """
 function boundgrid(object::AbstractSpatialObject{T,N}, dims::Dims{N}) where {N,T<:Real}
-  start, finish = coordextrema(object)
+  bounds = extent(object)
+  start  = first.(bounds)
+  finish = last.(bounds)
   RegularGrid(tuple(start...), tuple(finish...), dims=dims)
 end
