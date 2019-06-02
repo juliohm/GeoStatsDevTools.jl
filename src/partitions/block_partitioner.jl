@@ -5,8 +5,7 @@
 """
     BlockPartitioner(side)
 
-A method for partitioning spatial objects in N-dimensional space
-into blocks of given `side`.
+A method for partitioning spatial objects into blocks of given `side`.
 """
 struct BlockPartitioner{T<:Real} <: AbstractPartitioner
   side::T
@@ -35,8 +34,14 @@ function partition(object::AbstractSpatialObject{T,N},
   linear = LinearIndices(Dims(nblocks))
   for j in 1:npoints(object)
     coordinates!(coords, object, j)
-    icoords = floor.(Int, (Tuple(coords) .- origin) ./ side) .+ 1
-    i = linear[icoords...]
+
+    # find block coordinates
+    c = floor.(Int, (Tuple(coords) .- origin) ./ side) .+ 1
+    bcoords = ntuple(i->@inbounds(return clamp(c[i], 1, nblocks[i])), N)
+
+    # block index
+    i = linear[bcoords...]
+
     append!(subsets[i], j)
   end
 
