@@ -7,7 +7,8 @@
 
 A set of points with coordinate matrix `coords`. The number of rows
 of the matrix is the dimensionality of the domain whereas the number
-of columns is the number of points in the set.
+of columns is the number of points in the set. Alternatively, `coords`
+can be a vector of tuples (i.e. points).
 """
 struct PointSet{T<:Real,N} <: AbstractDomain{T,N}
   coords::Matrix{T}

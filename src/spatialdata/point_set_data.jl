@@ -5,9 +5,9 @@
 """
     PointSetData(data, coords)
 
-Spatial `data` georeferenced with coordinate matrix `coords`.
-The `data` argument is a dictionary mapping variable names to Julia
-arrays with the actual data.
+Spatial `data` georeferenced with `coords`, which can be a matrix or
+a vector of tuples. The `data` argument is a dictionary mapping variable
+names to Julia arrays with the actual data.
 
 See also: [`PointSet`](@ref)
 """

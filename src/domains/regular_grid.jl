@@ -9,9 +9,11 @@ A regular grid with dimensions `dims`, lower left corner at `origin`
 and cell spacing `spacing`. The three arguments must have the same length.
 
     RegularGrid(start, finish, dims=dims)
+    RegularGrid(extent, dims=dims)
 
 Alternatively, construct a regular grid from a `start` point (lower left)
-to a `finish` point (upper right), optionally passing `dims`.
+to a `finish` point (upper right), or from an `extent` (i.e `start:finish`),
+optionally passing `dims`.
 
     RegularGrid{T}(dims)
     RegularGrid{T}(dim1, dim2, ...)

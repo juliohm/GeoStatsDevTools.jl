@@ -3,11 +3,13 @@
 # ------------------------------------------------------------------
 
 """
+    RegularGridData(data)
+    RegularGridData(data, extent)
     RegularGridData(data, origin, spacing)
 
-Regularly spaced `data` georeferenced with `origin` and `spacing`.
-The `data` argument is a dictionary mapping variable names to Julia
-arrays with the actual data.
+Regularly spaced `data` georeferenced with `origin` and `spacing`,
+or an `extent`. The `data` argument is a dictionary mapping variable
+names to Julia arrays with the actual data.
 
 `NaN` or `missing` values in the Julia arrays are interpreted as
 non-valid. They can be used to mask the variables on the grid.
