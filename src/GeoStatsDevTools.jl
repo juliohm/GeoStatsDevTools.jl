@@ -22,7 +22,7 @@ using GeoStatsBase
 # implement methods for spatial objects
 import GeoStatsBase: domain, npoints,
                      coordnames, coordinates!,
-                     extent, nearestlocation,
+                     bounds, nearestlocation,
                      variables, value
 
 # implement methods for spatial statistics

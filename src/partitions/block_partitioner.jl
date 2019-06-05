@@ -15,9 +15,9 @@ function partition(object::AbstractSpatialObject{T,N},
                    partitioner::BlockPartitioner) where {N,T<:Real}
   side = partitioner.side
 
-  bounds     = extent(object)
-  lowerleft  = first.(bounds)
-  upperright = last.(bounds)
+  objbounds  = bounds(object)
+  lowerleft  = first.(objbounds)
+  upperright = last.(objbounds)
 
   @assert minimum(upperright .- lowerleft) ≥ side "block side is too large"
 
