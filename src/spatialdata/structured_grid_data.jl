@@ -45,6 +45,13 @@ Base.size(geodata::StructuredGridData) = size(geodata.domain)
 Base.getindex(geodata::StructuredGridData, var::Symbol) =
   reshape(values(geodata, var), size(geodata))
 
+function Base.getindex(geodata::StructuredGridData,
+                       icoords::Vararg{Int,N}) where {N}
+  vars = [var for (var,V) in variables(geodata)]
+  vals = [geodata.data[var][icoords...] for var in vars]
+  NamedTuple{tuple(vars...)}(vals)
+end
+
 # ------------
 # IO methods
 # ------------

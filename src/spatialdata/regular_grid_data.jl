@@ -73,6 +73,13 @@ spacing(geodata::RegularGridData) = spacing(geodata.domain)
 Base.getindex(geodata::RegularGridData, var::Symbol) =
   reshape(values(geodata, var), size(geodata))
 
+function Base.getindex(geodata::RegularGridData,
+                       icoords::Vararg{Int,N}) where {N}
+  vars = [var for (var,V) in variables(geodata)]
+  vals = [geodata.data[var][icoords...] for var in vars]
+  NamedTuple{tuple(vars...)}(vals)
+end
+
 # ------------
 # IO methods
 # ------------
