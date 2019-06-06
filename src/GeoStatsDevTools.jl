@@ -73,6 +73,7 @@ include("plotrecipes/domains/structured_grid.jl")
 include("plotrecipes/domains/abstract_domain.jl")
 include("plotrecipes/spatialdata.jl")
 include("plotrecipes/partitions.jl")
+include("plotrecipes/weighting.jl")
 include("plotrecipes/solutions/estimation.jl")
 include("plotrecipes/solutions/simulation.jl")
 
