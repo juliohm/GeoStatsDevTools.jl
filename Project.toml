@@ -1,7 +1,7 @@
 name = "GeoStatsDevTools"
 uuid = "19e549d1-356f-5655-9f3d-c1d6136da705"
 author = "Júlio Hoffimann <julio.hoffimann@gmail.com>"
-version = "0.4.4"
+version = "0.4.5"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -23,7 +23,7 @@ CSV = "≥ 0.2.0"
 DataFrames = "≥ 0.11.5"
 Distances = "≥ 0.5.0"
 Distributions = "≥ 0.15.0"
-GeoStatsBase = "≥ 0.4.1"
+GeoStatsBase = "≥ 0.4.3"
 NearestNeighbors = "≥ 0.4.3"
 RecipesBase = "≥ 0.2.3"
 Reexport = "≥ 0.2.0"
