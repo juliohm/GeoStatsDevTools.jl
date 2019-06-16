@@ -34,7 +34,7 @@ end
 function search!(neighbors::AbstractVector{Int},
                  xₒ::AbstractVector{T},
                  searcher::LocalNeighborSearcher,
-                 mask::AbstractVector{Bool}) where {T<:Real,N}
+                 mask::AbstractVector{Bool}) where {T,N}
   x = searcher.buff
   path = searcher.path
 

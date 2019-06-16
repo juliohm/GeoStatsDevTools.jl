@@ -9,7 +9,7 @@ A weighting method that assigns weights to points in spatial data
 based on blocks of given `side`. The number (n) of points inside a
 block determines the weights (1/n) of these points.
 """
-struct BlockWeighter{T<:Real} <: AbstractWeighter
+struct BlockWeighter{T} <: AbstractWeighter
   side::T
 end
 

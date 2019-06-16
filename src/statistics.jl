@@ -7,7 +7,7 @@
 
 A spatial statistic defined over a spatial domain.
 """
-struct SpatialStatistic{T<:Real,N,D<:AbstractDomain{T,N}} <: AbstractSpatialData{T,N}
+struct SpatialStatistic{T,N,D<:AbstractDomain{T,N}} <: AbstractSpatialData{T,N}
   data::Dict{Symbol,<:AbstractArray}
   domain::D
 end

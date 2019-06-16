@@ -72,7 +72,7 @@ Partition `object` with partition method `partitioner`.
 partition(::AbstractSpatialObject, ::AbstractPartitioner) = error("not implemented")
 
 function partition(object::AbstractSpatialObject{T,N},
-                   partitioner::AbstractFunctionPartitioner) where {N,T<:Real}
+                   partitioner::AbstractFunctionPartitioner) where {N,T}
   subsets = Vector{Vector{Int}}()
   for i in randperm(npoints(object))
     inserted = false
@@ -94,7 +94,7 @@ function partition(object::AbstractSpatialObject{T,N},
 end
 
 function partition(object::AbstractSpatialObject{T,N},
-                   partitioner::AbstractSpatialFunctionPartitioner) where {N,T<:Real}
+                   partitioner::AbstractSpatialFunctionPartitioner) where {N,T}
   # pre-allocate memory for coordinates
   x = MVector{N,T}(undef)
   y = MVector{N,T}(undef)

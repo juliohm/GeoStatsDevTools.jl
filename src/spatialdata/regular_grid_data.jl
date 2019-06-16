@@ -34,11 +34,11 @@ julia> RegularGridData{Float64}(data)
 
 See also: [`RegularGrid`](@ref)
 """
-struct RegularGridData{T<:Real,N} <: AbstractSpatialData{T,N}
+struct RegularGridData{T,N} <: AbstractSpatialData{T,N}
   data::Dict{Symbol,<:AbstractArray}
   domain::RegularGrid{T,N}
 
-  function RegularGridData{T,N}(data, domain) where {N,T<:Real}
+  function RegularGridData{T,N}(data, domain) where {N,T}
     sizes = [size(array) for array in values(data)]
     @assert length(unique(sizes)) == 1 "data dimensions must be the same for all variables"
     @assert length(sizes[1]) == N "inconsistent number of dimensions for given origin/spacing"
@@ -47,17 +47,17 @@ struct RegularGridData{T<:Real,N} <: AbstractSpatialData{T,N}
 end
 
 function RegularGridData(data::Dict{Symbol,<:AbstractArray},
-                         origin::NTuple{N,T}, spacing::NTuple{N,T}) where {N,T<:Real}
+                         origin::NTuple{N,T}, spacing::NTuple{N,T}) where {N,T}
   array, _ = iterate(values(data))
   dims     = size(array)
   RegularGridData{T,length(origin)}(data, RegularGrid(dims, origin, spacing))
 end
 
-RegularGridData{T}(data::Dict{Symbol,<:AbstractArray{<:Any,N}}) where {N,T<:Real} =
+RegularGridData{T}(data::Dict{Symbol,<:AbstractArray{<:Any,N}}) where {N,T} =
   RegularGridData(data, ntuple(i->zero(T), N), ntuple(i->one(T), N))
 
 function RegularGridData(data::Dict{Symbol,<:AbstractArray{<:Any,N}},
-                         bounds::NTuple{N,A}) where {N,T<:Real,A<:Tuple{T,T}}
+                         bounds::NTuple{N,A}) where {N,T,A<:Tuple{T,T}}
   array, _ = iterate(values(data))
   dims     = size(array)
   start    = first.(bounds)
@@ -83,12 +83,12 @@ end
 # ------------
 # IO methods
 # ------------
-function Base.show(io::IO, geodata::RegularGridData{T,N}) where {N,T<:Real}
+function Base.show(io::IO, geodata::RegularGridData{T,N}) where {N,T}
   dims = join(size(geodata), "×")
   print(io, "$dims RegularGridData{$T,$N}")
 end
 
-function Base.show(io::IO, ::MIME"text/plain", geodata::RegularGridData{T,N}) where {N,T<:Real}
+function Base.show(io::IO, ::MIME"text/plain", geodata::RegularGridData{T,N}) where {N,T}
   println(io, geodata)
   println(io, "  origin:  ", origin(geodata))
   println(io, "  spacing: ", spacing(geodata))

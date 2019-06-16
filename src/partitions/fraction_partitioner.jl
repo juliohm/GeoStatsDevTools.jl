@@ -21,7 +21,7 @@ end
 FractionPartitioner(fraction) = FractionPartitioner(fraction, true)
 
 function partition(object::AbstractSpatialObject{T,N},
-                   p::FractionPartitioner) where {N,T<:Real}
+                   p::FractionPartitioner) where {N,T}
   npts = npoints(object)
   frac = round(Int, p.fraction * npts)
 

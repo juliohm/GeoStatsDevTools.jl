@@ -2,7 +2,7 @@
 # Licensed under the ISC License. See LICENCE in the project root.
 # ------------------------------------------------------------------
 
-@recipe function f(domain::PointSet{T,N}, data::AbstractVector) where {N,T<:Real}
+@recipe function f(domain::PointSet{T,N}, data::AbstractVector) where {N,T}
   X = coordinates(domain)
 
   seriestype --> :scatter
@@ -27,7 +27,7 @@
   end
 end
 
-@recipe function f(domain::PointSet{T,N}) where {N,T<:Real}
+@recipe function f(domain::PointSet{T,N}) where {N,T}
   X = coordinates(domain)
 
   seriestype --> :scatter

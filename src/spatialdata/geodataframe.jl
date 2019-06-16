@@ -28,11 +28,11 @@ No additional storage is required other than a vector of symbols
 with the columns names representing spatial coordinates.
 
 """
-struct GeoDataFrame{T<:Real,N,DF<:AbstractDataFrame} <: AbstractSpatialData{T,N}
+struct GeoDataFrame{T,N,DF<:AbstractDataFrame} <: AbstractSpatialData{T,N}
   data::DF
   coordnames::Vector{Symbol}
 
-  function GeoDataFrame{T,N,DF}(data, coordnames) where {T<:Real,N,DF<:AbstractDataFrame}
+  function GeoDataFrame{T,N,DF}(data, coordnames) where {T,N,DF<:AbstractDataFrame}
     new(data, coordnames)
   end
 end

@@ -22,7 +22,7 @@ function NearestNeighborSearcher(domain::AbstractDomain, locs::AbstractVector{In
 end
 
 function search!(neighbors::AbstractVector{Int}, xₒ::AbstractVector{T},
-                 searcher::NearestNeighborSearcher, mask::AbstractVector{Bool}) where {T<:Real,N}
+                 searcher::NearestNeighborSearcher, mask::AbstractVector{Bool}) where {T,N}
   K       = searcher.K
   inds, _ = knn(searcher.kdtree, xₒ, K, true)
   locs    = view(searcher.locs, inds)

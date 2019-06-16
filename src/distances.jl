@@ -27,7 +27,7 @@ julia> Ellipsoidal([1.0,0.5,0.5], [π/2,0.0,0.0])
 struct Ellipsoidal{N,T} <: Metric
   dist::Mahalanobis{T}
 
-  function Ellipsoidal{N,T}(semiaxes, angles) where {N,T<:Real}
+  function Ellipsoidal{N,T}(semiaxes, angles) where {N,T}
     @assert length(semiaxes) == N "number of semiaxes must match spatial dimension"
     @assert all(semiaxes .> zero(T)) "semiaxes must be positive"
     @assert N ∈ [2,3] "dimension must be either 2 or 3"
@@ -80,9 +80,9 @@ struct Ellipsoidal{N,T} <: Metric
   end
 end
 
-Ellipsoidal(semiaxes::AbstractVector{T}, angles::AbstractVector{T}) where {T<:Real} =
+Ellipsoidal(semiaxes::AbstractVector{T}, angles::AbstractVector{T}) where {T} =
   Ellipsoidal{length(semiaxes),T}(semiaxes, angles)
 
-function Distances.evaluate(dist::Ellipsoidal{N,T}, a::AbstractVector, b::AbstractVector) where {N,T<:Real}
+function Distances.evaluate(dist::Ellipsoidal{N,T}, a::AbstractVector, b::AbstractVector) where {N,T}
   evaluate(dist.dist, a, b)
 end

@@ -24,11 +24,11 @@ julia> StructuredGridData(data, LAT, LON)
 
 See also: [`StructuredGrid`](@ref)
 """
-struct StructuredGridData{T<:Real,N} <: AbstractSpatialData{T,N}
+struct StructuredGridData{T,N} <: AbstractSpatialData{T,N}
   data::Dict{Symbol,<:AbstractArray}
   domain::StructuredGrid{T,N}
 
-  function StructuredGridData{T,N}(data, domain) where {N,T<:Real}
+  function StructuredGridData{T,N}(data, domain) where {N,T}
     sizes = [size(array) for array in values(data)]
     @assert length(unique(sizes)) == 1 "data dimensions must be the same for all variables"
     @assert prod(sizes[1]) == npoints(domain) "data and coordinates arrays must have the same number of indices"
@@ -37,7 +37,7 @@ struct StructuredGridData{T<:Real,N} <: AbstractSpatialData{T,N}
 end
 
 StructuredGridData(data::Dict{Symbol,<:AbstractArray},
-                   coordarrays::Vararg{<:AbstractArray{T},N}) where {N,T<:Real} =
+                   coordarrays::Vararg{<:AbstractArray{T},N}) where {N,T} =
   StructuredGridData{T,N}(data, StructuredGrid(coordarrays...))
 
 Base.size(geodata::StructuredGridData) = size(geodata.domain)
@@ -55,7 +55,7 @@ end
 # ------------
 # IO methods
 # ------------
-function Base.show(io::IO, geodata::StructuredGridData{T,N}) where {N,T<:Real}
+function Base.show(io::IO, geodata::StructuredGridData{T,N}) where {N,T}
   dims = join(size(geodata), "×")
   print(io, "$dims StructuredGridData{$T,$N}")
 end

@@ -7,7 +7,7 @@
 
 Assign `weights` for each point in `spatialdata`.
 """
-struct WeightedSpatialData{T<:Real,N,S<:AbstractSpatialData{T,N},V} <: AbstractSpatialData{T,N}
+struct WeightedSpatialData{T,N,S<:AbstractSpatialData{T,N},V} <: AbstractSpatialData{T,N}
   spatialdata::S
   weights::Vector{V}
 end

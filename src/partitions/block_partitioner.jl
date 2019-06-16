@@ -7,12 +7,12 @@
 
 A method for partitioning spatial objects into blocks of given `side`.
 """
-struct BlockPartitioner{T<:Real} <: AbstractPartitioner
+struct BlockPartitioner{T} <: AbstractPartitioner
   side::T
 end
 
 function partition(object::AbstractSpatialObject{T,N},
-                   partitioner::BlockPartitioner) where {N,T<:Real}
+                   partitioner::BlockPartitioner) where {N,T}
   side = partitioner.side
 
   objbounds  = bounds(object)

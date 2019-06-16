@@ -16,7 +16,7 @@ Update `neighbors` of coordinates `xₒ` with the `searcher` and `mask`,
 and return number of neighbors found.
 """
 search!(::AbstractVector{Int}, ::AbstractVector{T}, ::AbstractNeighborSearcher,
-        ::AbstractVector{Bool}) where {T<:Real,N} = error("not implemented")
+        ::AbstractVector{Bool}) where {T,N} = error("not implemented")
 
 #------------------
 # IMPLEMENTATIONS
