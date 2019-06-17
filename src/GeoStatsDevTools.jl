@@ -30,15 +30,10 @@ include("partitions.jl")
 # spatial weighting
 include("weighting.jl")
 
-# domain navigation
-include("paths.jl")
-include("neighborhoods.jl")
-
 # neighborhood search
 include("neighborsearch.jl")
 
 # distances and distributions
-include("distances.jl")
 include("distributions.jl")
 
 # utilities
@@ -72,25 +67,10 @@ export
   BlockWeighter,
   weight,
 
-  # paths
-  SimplePath,
-  RandomPath,
-  SourcePath,
-  ShiftedPath,
-
-  # neighborhoods
-  BallNeighborhood,
-  CylinderNeighborhood,
-  isneighbor,
-
   # neighborhood search
   NearestNeighborSearcher,
   LocalNeighborSearcher,
   search!,
-
-  # distances
-  Ellipsoidal,
-  evaluate,
 
   # distributions
   EmpiricalDistribution,
