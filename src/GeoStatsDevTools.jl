@@ -48,15 +48,8 @@ include("utils.jl")
 include("statistics.jl")
 
 # plot recipes
-include("plotrecipes/domains/point_set.jl")
-include("plotrecipes/domains/regular_grid.jl")
-include("plotrecipes/domains/structured_grid.jl")
-include("plotrecipes/domains/abstract_domain.jl")
-include("plotrecipes/spatialdata.jl")
 include("plotrecipes/partitions.jl")
 include("plotrecipes/weighting.jl")
-include("plotrecipes/solutions/estimation.jl")
-include("plotrecipes/solutions/simulation.jl")
 
 export
   # partitions
