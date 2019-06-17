@@ -24,9 +24,6 @@ import GeoStatsBase: domain, variables, value
 # implement methods for spatial statistics
 import Statistics: mean, var, quantile
 
-# spatial weighting
-include("weighting.jl")
-
 # neighborhood search
 include("neighborsearch.jl")
 
@@ -41,11 +38,6 @@ include("plotrecipes/partitions.jl")
 include("plotrecipes/weighting.jl")
 
 export
-  # weighting
-  WeightedSpatialData,
-  BlockWeighter,
-  weight,
-
   # neighborhood search
   NearestNeighborSearcher,
   LocalNeighborSearcher,
