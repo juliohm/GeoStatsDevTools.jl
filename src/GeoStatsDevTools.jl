@@ -44,10 +44,6 @@ include("distributions.jl")
 # utilities
 include("utils.jl")
 
-# solutions
-include("solutions/estimation_solution.jl")
-include("solutions/simulation_solution.jl")
-
 # spatial statistics
 include("statistics.jl")
 
