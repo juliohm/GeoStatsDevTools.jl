@@ -33,9 +33,6 @@ include("weighting.jl")
 # neighborhood search
 include("neighborsearch.jl")
 
-# distances and distributions
-include("distributions.jl")
-
 # utilities
 include("utils.jl")
 
@@ -71,12 +68,6 @@ export
   NearestNeighborSearcher,
   LocalNeighborSearcher,
   search!,
-
-  # distributions
-  EmpiricalDistribution,
-  transform!,
-  quantile,
-  cdf,
 
   # utilities
   readgeotable,
