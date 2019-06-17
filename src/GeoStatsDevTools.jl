@@ -23,15 +23,11 @@ using GeoStatsBase
 import GeoStatsBase: domain, npoints,
                      coordnames, coordinates!,
                      bounds, nearestlocation,
-                     variables, value
+                     variables, value,
+                     origin, spacing
 
 # implement methods for spatial statistics
 import Statistics: mean, var, quantile
-
-# spatial domain
-include("domains/point_set.jl")
-include("domains/regular_grid.jl")
-include("domains/structured_grid.jl")
 
 # spatial data
 include("spatialdata/geodataframe.jl")
@@ -78,13 +74,6 @@ include("plotrecipes/solutions/estimation.jl")
 include("plotrecipes/solutions/simulation.jl")
 
 export
-  # domains
-  PointSet,
-  RegularGrid,
-  StructuredGrid,
-  origin,
-  spacing,
-
   # spatial data
   GeoDataFrame,
   PointSetData,
