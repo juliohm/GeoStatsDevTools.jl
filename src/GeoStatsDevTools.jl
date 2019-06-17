@@ -24,9 +24,6 @@ import GeoStatsBase: domain, variables, value
 # implement methods for spatial statistics
 import Statistics: mean, var, quantile
 
-# spatial partitions
-include("partitions.jl")
-
 # spatial weighting
 include("weighting.jl")
 
@@ -44,21 +41,6 @@ include("plotrecipes/partitions.jl")
 include("plotrecipes/weighting.jl")
 
 export
-  # partitions
-  SpatialPartition,
-  UniformPartitioner,
-  FractionPartitioner,
-  BlockPartitioner,
-  BallPartitioner,
-  PlanePartitioner,
-  DirectionPartitioner,
-  FunctionPartitioner,
-  ProductPartitioner,
-  HierarchicalPartitioner,
-  partition,
-  subsets,
-  →,
-
   # weighting
   WeightedSpatialData,
   BlockWeighter,
