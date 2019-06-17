@@ -9,7 +9,6 @@ using Random
 using StatsBase
 using Distances
 using LinearAlgebra
-using DataFrames
 using StaticArrays
 using NearestNeighbors
 using RecipesBase
@@ -28,12 +27,6 @@ import GeoStatsBase: domain, npoints,
 
 # implement methods for spatial statistics
 import Statistics: mean, var, quantile
-
-# spatial data
-include("spatialdata/geodataframe.jl")
-include("spatialdata/point_set_data.jl")
-include("spatialdata/regular_grid_data.jl")
-include("spatialdata/structured_grid_data.jl")
 
 # spatial partitions
 include("partitions.jl")
@@ -74,12 +67,6 @@ include("plotrecipes/solutions/estimation.jl")
 include("plotrecipes/solutions/simulation.jl")
 
 export
-  # spatial data
-  GeoDataFrame,
-  PointSetData,
-  RegularGridData,
-  StructuredGridData,
-
   # partitions
   SpatialPartition,
   UniformPartitioner,
